@@ -64,6 +64,7 @@ var diff_u = 0.6;
 var diff_v = 0.1;
 var limit_u = 20;
 var limit_v = 20;
+var iteration = 0;
 
 init = function()
 {
@@ -102,6 +103,7 @@ init = function()
         color4:  {type: "v4", value: new THREE.Vector4(1, 1, 0, 0.75)},
         color5:  {type: "v4", value: new THREE.Vector4(1, 0, 0, 1.00)},
         brush:   {type: "v2", value: new THREE.Vector2(-10, -10)},
+        play:    {type: "f",  value: 1.0},
     };
     mColors = [mUniforms.color1, mUniforms.color2, mUniforms.color3, mUniforms.color4, mUniforms.color5];
     $("#gradient").gradient("setUpdateCallback", onUpdatedColor);
@@ -157,6 +159,11 @@ var resize = function(width, height)
     mTexture1.wrapT = THREE.RepeatWrapping;
     mTexture2.wrapS = THREE.RepeatWrapping;
     mTexture2.wrapT = THREE.RepeatWrapping;
+
+    // https://threejs.org/docs/#api/constants/Textures
+    // THREE.ClampToEdgeWrapping
+    // THREE.MirroredRepeatWrapping
+    // THREE.RepeatWrapping
     
     mUniforms.screenWidth.value  = canvasWidth/4;  // canvasWidth/2;
     mUniforms.screenHeight.value = canvasHeight/4; //canvasHeight/2;
@@ -190,12 +197,17 @@ var render = function(time)
         mUniforms.brush.value = mMinusOnes; // disable brush
     }
     
-    if (mColorsNeedUpdate)
+    if (mColorsNeedUpdate) {
         updateUniformsColors();
+    }
     
     mScreenQuad.material = mScreenMaterial;
     mRenderer.render(mScene, mCamera);
     
+    if (mUniforms.play.value == 1.0) {
+        $("#iteration").html(iteration++);
+    }
+
     requestAnimationFrame(render);
 }
 
@@ -248,10 +260,24 @@ var onMouseUp = function(e)
     mMouseDown = false;
 }
 
+play = function()
+{
+    if (mUniforms.play.value == 0.0) {
+        mUniforms.play.value = 1.0;
+        $("#btn_play").button({icons : {primary : "ui-icon-pause"}});
+    }
+    else {
+        mUniforms.play.value = 0.0;
+        $("#btn_play").button({icons : {primary : "ui-icon-play"}});
+    }
+}
+
 clean = function()
 {
     mUniforms.brush.value = new THREE.Vector2(-10, -10);
     mUniforms.seed.value  = Math.random();
+    iteration = 0;
+    $("#iteration").html(0);
 }
 
 select_u = function()
@@ -328,6 +354,11 @@ var worldToForm = function()
 
 var init_controls = function()
 {
+    $("#btn_play").button({
+        icons : {primary : "ui-icon-pause"},
+        text : false
+    });
+
     $("#btn_clear").button({
         icons : {primary : "ui-icon-refresh"},
         text : false

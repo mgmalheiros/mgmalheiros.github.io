@@ -36,6 +36,7 @@
             uniform float limit_u;
             uniform float limit_v;
             uniform float split;
+            uniform float play;
 
             float step_x = 1.0/screenWidth;
             float step_y = 1.0/screenHeight;
@@ -49,7 +50,7 @@
             }
 
             void main()
-            { 
+            {
                 // explicit request to clear screen
                 if (brush.x < -5.0) 
                 {
@@ -61,6 +62,24 @@
                     return;
                 }
                 
+                // simulation is paused: just copy texture pixels
+                if (play == 0.0)
+                {
+                    vec2 uv = texture2D(tSource, vUv).rg;
+
+                    if (brush.x > 0.0) {
+                        vec2 diff = (vUv - brush) / texel;
+                        float dist = dot(diff, diff);
+                        if (dist < 8.0) {
+                            //uv.r = 2.0;
+                            uv.g = 0.0;
+                        }
+                    }
+
+                    gl_FragColor = vec4(uv.r, uv.g, 0.0, 1.0);
+                    return;
+                }
+
                 // creates a parameter map
                 //float diff_u = vUv.y * 0.083;
                 //float diff_v = vUv.x * 0.073;
@@ -113,9 +132,10 @@
                 }
                 
                 if (brush.x > 0.0) {
-                    vec2 diff = (vUv - brush)/texel;
+                    vec2 diff = (vUv - brush) / texel;
                     float dist = dot(diff, diff);
                     if (dist < 8.0) {
+                        //dst.r = 2.0;
                         dst.g = 0.0;
                     }
                 }
@@ -235,7 +255,13 @@
                     </select>
                 </form>
 
-                <p style="text-align:center">
+                <p style="text-align:left">
+                    <button id="btn_play" onclick="play()">Play / Pause</button>
+                    Iteration:
+                    <span class="remark" id="iteration"></span>
+                <p/>
+
+                <p style="text-align:left">
                     <button id="btn_clear" onclick="clean()">Clear</button>
                     <button id="btn_select_u" onclick="select_u()">Show U</button>
                     <button id="btn_select_v" onclick="select_v()">Show V</button>                    
