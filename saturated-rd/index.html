@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Saturated reaction-diffusion (Turing equations)</title>
-        
+
         <link rel="stylesheet" type="text/css" href="../css/experiments.css"/>
         <link rel="stylesheet" type="text/css" href="../gradientui/gradientui.css"/>
         <link type="text/css" href="../3rd/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
@@ -11,17 +11,17 @@
         <script type="text/javascript" src="../3rd/colorPicker.js"></script>
         <script type="text/javascript" src="../3rd/three.min.js"></script>
         <script type="text/javascript" src="../gradientui/gradientui.js"></script>
-        
+
         <script type="x-shader/x-vertex" id="standardVertexShader">
             varying vec2 vUv;
-            
+
             void main()
             {
                 vUv = uv;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
         </script>
-        
+
         <script type="x-shader/x-fragment" id="gsFragmentShader">
             varying vec2 vUv;
             uniform float screenWidth;
@@ -41,7 +41,7 @@
             float step_x = 1.0/screenWidth;
             float step_y = 1.0/screenHeight;
             vec2 texel = vec2(step_x, step_y);
-            
+
             // https://thebookofshaders.com/10/
             // https://stackoverflow.com/questions/4200224/random-noise-functions-for-glsl
             float random (vec2 st)
@@ -52,7 +52,7 @@
             void main()
             {
                 // explicit request to clear screen
-                if (brush.x < -5.0) 
+                if (brush.x < -5.0)
                 {
                     // random noise (deterministic based on fragment position)
                     vec2 st = gl_FragCoord.xy;
@@ -61,7 +61,7 @@
                     gl_FragColor = vec4(4.0, v, 0.0, 1.0);
                     return;
                 }
-                
+
                 // simulation is paused: just copy texture pixels
                 if (play == 0.0)
                 {
@@ -83,14 +83,14 @@
                 // creates a parameter map
                 //float diff_u = vUv.y * 0.083;
                 //float diff_v = vUv.x * 0.073;
-                
+
                 // five-point stencil
                 vec2 uv  = texture2D(tSource, vUv).rg;
                 vec2 uv0 = texture2D(tSource, vUv + vec2(-step_x, 0.0)).rg;
                 vec2 uv1 = texture2D(tSource, vUv + vec2(step_x,  0.0)).rg;
                 vec2 uv2 = texture2D(tSource, vUv + vec2(0.0,    -step_y)).rg;
                 vec2 uv3 = texture2D(tSource, vUv + vec2(0.0,     step_y)).rg;
-                
+
                 vec2 lapl;
                 if (aniso_u == 0.0) {
                     lapl.r =     uv0.r +     uv1.r + uv2.r + uv3.r - 4.0*uv.r;
@@ -112,15 +112,15 @@
                 // Turing equations
                 float du = 0.01*(16.0 - uv.r*uv.g)        + diff_u*lapl.r;
                 float dv = 0.01*(uv.r*uv.g - uv.g - 12.0) + diff_v*lapl.g;
-                
+
                 // fixed delta
                 vec2 dst = uv + 0.3*vec2(du, dv);
-                
+
                 // clamp negative values of V
                 if (dst.g < 0.0) {
                     dst.g = 0.0;
                 }
-                
+
                 if ((split == 0.0) || (gl_FragCoord.x > screenWidth / 2.0)) {
                     // saturation limits for U and V
                     if (dst.r > limit_u) {
@@ -130,7 +130,7 @@
                         dst.g = limit_v;
                     }
                 }
-                
+
                 if (brush.x > 0.0) {
                     vec2 diff = (vUv - brush) / texel;
                     float dist = dot(diff, diff);
@@ -139,11 +139,11 @@
                         dst.g = 0.0;
                     }
                 }
-                
+
                 gl_FragColor = vec4(dst.r, dst.g, 0.0, 1.0);
             }
         </script>
-        
+
         <script type="x-shader/x-fragment" id="screenFragmentShader">
             varying vec2 vUv;
             uniform float screenWidth;
@@ -155,9 +155,9 @@
             uniform vec4  color4;
             uniform vec4  color5;
             uniform float chem;
-            
+
             vec2 texel = vec2(1.0/screenWidth, 1.0/screenHeight);
-            
+
             void main()
             {
                 float value;
@@ -167,11 +167,11 @@
                 }
                 else {
                     // show V in [0,10]
-                    value = texture2D(tSource, vUv).g / 10.0; 
+                    value = texture2D(tSource, vUv).g / 10.0;
                 }
-                
+
                 float a;
-                vec3 col;                
+                vec3 col;
                 if (value <= color1.a) {
                     col = color1.rgb;
                 }
@@ -194,11 +194,11 @@
                 if (value > color5.a) {
                     col = color5.rgb;
                 }
-                
+
             	gl_FragColor = vec4(col.r, col.g, col.b, 1.0);
             }
         </script>
-        
+
         <script type="text/javascript" src="saturated-rd.js"></script>
         <meta charset="UTF-8">
         <style>
@@ -220,13 +220,13 @@
                                          [0.50, '#00ff00'],
                                          [0.75, '#ffff00'],
                                          [1.00, '#ff0000']]});
-                
+
                 // KLUDGE!
                 colorPicker.offsetX = -512;
                 colorPicker.offsetY = -256;
-                
+
                 document.getElementById("gradient").onselectstart = function () {return false;};
-                
+
                 init();
             });
         </script>
@@ -264,14 +264,14 @@
                 <p style="text-align:left">
                     <button id="btn_clear" onclick="clean()">Clear</button>
                     <button id="btn_select_u" onclick="select_u()">Show U</button>
-                    <button id="btn_select_v" onclick="select_v()">Show V</button>                    
+                    <button id="btn_select_v" onclick="select_v()">Show V</button>
                     <button id="btn_snapshot" onclick="snapshot()">Take snapshot</button>
                 <p/>
 
                 U diffusion rate:
                 <span class="remark" id="diff_u"></span><br/>
                 <div id="sld_diff_u" class="slider"></div>
-                
+
                 V diffusion rate:
                 <span class ="remark" id="diff_v"></span><br/>
                 <div id="sld_diff_v" class="slider"></div>
@@ -279,18 +279,18 @@
                 U saturation limit:
                 <span class="remark" id="limit_u"></span><br/>
                 <div id="sld_limit_u" class="slider"></div>
-                
+
                 V saturation limit:
                 <span class="remark" id="limit_v"></span><br/>
                 <div id="sld_limit_v" class="slider"></div>
-                
+
                 Split domain / anisotropy:
                 <p style="text-align:center">
                     <button id="btn_split" onclick="toggle_split()">Toggle split domain</button>
                     <button id="btn_aniso_u" onclick="aniso_u()">Toggle anisotropy for U</button>
                     <button id="btn_aniso_v" onclick="aniso_v()">Toggle anisotropy for V</button>
                 <p/>
-                
+
                 Colors:
                 <div id="gradient" style=""></div>
                 <div style="font-size:x-small">Share (paste and press enter):</div>
@@ -307,4 +307,3 @@
         </footer>
     </body>
 </html>
-
