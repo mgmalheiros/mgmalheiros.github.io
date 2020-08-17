@@ -1,0 +1,26 @@
+html {
+  background-color: #ffffff;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #0d1239;
+  margin: auto;
+  max-width: 1024px;
+}
+
+pre {
+  background-color: #eeeeee;
+  font-family: monospace;
+  font-size: 14px;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-top: 1em;
+}
+
+#abstract {
+  font-size: 14px;
+  text-align: justify;
+}
+
