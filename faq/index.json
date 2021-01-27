@@ -74,7 +74,7 @@
 	"title": "Artigos científicos",
 	"tags": [],
 	"description": "",
-	"content": ""
+	"content": "Tópico 1 Assunto do tópico 1.\nTópico 2 Assunto do tópico 2.\n"
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/distanciamento/",
@@ -112,8 +112,8 @@
 	"content": "   1. Qual é a dúvida?   Aqui está uma resposta sucinta.\n  "
 },
 {
-	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/",
-	"title": "Saiba mais",
+	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/sobre/",
+	"title": "Sobre este site",
 	"tags": [],
 	"description": "",
 	"content": ""
@@ -121,6 +121,13 @@
 {
 	"uri": "https://mgmalheiros.github.io/faq/divulgue/",
 	"title": "Divulgue",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/",
+	"title": "Saiba mais",
 	"tags": [],
 	"description": "",
 	"content": ""
@@ -138,13 +145,6 @@
 	"tags": [],
 	"description": "",
 	"content": "Principais medidas Você deve priorizar, nesta ordem:\n Usar uma máscara sempre que fora de sua residência. Preferir o ar livre ou os ambientes bem ventilados (com janelas sempre abertas). Manter a distância e evitar aglomerações. Higienizar as mãos com sabão ou álcool gel.  "
-},
-{
-	"uri": "https://mgmalheiros.github.io/faq/sobre/",
-	"title": "Sobre este site",
-	"tags": [],
-	"description": "",
-	"content": ""
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/tags/",

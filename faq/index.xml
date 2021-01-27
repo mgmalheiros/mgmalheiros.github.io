@@ -93,7 +93,8 @@ Tópico 2 Assunto do tópico 2.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mgmalheiros.github.io/faq/saiba-mais/artigos/</guid>
-      <description></description>
+      <description>Tópico 1 Assunto do tópico 1.
+Tópico 2 Assunto do tópico 2.</description>
     </item>
     
     <item>
@@ -127,10 +128,10 @@ Tópico 2 Assunto do tópico 2.</description>
     
     <item>
       <title>Sobre este site</title>
-      <link>https://mgmalheiros.github.io/faq/sobre/</link>
+      <link>https://mgmalheiros.github.io/faq/saiba-mais/sobre/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mgmalheiros.github.io/faq/sobre/</guid>
+      <guid>https://mgmalheiros.github.io/faq/saiba-mais/sobre/</guid>
       <description></description>
     </item>
     
