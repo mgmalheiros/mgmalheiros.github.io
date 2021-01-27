@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Principais medidas on Dicas de prevenção contra a Covid-19</title>
-    <link>http://example.org/</link>
+    <link>https://mgmalheiros.github.io/faq/</link>
     <description>Recent content in Principais medidas on Dicas de prevenção contra a Covid-19</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://mgmalheiros.github.io/faq/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Modelos</title>
-      <link>http://example.org/mascaras/modelos/</link>
+      <link>https://mgmalheiros.github.io/faq/mascaras/modelos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/mascaras/modelos/</guid>
+      <guid>https://mgmalheiros.github.io/faq/mascaras/modelos/</guid>
       <description>Tópico 1 Assunto do tópico 1.
 Tópico 2 Assunto do tópico 2.
    Option Description     data path to data files to supply the data that will be passed into templates.   engine engine to be used for processing templates. Handlebars is the default.   ext extension to be used for dest files.    </description>
@@ -18,68 +18,68 @@ Tópico 2 Assunto do tópico 2.
     
     <item>
       <title>Perguntas frequentes</title>
-      <link>http://example.org/distanciamento/perguntas/</link>
+      <link>https://mgmalheiros.github.io/faq/distanciamento/perguntas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/distanciamento/perguntas/</guid>
+      <guid>https://mgmalheiros.github.io/faq/distanciamento/perguntas/</guid>
       <description>   1. Qual é a dúvida?   Aqui está uma resposta sucinta.
   </description>
     </item>
     
     <item>
       <title>Perguntas frequentes</title>
-      <link>http://example.org/higiene/perguntas/</link>
+      <link>https://mgmalheiros.github.io/faq/higiene/perguntas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/higiene/perguntas/</guid>
+      <guid>https://mgmalheiros.github.io/faq/higiene/perguntas/</guid>
       <description>   1. Qual é a dúvida?   Aqui está uma resposta sucinta.
   </description>
     </item>
     
     <item>
       <title>Reportagens</title>
-      <link>http://example.org/saiba-mais/reportagens/</link>
+      <link>https://mgmalheiros.github.io/faq/saiba-mais/reportagens/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/saiba-mais/reportagens/</guid>
+      <guid>https://mgmalheiros.github.io/faq/saiba-mais/reportagens/</guid>
       <description>Tópico 1 Assunto do tópico 1.
 Tópico 2 Assunto do tópico 2.</description>
     </item>
     
     <item>
       <title>Residências</title>
-      <link>http://example.org/ventilacao/residencias/</link>
+      <link>https://mgmalheiros.github.io/faq/ventilacao/residencias/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/ventilacao/residencias/</guid>
+      <guid>https://mgmalheiros.github.io/faq/ventilacao/residencias/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Empresas</title>
-      <link>http://example.org/ventilacao/empresas/</link>
+      <link>https://mgmalheiros.github.io/faq/ventilacao/empresas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/ventilacao/empresas/</guid>
+      <guid>https://mgmalheiros.github.io/faq/ventilacao/empresas/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Protocolos</title>
-      <link>http://example.org/saiba-mais/protocolos/</link>
+      <link>https://mgmalheiros.github.io/faq/saiba-mais/protocolos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/saiba-mais/protocolos/</guid>
+      <guid>https://mgmalheiros.github.io/faq/saiba-mais/protocolos/</guid>
       <description>Tópico 1 Assunto do tópico 1.
 Tópico 2 Assunto do tópico 2.</description>
     </item>
     
     <item>
       <title>Uso correto</title>
-      <link>http://example.org/mascaras/uso-correto/</link>
+      <link>https://mgmalheiros.github.io/faq/mascaras/uso-correto/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/mascaras/uso-correto/</guid>
+      <guid>https://mgmalheiros.github.io/faq/mascaras/uso-correto/</guid>
       <description> Uma dica a ser dada.
  Assunto importante!
  Recomendação.
@@ -89,48 +89,48 @@ Tópico 2 Assunto do tópico 2.</description>
     
     <item>
       <title>Artigos científicos</title>
-      <link>http://example.org/saiba-mais/artigos/</link>
+      <link>https://mgmalheiros.github.io/faq/saiba-mais/artigos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/saiba-mais/artigos/</guid>
+      <guid>https://mgmalheiros.github.io/faq/saiba-mais/artigos/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Perguntas frequentes</title>
-      <link>http://example.org/mascaras/perguntas/</link>
+      <link>https://mgmalheiros.github.io/faq/mascaras/perguntas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/mascaras/perguntas/</guid>
+      <guid>https://mgmalheiros.github.io/faq/mascaras/perguntas/</guid>
       <description>1. Qual é a dúvida?   Aqui está uma resposta sucinta.
     2. This is just a text is just a text is just a text is just a text is just a text is just a text is just a text is just a text is just a text?   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</description>
     </item>
     
     <item>
       <title>Restaurantes e bares</title>
-      <link>http://example.org/ventilacao/restaurantes/</link>
+      <link>https://mgmalheiros.github.io/faq/ventilacao/restaurantes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/ventilacao/restaurantes/</guid>
+      <guid>https://mgmalheiros.github.io/faq/ventilacao/restaurantes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Perguntas frequentes</title>
-      <link>http://example.org/ventilacao/perguntas/</link>
+      <link>https://mgmalheiros.github.io/faq/ventilacao/perguntas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/ventilacao/perguntas/</guid>
+      <guid>https://mgmalheiros.github.io/faq/ventilacao/perguntas/</guid>
       <description>   1. Qual é a dúvida?   Aqui está uma resposta sucinta.
   </description>
     </item>
     
     <item>
       <title>Sobre este site</title>
-      <link>http://example.org/sobre/</link>
+      <link>https://mgmalheiros.github.io/faq/sobre/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/sobre/</guid>
+      <guid>https://mgmalheiros.github.io/faq/sobre/</guid>
       <description></description>
     </item>
     
