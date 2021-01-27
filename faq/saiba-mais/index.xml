@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Saiba mais on Dicas de prevenção contra a Covid-19</title>
+    <link>http://example.org/saiba-mais/</link>
+    <description>Recent content in Saiba mais on Dicas de prevenção contra a Covid-19</description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="http://example.org/saiba-mais/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reportagens</title>
+      <link>http://example.org/saiba-mais/reportagens/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/saiba-mais/reportagens/</guid>
+      <description>Tópico 1 Assunto do tópico 1.
+Tópico 2 Assunto do tópico 2.</description>
+    </item>
+    
+    <item>
+      <title>Protocolos</title>
+      <link>http://example.org/saiba-mais/protocolos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/saiba-mais/protocolos/</guid>
+      <description>Tópico 1 Assunto do tópico 1.
+Tópico 2 Assunto do tópico 2.</description>
+    </item>
+    
+    <item>
+      <title>Artigos científicos</title>
+      <link>http://example.org/saiba-mais/artigos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/saiba-mais/artigos/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
