@@ -132,7 +132,9 @@ jQuery(document).ready(function() {
             value = input.val(),
             items = jQuery('[data-nav-id]');
         items.removeClass('search-match');
-        if (!value.length) {
+        
+        // MGM: perform interactive highlight for 3 or more characters only
+        if (value.length < 3) {
             $('ul.topics').removeClass('searched');
             items.css('display', 'block');
             sessionStorage.removeItem('search-value');
@@ -142,6 +144,9 @@ jQuery(document).ready(function() {
 
         sessionStorage.setItem('search-value', value);
         $(".highlightable").unhighlight({ element: 'mark' }).highlight(value, { element: 'mark' });
+        
+        // MGM: explicitly open all matching expandable text sections
+        $("mark").closest(".expand-content").css("display", "block");
 
         if (ajax && ajax.abort) ajax.abort();
 
