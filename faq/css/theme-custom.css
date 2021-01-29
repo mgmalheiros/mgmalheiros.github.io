@@ -2,7 +2,7 @@
 
 :root{
 
-    --MAIN-TEXT-color:#323232; /* Color of text by default */
+    --MAIN-TEXT-color:#000000; /* Color of text by default #323232 */
     --MAIN-TITLES-TEXT-color: #5e5e5e; /* Color of titles h2-h3-h4-h5 */
     --MAIN-LINK-color:#1C90F3; /* Color of links */
     --MAIN-LINK-HOVER-color:#167ad0; /* Color of hovered links */
@@ -45,6 +45,7 @@ h2, h3, h4, h5 {
 
 a {
     color: var(--MAIN-LINK-color);
+    
 }
 
 .anchor {
@@ -141,33 +142,41 @@ body {
 div.notices.dica p {
     border-top: 30px solid #6AB0DE;
     background: #E7F2FA;
+    color: #000;
 }
 div.notices.dica p:first-child:after {
     content: 'Dica';
+    font-weight: bold;
 }
 
 div.notices.importante p {
     border-top: 30px solid #F0B37E;
     background: #FFF2DB;
+    color: #000;
 }
 div.notices.importante p:first-child:after {
     content: 'Importante';
+    font-weight: bold;
 }
 
 div.notices.certo p {
     border-top: 30px solid rgba(92, 184, 92, 0.8);
     background: #E6F9E6;
+    color: #000;
 }
 div.notices.certo p:first-child:after {
     content: 'Certo';
+    font-weight: bold;
 }
 
 div.notices.errado p {
     border-top: 30px solid rgba(217, 83, 79, 0.8);
     background: #FAE2E2;
+    color: #000;
 }
 div.notices.errado p:first-child:after {
     content: 'Errado';
+    font-weight: bold;
 }
 
 div.expand {

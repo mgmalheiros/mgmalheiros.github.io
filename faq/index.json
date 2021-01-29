@@ -112,13 +112,6 @@
 	"content": "   1. Qual é a dúvida?   Aqui está uma resposta sucinta.\n  "
 },
 {
-	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/sobre/",
-	"title": "Sobre este site",
-	"tags": [],
-	"description": "",
-	"content": ""
-},
-{
 	"uri": "https://mgmalheiros.github.io/faq/divulgue/",
 	"title": "Divulgue",
 	"tags": [],
@@ -128,6 +121,13 @@
 {
 	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/",
 	"title": "Saiba mais",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/equipe/",
+	"title": "Equipe",
 	"tags": [],
 	"description": "",
 	"content": ""
@@ -144,7 +144,7 @@
 	"title": "Principais medidas",
 	"tags": [],
 	"description": "",
-	"content": "Principais medidas Você deve priorizar, nesta ordem:\n Usar uma máscara sempre que fora de sua residência. Preferir o ar livre ou os ambientes bem ventilados (com janelas sempre abertas). Manter a distância e evitar aglomerações. Higienizar as mãos com sabão ou álcool gel.  "
+	"content": "Principais medidas Você deve priorizar, nesta ordem:\n Usar uma máscara sempre que estiver fora da sua residência. Preferir o ar livre e os locais bem ventilados (com janelas sempre abertas). Manter a distância e evitar aglomerações. Higienizar as mãos com sabão ou álcool gel.  O vírus é transmissível pelo ar, então para se proteger é fundamental usar máscaras, evitando locais fechados e mal ventilados. Apenas distanciamento e higiene não são suficientes. Fonte: Portal G1, 07/01/2021\n "
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/tags/",
