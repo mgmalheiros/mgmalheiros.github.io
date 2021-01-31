@@ -1,10 +1,87 @@
 [
 {
+	"uri": "https://mgmalheiros.github.io/faq/atue/amplifique/",
+	"title": "Amplifique a prevenção",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/distanciamento/lazer/",
+	"title": "Atividades de lazer",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/mascaras/modelos/",
+	"title": "Modelos",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
 	"uri": "https://mgmalheiros.github.io/faq/mascaras/",
 	"title": "Máscaras",
 	"tags": [],
 	"description": "",
 	"content": "As máscaras são essenciais para conter a transmissão do vírus.\nÉ preciso conhecer os diferentes modelos de máscaras:\n Máscaras de alta qualidade (PFF2) dão a melhor proteção, seguidas por máscaras cirúrgicas (média proteção) e então de pano (menor proteção). Quanto maior o risco do ambiente (local mal ventilado, muitas pessoas, mais tempo, com doentes) mais necessário usar uma máscara de melhor proteção. Quanto maior o risco do usuário da máscara (idoso, pessoa com comorbidade, profissional da saúde) mais necessário usar uma máscara de melhor proteção. Máscaras de pano com mais camadas oferecem melhor proteção do que tecidos finos.  É preciso também usar corretamente a máscara para que dê proteção:\n A máscara deve cobrir completamente o nariz e a boca: máscaras no queixo ou deixando o nariz de fora são inúteis. A máscara deve se ajustar bem ao rosto, sem deixar folgas ou aberturas por onde entre ou saia o ar. Para melhor ajuste e segurança, deve-se usar máscaras que possam ser presas na nuca, ao invés da orelha. Uma peça de metal perto do nariz também melhora o ajuste da máscara.  Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos. Por isso é fundamental continuar usando máscaras, arejar ambientes, manter o distanciamento e cuidar da higiene das mãos, mesmo já havendo vacinas.\n Fontes: [Portal G1, 08/01/2021] [UK face covering guidance, 04/12/2020]\n"
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/higiene/perguntas/",
+	"title": "Perguntas e respostas",
+	"tags": [],
+	"description": "",
+	"content": "   1. Qual é a dúvida?   Aqui está uma resposta sucinta.\n  "
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/reportagens/",
+	"title": "Reportagens",
+	"tags": [],
+	"description": "",
+	"content": "Tópico 1 Assunto do tópico 1.\nTópico 2 Assunto do tópico 2.\n"
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/ventilacao/residencias/",
+	"title": "Residências",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/ventilacao/empresas/",
+	"title": "Empresas",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/atue/divulgue/",
+	"title": "Material de divulgação",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/protocolos/",
+	"title": "Protocolos",
+	"tags": [],
+	"description": "",
+	"content": "Tópico 1 Assunto do tópico 1.\nTópico 2 Assunto do tópico 2.\n"
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/distanciamento/esportes/",
+	"title": "Prática de esportes",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/mascaras/uso/",
+	"title": "Uso correto",
+	"tags": [],
+	"description": "",
+	"content": ""
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/ventilacao/",
@@ -14,6 +91,13 @@
 	"content": "Como se dá o contágio pelo ar?\n Os aerossóis são partículas de água que flutuam no ar, podendo conter o coronavírus. Ao respirar, falar ou cantar, uma pessoa expele aerossóis, que permanecem no ar por um período. Se esta pessoa está contaminada e em um espaço fechado e mal ventilado, as partículas vão se acumular no ar com o tempo. Outras pessoas no mesmo ambiente podem inalar essas partículas e ficarem doentes.  Como reduzir os riscos?\n O mais importante é o uso de máscaras por todos, para que menos partículas sejam expelidas ou respiradas. Se o ambiente for ao ar livre, ou se for um local bem ventilado, há muito mais chances de dispersar os aerossóis. A ventilação de um espaço fechado pode ser melhorada simplesmente ao abrir portas e janelas. Em ambientes mais controlados como hospitais ou fábricas, recomenda-se usar sistemas de filtragem de ar. É importante evitar aglomerações, então ambientes com menos pessoas circulando são mais seguros. Reduzir o tempo de permanência em ambientes fechados ou com muitas pessoas também diminui os riscos.  Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos. Por isso é fundamental continuar usando máscaras, arejar ambientes, manter o distanciamento e cuidar da higiene das mãos, mesmo já havendo vacinas.\n Fontes: [Portal G1, 07/01/2021] [Center for Health Security, 21/01/2021]\n"
 },
 {
+	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/artigos/",
+	"title": "Artigos científicos",
+	"tags": [],
+	"description": "",
+	"content": "Tópico 1 Assunto do tópico 1.\nTópico 2 Assunto do tópico 2.\n"
+},
+{
 	"uri": "https://mgmalheiros.github.io/faq/distanciamento/",
 	"title": "Distanciamento",
 	"tags": [],
@@ -21,11 +105,67 @@
 	"content": "Distanciamento não implica em isolamento. Significa reduzir a circulação de pessoas para conter o contágio.\nÉ importante saber que:\n As atividades ao ar livre são mais seguras do que em ambientes fechados. Você pode encontrar pessoas que não residam com você, mas deve ser ao ar livre e com o uso de máscara. Locais com poucas pessoas, ou com pessoas distantes entre si são mais seguros do que locais lotados. Você pode diminuir o risco em ambientes cheios de pessoas reduzindo o tempo de permanência. Em ambientes fechados continue mantendo uma distância mínima de 2 metros, sempre com máscara.  Cada atividade sempre trará riscos, então é importante reduzi-los com diversas medidas:\n Parques, praças e praias têm risco menor, desde que os grupos familiares mantenham distância dos demais. E é sempre mais seguro usar máscaras. Esportes, principalmente individuais, são mais seguros se feitos ao ar livre. Escolas trazem risco pelo ambiente confinado e pela circulação de muitas pessoas. O uso de máscaras e ventilação dos ambientes são essenciais. Ainda assim, medidas específicas de prevenção precisam ser seguidas. Em ambientes de trabalho como escritórios, garantir a correta ventilação é fundamental. Trabalhadores de atividades essenciais precisam usar máscaras de qualidade (PFF2 ou cirúrgicas).  Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos. Por isso é fundamental continuar usando máscaras, arejar ambientes, manter o distanciamento e cuidar da higiene das mãos, mesmo já havendo vacinas.\n Fontes: [Portal G1, 07/01/2021] [UK social distancing guidance, 07/01/2021]\n"
 },
 {
+	"uri": "https://mgmalheiros.github.io/faq/distanciamento/escola/",
+	"title": "Escola",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/mascaras/perguntas/",
+	"title": "Perguntas e respostas",
+	"tags": [],
+	"description": "",
+	"content": "   1. Qual é a dúvida?   Aqui está uma resposta sucinta.\n  "
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/ventilacao/restaurantes/",
+	"title": "Restaurantes e bares",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
 	"uri": "https://mgmalheiros.github.io/faq/higiene/",
 	"title": "Higiene",
 	"tags": [],
 	"description": "",
 	"content": "Os protocolos iniciais para combater a pandemia foram estabelecidos nos primeiros meses de 2020, quando acreditava-se que a principal via de transmissão era por contato (daí a importância da higiene das mãos) e de gotículas de saliva (daí a necessidade de manter a distância mínima de 2m).\nNo período que se seguiu, surgiu evidência crescente entre os cientistas de que a via principal de transmissão é pelo ar, através de partículas dispersas chamadas aerossóis. Essas partículas podem ficar mais tempo suspensas no ar, principalmente em ambientes fechados, e também causar contágio em distâncias maiores. Daí a importância de uso constante de máscaras e de ventilação de ambientes.\nAinda assim, os cuidados com a higiene devem ser mantidos:\n Em especial, lavar as mãos com sabão ou álcool gel. A limpeza de superfícies deve ser priorizada em ambientes compartilhados por muitas pessoas, em especial se envolve alimentação. Devem ser evitados objetos de uso comum.  Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos. Por isso é fundamental continuar usando máscaras, arejar ambientes, manter o distanciamento e cuidar da higiene das mãos, mesmo já havendo vacinas.\n Fontes: [Estadão, 23/01/2021] [UK social distancing guidance, 07/01/2021]\n"
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/ventilacao/perguntas/",
+	"title": "Perguntas e respostas",
+	"tags": [],
+	"description": "",
+	"content": "   1. Qual é a dúvida?   Aqui está uma resposta sucinta.\n  "
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/distanciamento/trabalho/",
+	"title": "Trabalho",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/atue/",
+	"title": "Faça a sua parte",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/distanciamento/essenciais/",
+	"title": "Serviços essenciais",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://mgmalheiros.github.io/faq/distanciamento/perguntas/",
+	"title": "Perguntas e respostas",
+	"tags": [],
+	"description": "",
+	"content": "   1. Qual é a dúvida?   Aqui está uma resposta sucinta.\n  "
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/saiba-mais/",
