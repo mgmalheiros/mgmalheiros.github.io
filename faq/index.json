@@ -39,7 +39,7 @@
 	"title": "Reportagens",
 	"tags": [],
 	"description": "",
-	"content": "Tópico 1 Assunto do tópico 1.\nTópico 2 Assunto do tópico 2.\n"
+	"content": "Em português   [UOL, 25/01/2021] Coronavírus: é possível pegar covid-19 ao ar livre?\n  [Estado de São Paulo, 23/01/2021] O coronavírus é transmitido pelo ar em ambientes fechados. Mas ainda desinfetamos as superfícies.\n  [Yahoo Notícias, 11/01/2021] Entenda como a máscara pode evitar formas mais graves da Covid-19\n  [Portal G1, 08/01/2021] Covid-19: qual máscara é melhor? Veja comparativo, segundo estudo publicado na \u0026lsquo;Science\u0026rsquo;\n  [Portal G1, 07/01/2021] Contágio pelo ar: especialistas explicam como a Covid é mais transmitida e fazem alerta\n  [Veja Rio, 03/12/2020 O que estão nos ensinando errado sobre o Coronavírus?\n  Em inglês   [Wall Street Journal, 31/01/2021] The NFL’s Covid-19 Finding That Saved the Season\n  [New York Times opinion, 29/01/2021] It’s Been 10 Months, and I Still Don’t Know When to Replace My Mask!\n  [Nature, 29/01/2021] COVID-19 rarely spreads through surfaces. So why are we still deep cleaning?\n  [Nature, 08/07/2020] Mounting evidence suggests coronavirus is airborne — but health advice has not caught up\n  [NPR, 26/12/2020] For Scientists Who Study Virus Transmission, 2020 Was A Watershed Year\n  "
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/ventilacao/residencias/",
@@ -67,7 +67,7 @@
 	"title": "Protocolos",
 	"tags": [],
 	"description": "",
-	"content": "Tópico 1 Assunto do tópico 1.\nTópico 2 Assunto do tópico 2.\n"
+	"content": "Em inglês  [SAGE UK, 16/12/2020] Simple summary of ventilation actions to mitigate the risk of COVID-19  "
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/distanciamento/esportes/",
@@ -95,7 +95,7 @@
 	"title": "Artigos científicos",
 	"tags": [],
 	"description": "",
-	"content": "Tópico 1 Assunto do tópico 1.\nTópico 2 Assunto do tópico 2.\n"
+	"content": "Em inglês   [OFID, 27/01/2021] SARS-CoV-2 infection among healthcare workers despite the use of surgical masks and physical distancing - the role of airborne transmission\n  [Journal of Hospital Infection, 12/01/2021] Dismantling myths on the airborne transmission of severe acute respiratory syndrome coronavirus (SARS-CoV-2)\n  [ScienceAdvances, 01/01/2021] Airflows inside passenger cars and implications for airborne disease transmission\n  [Int J Environ Res Public Health, 06/01/2021] Modes of Transmission of Severe Acute Respiratory Syndrome-Coronavirus-2 (SARS-CoV-2) and Factors Influencing on the Airborne Transmission: A Review\n  [Nature, 30/12/2020] Fluid dynamics of COVID-19 airborne infection suggests urgent data for a scientific design of social distancing\n  [Environ Res. 10/12/2020 A systematic review of possible airborne transmission of the COVID-19 virus (SARS-CoV-2) in the indoor air environment\n  [Clinical Infections Diseases, 06/07/2020] It Is Time to Address Airborne Transmission of COVID-19\n  "
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/distanciamento/",
@@ -130,7 +130,7 @@
 	"title": "Higiene",
 	"tags": [],
 	"description": "",
-	"content": "Os protocolos iniciais para combater a pandemia foram estabelecidos nos primeiros meses de 2020, quando acreditava-se que a principal via de transmissão era por contato (daí a importância da higiene das mãos) e de gotículas de saliva (daí a necessidade de manter a distância mínima de 2m).\nNo período que se seguiu, surgiu evidência crescente entre os cientistas de que a via principal de transmissão é pelo ar, através de partículas dispersas chamadas aerossóis. Essas partículas podem ficar mais tempo suspensas no ar, principalmente em ambientes fechados, e também causar contágio em distâncias maiores. Daí a importância de uso constante de máscaras e de ventilação de ambientes.\nAinda assim, os cuidados com a higiene devem ser mantidos:\n Em especial, lavar as mãos com sabão ou álcool gel. A limpeza de superfícies deve ser priorizada em ambientes compartilhados por muitas pessoas, em especial se envolve alimentação. Devem ser evitados objetos de uso comum.  Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos. Por isso é fundamental continuar usando máscaras, arejar ambientes, manter o distanciamento e cuidar da higiene das mãos, mesmo já havendo vacinas.\n Fontes: [Estadão, 23/01/2021] [UK social distancing guidance, 07/01/2021]\n"
+	"content": "Os protocolos iniciais para combater a pandemia foram estabelecidos nos primeiros meses de 2020, quando acreditava-se que a principal via de transmissão era por contato (daí a importância da higiene das mãos) e de gotículas de saliva (daí a necessidade de manter a distância mínima de 2m).\nNo período que se seguiu, surgiu evidência crescente entre os cientistas de que a via principal de transmissão é pelo ar, através de partículas dispersas chamadas aerossóis. Essas partículas podem ficar mais tempo suspensas no ar, principalmente em ambientes fechados, e também causar contágio em distâncias maiores. Daí a importância de uso constante de máscaras e de ventilação de ambientes.\nAinda assim, os cuidados com a higiene devem ser mantidos:\n Em especial, lavar as mãos com sabão ou álcool gel. A limpeza de superfícies deve ser priorizada em ambientes compartilhados por muitas pessoas, em especial se envolve alimentação. Devem ser evitados objetos de uso comum.  Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos. Por isso é fundamental continuar usando máscaras, arejar ambientes, manter o distanciamento e cuidar da higiene das mãos, mesmo já havendo vacinas.\n Fontes: [Estado de São Paulo, 23/01/2021] [UK social distancing guidance, 07/01/2021]\n"
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/ventilacao/perguntas/",
@@ -172,14 +172,14 @@
 	"title": "Saiba mais",
 	"tags": [],
 	"description": "",
-	"content": "Este site é focado na prevenção da Covid-19.\nPara mais detalhes sobre vacinas recomendamos:\n A iniciativa Todos pelas Vacinas. O portal da Fundação Oswaldo Cruz.  Para mais informações sobre a Covid-19 recomendamos:\n O portal do Dr. Dráuzio Varella. O portal da Fundação Oswaldo Cruz. O portal da UNIMED.  "
+	"content": "Este site é focado na prevenção da Covid-19.\nPara perguntas e respostas sobre vacinas recomendamos:\n A iniciativa Todos pelas Vacinas. O portal da Fundação Oswaldo Cruz.  Para perguntas e respostas sobre a doença recomendamos:\n O portal do Dr. Dráuzio Varella. O portal da Fundação Oswaldo Cruz. O portal da UNIMED.  Para informações técnicas sobre transmissão por aerossóis e limpeza de ar recomendamos:\n FAQs on Protecting Yourself from COVID-19 Aerosol Transmission  "
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/equipe/",
 	"title": "Equipe",
 	"tags": [],
 	"description": "",
-	"content": "Essa iniciativa é feita de forma voluntária e para fins educacionais por pesquisadores do Observatório Covid-19 BR.\nEste site foi desenvolvido com a ferramenta Hugo, utilizando o tema Learn, que por sua vez é baseado no Grav.\n"
+	"content": "Essa iniciativa é feita de forma voluntária e para fins educacionais pelo Observatório Covid-19 BR.\nEste site foi desenvolvido com a ferramenta Hugo, utilizando o tema Learn, que por sua vez é baseado no Grav.\nEste conteúdo é disponibilizado sob a licença Creative Commons Atribuição-NãoComercial 4.0 Internacional (CC BY-NC 4.0).\n"
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/categories/",
@@ -193,7 +193,7 @@
 	"title": "Principais medidas",
 	"tags": [],
 	"description": "",
-	"content": "Principais medidas Para evitar o contágio pela Covid-19, priorize nesta ordem:\n Usar uma máscara sempre que estiver fora da sua residência. Preferir o ar livre e os locais bem ventilados (com janelas sempre abertas). Manter a distância e evitar aglomerações. Higienizar as mãos com sabão ou álcool gel.  É importante saber que:\n O vírus é transmissível pelo ar, principalmente em locais fechados e mal ventilados. Quanto mais pessoas circulando, maior o contágio: saia de casa apenas quando necessário. Uma de cada três pessoas com o vírus não tem sintomas, então reduza o contato com quem não reside com você. Apenas distanciamento e higiene não são medidas suficientes, para se proteger é preciso usar máscaras e ventilar os ambientes. Todos devem continuar seguindo as medidas de prevenção, mesmo depois de serem vacinadas. Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos.  Fontes: [Portal G1, 07/01/2021] [UK Covid-19 guidelines, 28/01/2021]\n Conteúdo atualizado em 31/01/2012.\n"
+	"content": "Principais medidas Para evitar o contágio pela Covid-19, priorize nesta ordem:\n Usar uma máscara sempre que estiver fora da sua residência. Preferir o ar livre e os locais bem ventilados (com janelas sempre abertas). Manter a distância e evitar aglomerações. Higienizar as mãos com sabão ou álcool gel.  É importante saber que:\n O vírus é transmissível pelo ar, principalmente em locais fechados e mal ventilados. Quanto mais pessoas circulando, maior o contágio: saia de casa apenas quando necessário. Uma de cada três pessoas com o vírus não tem sintomas, então reduza o contato com quem não reside com você. Apenas distanciamento e higiene não são medidas suficientes, para se proteger é preciso usar máscaras e ventilar os ambientes. Todos devem continuar seguindo as medidas de prevenção, mesmo depois de serem vacinadas. Nenhuma prevenção é 100% garantida, mas combinando diversas medidas podemos reduzir significativamente os riscos.  Fontes: [Portal G1, 07/01/2021] [UK Covid-19 guidelines, 28/01/2021]\n Conteúdo atualizado em 01/02/2012.\n"
 },
 {
 	"uri": "https://mgmalheiros.github.io/faq/tags/",
