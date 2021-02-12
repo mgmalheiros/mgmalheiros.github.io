@@ -190,3 +190,11 @@ div.expand-label {
     font-weight: bold;
 }*/
 
+#footer {
+    padding: 10px 10px;
+}
+
+#footer p {
+    margin: 0;
+}
+
