@@ -1,0 +1,1 @@
+(self.webpackChunksite=self.webpackChunksite||[]).push([[2535],{6353:function(e){"use strict";e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Game Jam 2 Results","permalink":"/wasm4/blog/jam-2-results"},{"title":"WASM-4 Jam 2 in August","permalink":"/wasm4/blog/jam-2"},{"title":"Release 2.4: Netplay","permalink":"/wasm4/blog/release-2-4-0"}]}')}}]);
