@@ -1,0 +1,1 @@
+(self.webpackChunksite=self.webpackChunksite||[]).push([[7508],{7167:function(e){"use strict";e.exports=JSON.parse('{"slug":"lantern-maze","title":"Lantern Maze","author":"Gabriel Libardi Lulu, Victor Gabriel Leite da Costa","github":"none","date":1753315200000,"readme":""}')}}]);

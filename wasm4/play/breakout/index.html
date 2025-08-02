@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="generator" content="Docusaurus v2.0.0-beta.4">
+<link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="WASM-4 Blog RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="WASM-4 Blog Atom Feed">
+<link rel="search" type="application/opensearchdescription+xml" title="WASM-4" href="/opensearch.xml"><title data-react-helmet="true">Breakout | WASM-4</title><meta data-react-helmet="true" property="og:title" content="Breakout | WASM-4"><meta data-react-helmet="true" property="og:image" content="https://wasm4.org/carts/breakout.png"><meta data-react-helmet="true" name="twitter:image" content="https://wasm4.org/carts/breakout.png"><meta data-react-helmet="true" property="og:url" content="https://wasm4.org/play/breakout"><meta data-react-helmet="true" name="docsearch:language" content="en"><meta data-react-helmet="true" name="docsearch:docusaurus_tag" content="default"><meta data-react-helmet="true" name="description" property="og:description" content="Build retro games using WebAssembly for a fantasy console"><link data-react-helmet="true" rel="shortcut icon" href="/img/favicon.ico"><link data-react-helmet="true" rel="canonical" href="https://wasm4.org/play/breakout"><link data-react-helmet="true" rel="alternate" href="https://wasm4.org/play/breakout" hreflang="en"><link data-react-helmet="true" rel="alternate" href="https://wasm4.org/play/breakout" hreflang="x-default"><link data-react-helmet="true" rel="preconnect" href="https://BH4D9OD16A-dsn.algolia.net" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.1cf596c0.css">
+<link rel="preload" href="/assets/js/runtime~main.84aff5fe.js" as="script">
+<link rel="preload" href="/assets/js/main.1e3cb70e.js" as="script">
+</head>
+<body>
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"dark")}()</script><div id="__docusaurus">
+<div><a href="#" class="skipToContent_1oUP">Skip to main content</a></div><nav class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Navigation bar toggle" class="navbar__toggle clean-btn" type="button" tabindex="0"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><img src="/img/logo.svg" alt="WASM-4 Logo" class="themedImage_1VuW themedImage--light_3UqQ navbar__logo"><img src="/img/logo.svg" alt="WASM-4 Logo" class="themedImage_1VuW themedImage--dark_hz6m navbar__logo"><b class="navbar__title">WASM-4</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/play">Play</a><a class="navbar__item navbar__link" href="/docs/">Learn</a><a class="navbar__item navbar__link" href="/blog">Blog</a><a class="navbar__item navbar__link" href="/community">Community</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/aduros/wasm4" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link header-github-link" aria-label="GitHub repository"></a><div class="searchBox_1Doo"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div class="main-wrapper"><main><div class="container game-container"><div class="game-embed-wrapper ratio_3kC7"><svg class="innerSvg_3yDh" viewBox="0 0 1 1"></svg><div class="content_3hbi"><iframe src="https://wasm4.org/embed/#?url=%2Fcarts%2Fbreakout.wasm&amp;disk-prefix=breakout" allow="fullscreen; gamepad; autoplay" frameborder="0" class="game-embed"></iframe></div></div><div class="text--center margin-bottom--lg"><small>P1 controls: Arrows, X, Z / P2 controls: ESDF, Tab, Q</small></div><h1>Breakout<span class="cart-icons"><a href="/carts/breakout.wasm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" alt="Download" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><title>Download</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"></path></svg></a><a href="#"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" alt="Share" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><title>Share</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg></a></span></h1><div class="avatar"><a class="avatar__photo-link avatar__photo avatar__photo--lg" href="https://github.com/none" target="_blank"><img src="https://github.com/none.png?size=128"></a><div class="avatar__intro"><div class="avatar__name"><a href="https://github.com/none" target="_blank">Guilherme Grecco Bononi, Guilherme da Silva Nascimento</a></div><small class="avatar__subtitle">July 31, 2025</small></div></div><div class="margin-top--lg"><div><p>A modern take on the classic Breakout arcade game, built for the WASM-4 console. Experience enhanced gameplay with dynamic power-ups, progressive difficulty scaling, and advanced audio-visual effects.</p>
+<h2>Game Overview</h2>
+<p>Navigate your paddle to bounce the ball and destroy all blocks on the screen. Progress through 50 challenging levels with increasing difficulty, unlock powerful abilities, and master the art of precision timing and strategic positioning.</p>
+<h2>Controls</h2>
+<h3>Basic Movement</h3>
+<ul>
+<li><strong>Arrow Keys (Left/Right)</strong>: Move paddle horizontally</li>
+<li><strong>X Key</strong>: Rotate paddle counter-clockwise (for strategic ball angles)  </li>
+<li><strong>Z Key</strong>: Rotate paddle clockwise (for strategic ball angles)</li>
+<li><strong>UP Key</strong>: 
+<ul>
+<li>Menu: Start game</li>
+<li>Game Over: Restart</li>
+<li>Level Complete: Continue to next level</li>
+<li>During play: Fire laser (when Laser Paddle power-up is active)</li>
+</ul>
+</li>
+</ul>
+<h3>Paddle Mechanics</h3>
+<ul>
+<li>Paddle automatically returns to center rotation when rotation keys are released</li>
+<li>Rotation affects ball bounce angle for strategic gameplay</li>
+<li>Maximum rotation is limited to prevent horizontal ball movement</li>
+</ul>
+<h2>Power-Up System</h2>
+<p>Destroy blocks to randomly obtain power-ups with different rarity levels:</p>
+<h3>Common Power-ups (40% chance)</h3>
+<ul>
+<li><strong>Bigger Paddle</strong>: Increases paddle width for easier ball control</li>
+</ul>
+<h3>Rare Power-ups (35% chance)</h3>
+<ul>
+<li><strong>Multi Ball</strong>: Spawns additional balls for faster block clearing</li>
+<li><strong>Laser Paddle</strong>: Enables laser shooting with UP key (limited cooldown)</li>
+<li><strong>Magnetic Paddle</strong>: Attracts the ball for enhanced control</li>
+</ul>
+<h3>Epic Power-ups (20% chance)</h3>
+<ul>
+<li><strong>Ball Through Blocks</strong>: Ball passes through blocks, destroying them instantly</li>
+<li><strong>Shield</strong>: Provides protection at the bottom of the screen</li>
+</ul>
+<h3>Legendary Power-ups (5% chance)</h3>
+<ul>
+<li><strong>Golden Ball</strong>: Ultimate ball with enhanced destructive capabilities</li>
+<li><strong>Block Destroyer</strong>: Instantly destroys multiple blocks in an area</li>
+</ul>
+<h2>Level System</h2>
+<h3>Progression</h3>
+<ul>
+<li><strong>50 Total Levels</strong> with increasing difficulty</li>
+<li><strong>5 Difficulty Tiers</strong>: Easy (1-5), Medium (6-12), Hard (13-25), Expert (26-40), Nightmare (41-50)</li>
+</ul>
+<h3>Dynamic Scaling</h3>
+<ul>
+<li><strong>Ball Speed</strong>: Increases from 1.2 to 3.5 (max) as levels progress</li>
+<li><strong>Block Density</strong>: Starts at 60% and increases to 95% maximum</li>
+<li><strong>Strong Blocks</strong>: Ratio increases from 10% to 70%, requiring multiple hits</li>
+<li><strong>Power-up Frequency</strong>: Decreases from 12% to 3% minimum as difficulty rises</li>
+</ul>
+<h3>Block Patterns</h3>
+<p>Levels feature 10 different block arrangements:</p>
+<ul>
+<li>Simple, Checkerboard, Diamond, Pyramid</li>
+<li>Spiral, Cross, Fortress, Maze</li>
+<li>Waves, Random formations</li>
+</ul>
+<h2>Audio System</h2>
+<p>Enhanced audio experience with:</p>
+<ul>
+<li><strong>Dynamic Sound Effects</strong>: Menu navigation, ball bounces, block destruction</li>
+<li><strong>Power-up Audio</strong>: Unique sounds for each power-up activation</li>
+<li><strong>Progressive Audio</strong>: Sound complexity increases with level difficulty</li>
+<li><strong>Spatial Audio</strong>: Different tones for different game events</li>
+</ul>
+<h2>Technical Features</h2>
+<h3>Advanced Physics</h3>
+<ul>
+<li>Realistic ball physics with rotation-based bounce angles</li>
+<li>Collision detection with pixel-perfect accuracy</li>
+<li>Dynamic ball speed based on paddle movement</li>
+</ul>
+<h3>Visual Effects</h3>
+<ul>
+<li>Particle systems for block destruction</li>
+<li>Ball trail effects for enhanced visual feedback</li>
+<li>Animation systems for smooth transitions</li>
+<li>Dynamic color schemes based on level difficulty</li>
+</ul>
+<h3>Performance Optimization</h3>
+<ul>
+<li>Efficient rendering system optimized for WASM-4's 160x160 resolution</li>
+<li>Memory-conscious particle and effect management</li>
+<li>Smooth 60 FPS gameplay experience</li>
+</ul>
+<h2>Gameplay Tips</h2>
+<ol>
+<li><strong>Master Paddle Rotation</strong>: Use Z/X keys to control ball direction strategically</li>
+<li><strong>Power-up Strategy</strong>: Save powerful abilities for dense block formations</li>
+<li><strong>Corner Shots</strong>: Aim for difficult-to-reach blocks using angled bounces</li>
+<li><strong>Speed Management</strong>: Higher levels require precise timing due to increased ball speed</li>
+<li><strong>Pattern Recognition</strong>: Learn block patterns to optimize your clearing strategy</li>
+</ol>
+<p>Enjoy the enhanced Breakout experience!</p></div></div><div class="margin-top--lg"><small>License: <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></small></div></div></main></div><footer class="footer"><div class="container"><div class="footer__bottom text--center"></div></div></footer></div>
+<script src="/assets/js/runtime~main.84aff5fe.js"></script>
+<script src="/assets/js/main.1e3cb70e.js"></script>
+</body>
+</html>

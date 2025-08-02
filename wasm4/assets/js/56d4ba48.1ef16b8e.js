@@ -1,0 +1,1 @@
+(self.webpackChunksite=self.webpackChunksite||[]).push([[9916],{7586:function(e){"use strict";e.exports=JSON.parse('{"slug":"duck-maze","title":"Duck Maze","author":"Julia Marques Sanches","github":"jMarquesssss","date":1753574400000,"readme":"<p>You\'re a Duck stuck in a maze. So now, you should get out!\\nGood luck :)</p>"}')}}]);
