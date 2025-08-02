@@ -2,28 +2,28 @@
 <rss version="2.0">
     <channel>
         <title>WASM-4 Blog</title>
-        <link>https://wasm4.org/blog</link>
+        <link>https://wasm4.org/wasm4/blog</link>
         <description>WASM-4 Blog</description>
         <lastBuildDate>Fri, 26 Aug 2022 03:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[Game Jam 2 Results]]></title>
-            <link>https://wasm4.org/blog/jam-2-results</link>
+            <link>https://wasm4.org/wasm4/blog/jam-2-results</link>
             <guid>Game Jam 2 Results</guid>
             <pubDate>Fri, 26 Aug 2022 03:00:00 GMT</pubDate>
             <description><![CDATA[The second WASM-4 game jam is a wrap and the results are in! Thanks]]></description>
         </item>
         <item>
             <title><![CDATA[WASM-4 Jam 2 in August]]></title>
-            <link>https://wasm4.org/blog/jam-2</link>
+            <link>https://wasm4.org/wasm4/blog/jam-2</link>
             <guid>WASM-4 Jam 2 in August</guid>
             <pubDate>Fri, 15 Jul 2022 03:00:00 GMT</pubDate>
             <description><![CDATA[I'm pleased to announce the second WASM-4 game jam, in partnership with our friends at Wasmer!]]></description>
         </item>
         <item>
             <title><![CDATA[Release 2.4: Netplay]]></title>
-            <link>https://wasm4.org/blog/release-2-4-0</link>
+            <link>https://wasm4.org/wasm4/blog/release-2-4-0</link>
             <guid>Release 2.4: Netplay</guid>
             <pubDate>Wed, 13 Apr 2022 03:00:00 GMT</pubDate>
             <description><![CDATA[The latest version of WASM-4 now supports online multiplayer!]]></description>

@@ -4,8 +4,8 @@
   <ShortName>WASM-4</ShortName>
   <Description>Search WASM-4</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://wasm4.org/img/favicon.ico</Image>
-  <Url type="text/html" method="get" template="https://wasm4.org/search?q={searchTerms}"/>
-  <Url type="application/opensearchdescription+xml" rel="self" template="https://wasm4.org/opensearch.xml" />
-  <moz:SearchForm>https://wasm4.org/</moz:SearchForm>
+  <Image width="16" height="16" type="image/x-icon">https://wasm4.org/wasm4/img/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://wasm4.org/wasm4/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://wasm4.org/wasm4/opensearch.xml" />
+  <moz:SearchForm>https://wasm4.org/wasm4/</moz:SearchForm>
 </OpenSearchDescription>

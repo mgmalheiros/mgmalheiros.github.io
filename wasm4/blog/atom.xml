@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://wasm4.org/blog</id>
+    <id>https://wasm4.org/wasm4/blog</id>
     <title>WASM-4 Blog</title>
     <updated>2022-08-26T03:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://wasm4.org/blog"/>
+    <link rel="alternate" href="https://wasm4.org/wasm4/blog"/>
     <subtitle>WASM-4 Blog</subtitle>
-    <icon>https://wasm4.org/img/favicon.ico</icon>
+    <icon>https://wasm4.org/wasm4/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Game Jam 2 Results]]></title>
         <id>Game Jam 2 Results</id>
-        <link href="https://wasm4.org/blog/jam-2-results"/>
+        <link href="https://wasm4.org/wasm4/blog/jam-2-results"/>
         <updated>2022-08-26T03:00:00.000Z</updated>
         <summary type="html"><![CDATA[The second WASM-4 game jam is a wrap and the results are in! Thanks]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[WASM-4 Jam 2 in August]]></title>
         <id>WASM-4 Jam 2 in August</id>
-        <link href="https://wasm4.org/blog/jam-2"/>
+        <link href="https://wasm4.org/wasm4/blog/jam-2"/>
         <updated>2022-07-15T03:00:00.000Z</updated>
         <summary type="html"><![CDATA[I'm pleased to announce the second WASM-4 game jam, in partnership with our friends at Wasmer!]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[Release 2.4: Netplay]]></title>
         <id>Release 2.4: Netplay</id>
-        <link href="https://wasm4.org/blog/release-2-4-0"/>
+        <link href="https://wasm4.org/wasm4/blog/release-2-4-0"/>
         <updated>2022-04-13T03:00:00.000Z</updated>
         <summary type="html"><![CDATA[The latest version of WASM-4 now supports online multiplayer!]]></summary>
     </entry>
