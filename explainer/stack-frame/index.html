@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stack Frame Explainer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Stack&nbsp;Frame Explainer</h1>
+    <p>Edit the source, <strong>Analyze</strong> it into bytecode, then <strong>Execute</strong> step&#8209;by&#8209;step and watch the call stack.</p>
+  </header>
+
+  <main class="cols">
+    <!-- LEFT: source -->
+    <section class="col">
+      <h2>Source code</h2>
+      <div class="editor">
+        <div class="gutter" id="srcGutter" aria-hidden="true"></div>
+        <textarea id="source" spellcheck="false" autocomplete="off" wrap="off"></textarea>
+      </div>
+      <div class="btnrow">
+        <button id="btnAnalyze" class="btn primary">Analyze</button>
+      </div>
+      <h3>Messages</h3>
+      <div id="errors" class="errbox"></div>
+    </section>
+
+    <!-- CENTER: bytecode -->
+    <section class="col">
+      <h2>Bytecode</h2>
+      <div class="editor" id="bytecodeEditor">
+        <div class="gutter" id="bcGutter" aria-hidden="true"></div>
+        <textarea id="bytecode" spellcheck="false" autocomplete="off" wrap="off"></textarea>
+      </div>
+      <div id="bytecodeView" class="code view hidden"></div>
+      <div class="btnrow">
+        <button id="btnExecute" class="btn primary">Execute</button>
+        <button id="btnBack" class="btn" disabled>&#9664; Back</button>
+        <button id="btnForward" class="btn" disabled>Forward &#9654;</button>
+        <button id="btnContinue" class="btn" disabled>Continue &#9197;</button>
+        <button id="btnEdit" class="btn ghost hidden">&#9998; Edit</button>
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <!-- RIGHT: call stack -->
+    <section class="col">
+      <h2>Call stack</h2>
+      <div id="stackWrap" class="stackwrap">
+        <svg id="stackSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </section>
+  </main>
+
+  <script src="parser.js"></script>
+  <script src="core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
