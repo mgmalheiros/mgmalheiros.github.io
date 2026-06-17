@@ -22,9 +22,8 @@
       </div>
       <div class="btnrow">
         <button id="btnAnalyze" class="btn primary">Analyze</button>
+        <div id="errors" class="errbox"></div>
       </div>
-      <h3>Messages</h3>
-      <div id="errors" class="errbox"></div>
     </section>
 
     <!-- CENTER: bytecode -->
@@ -42,7 +41,6 @@
         <button id="btnContinue" class="btn" disabled>Continue &#9197;</button>
         <button id="btnEdit" class="btn ghost hidden">&#9998; Edit</button>
       </div>
-      <div id="status" class="status"></div>
     </section>
 
     <!-- RIGHT: call stack -->
@@ -50,6 +48,9 @@
       <h2>Call stack</h2>
       <div id="stackWrap" class="stackwrap">
         <svg id="stackSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="btnrow">
+        <div id="stepInfo" class="status"></div>
       </div>
     </section>
   </main>

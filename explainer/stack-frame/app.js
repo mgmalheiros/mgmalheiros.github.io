@@ -8,23 +8,25 @@
   const DEFAULT_SOURCE = [
     "var a",
     "f {",
-    "  a = 1",
+    "  var a",
+    "  a = 2",
     "  var b",
-    "  b = 2",
+    "  b = 3",
     "  g {",
-    "    b = 3",
+    "    b = 5",
     "    var c",
-    "    c = 4",
+    "    c = 6",
     "  }",
     "  h {",
-    "    var x",
-    "    x = 5",
+    "    var d",
+    "    d = 4",
     "    g()",
-    "    a = 6",
-    "    b = 7",
+    "    a = 7",
+    "    b = 8",
     "  }",
     "  h()",
     "}",
+    "a = 1",
     "f()",
   ].join("\n");
 
@@ -36,7 +38,7 @@
     btnAnalyze: $("btnAnalyze"), btnExecute: $("btnExecute"),
     btnBack: $("btnBack"), btnForward: $("btnForward"),
     btnContinue: $("btnContinue"), btnEdit: $("btnEdit"),
-    status: $("status"), stackWrap: $("stackWrap"), stackSvg: $("stackSvg"),
+    stepInfo: $("stepInfo"), stackWrap: $("stackWrap"), stackSvg: $("stackSvg"),
   };
 
   const parser = LarkParser.get_parser();
@@ -107,7 +109,6 @@
     updateBcGutter();
     showOk("No errors. Bytecode generated — press Execute to run it.");
     renderStack(null);
-    el.status.textContent = "";
   }
 
   function parseErrorMessage(e) {
@@ -130,7 +131,6 @@
     step = 0;
     enterRunMode();
     render();
-    showOk("Executing. Use Back / Forward / Continue to step.");
   }
 
   function enterRunMode() {
@@ -146,6 +146,7 @@
     el.bytecodeView.classList.add("hidden");
     el.btnEdit.classList.add("hidden");
     el.btnBack.disabled = el.btnForward.disabled = el.btnContinue.disabled = true;
+    el.stepInfo.textContent = "";
   }
 
   function gotoStep(i) {
@@ -160,8 +161,7 @@
     renderStack(snap);
     el.btnBack.disabled = step <= 0;
     el.btnForward.disabled = el.btnContinue.disabled = step >= trace.length - 1;
-    el.status.textContent =
-      `Step ${step + 1} / ${trace.length}  —  ${snap.note}`;
+    el.stepInfo.textContent = `Step ${step + 1} / ${trace.length}  —  ${snap.note}`;
   }
 
   function renderBytecodeView(snap) {
@@ -217,6 +217,23 @@
     while (cur != null && cur >= 0) { visible.add(cur); cur = stack[cur].link; }
     const topIdx = stack.length - 1;
 
+    // for each visible frame, which variable names are shadowed by a frame
+    // closer to the top of the static-scope chain?
+    const shadowedVars = new Map(); // frameIdx -> Set of shadowed var names
+    {
+      const seenNames = new Set();
+      let ci = stack.length - 1;
+      while (ci != null && ci >= 0) {
+        const shad = new Set();
+        for (const v of stack[ci].vars) {
+          if (seenNames.has(v.name)) shad.add(v.name);
+        }
+        shadowedVars.set(ci, shad);
+        for (const v of stack[ci].vars) seenNames.add(v.name);
+        ci = stack[ci].link;
+      }
+    }
+
     // frame heights and bottom-anchored layout
     const heights = stack.map((f) => headerH + (f.vars.length + 1) * rowH);
     const content = heights.reduce((a, b) => a + b, 0) + gap * (stack.length - 1) + topPad + botPad;
@@ -246,9 +263,9 @@
 
       parts.push(`<g>`);
       // outer box
-      parts.push(rect(b.x, b.y, b.w, b.h, "none", stroke, 1.5, 8));
+      parts.push(rect(b.x, b.y, b.w, b.h, "none", stroke, 1.5, 0));
       // header
-      parts.push(rect(b.x, b.y, b.w, headerH, headFill, headFill, 0, 8));
+      parts.push(rect(b.x, b.y, b.w, headerH, headFill, headFill, 0, 0));
       parts.push(text(b.x + 10, b.y + headerH / 2 + 4, esc(f.name), "svg-fn", "#fff"));
       if (i === topIdx)
         parts.push(text(b.x + b.w - 8, b.y - 5, "▲ top", "svg-tag", null, "end"));
@@ -256,15 +273,23 @@
       // variable rows (definition order grows upward => render reversed top-down)
       let ry = b.y + headerH;
       const vrev = f.vars.slice().reverse();
+      const shadSet = shadowedVars.get(i) || new Set();
       for (const v of vrev) {
-        parts.push(rect(b.x, ry, b.w, rowH, cellFill, stroke, 0.5, 0));
-        const val = (v.value === undefined || v.value === null) ? "—" : v.value;
-        parts.push(text(b.x + 12, ry + rowH / 2 + 4, `${esc(v.name)} = ${esc(val)}`, "svg-var", cellInk));
+        const isShad = vis && shadSet.has(v.name);
+        const vFill = isShad ? "#ededed" : cellFill;
+        const vInk  = isShad ? "#9e9e9e" : cellInk;
+        const vStroke = isShad ? "#bdbdbd" : stroke;
+        parts.push(rect(b.x, ry, b.w, rowH, vFill, vStroke, 0.5, 0));
+        let val = (v.value === undefined || v.value === null) ? "?" : v.value;
+        if (isShad) {
+          val += ' (shadowed)';
+        }
+        parts.push(text(b.x + 12, ry + rowH / 2 + 4, `${esc(v.name)} = ${esc(val)}`, "svg-var", vInk));
         ry += rowH;
       }
       // return-address row (bottom of frame)
       parts.push(rect(b.x, ry, b.w, rowH, vis ? "#d7eed9" : "#e3e3e3", stroke, 0.5, 0));
-      const retTxt = f.ret == null ? "ret → — (entry)" : `ret → line ${f.ret}`;
+      const retTxt = f.ret == null ? "ret → (startup)" : `ret → line ${f.ret}`;
       parts.push(text(b.x + 12, ry + rowH / 2 + 4, retTxt, "svg-ret", vis ? "#33691e" : "#9e9e9e"));
       parts.push(`</g>`);
     }
@@ -276,13 +301,13 @@
       const from = boxes[i], to = boxes[f.link];
       const y1 = from.y + from.h - rowH / 2;   // bottom of source frame (return-address row)
       const y2 = to.y + headerH / 2;           // top of target frame (function name)
-      const channel = 12 + (i % 4) * 9;
+      const channel = 40 - (i % 4) * 8;
       const d = `M ${from.x},${y1} H ${channel} V ${y2} H ${to.x}`;
       parts.push(
         `<path d="${d}" fill="none" stroke="var(--red,#e53935)" stroke-width="1.6" ` +
         `marker-end="url(#ah)"/>`
       );
-      parts.push(text(channel + 4, (y1 + y2) / 2, "static", "svg-linklabel", null, "start"));
+      parts.push(text(channel + 2, y1 - 4, "static", "svg-linklabel", null, "start"));
     }
 
     svg.setAttribute("width", W);
