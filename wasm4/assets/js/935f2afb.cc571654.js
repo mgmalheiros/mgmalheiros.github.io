@@ -1,0 +1,1 @@
+(self.webpackChunksite=self.webpackChunksite||[]).push([[53],{9054:e=>{"use strict";e.exports=JSON.parse('{"pluginId":"default","version":"current","label":"Next","banner":"none","isLast":true,"docsSidebars":{"defaultSidebar":[{"type":"link","label":"Introduction","href":"/wasm4/docs/"}]}}')}}]);
