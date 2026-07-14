@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="generator" content="Docusaurus v2.0.0-beta.4">
+<title data-react-helmet="true">Monty Hall | WASM-4</title><meta data-react-helmet="true" property="og:title" content="Monty Hall | WASM-4"><meta data-react-helmet="true" property="og:image" content="https://wasm4.org/carts/monty-hall.png"><meta data-react-helmet="true" name="twitter:image" content="https://wasm4.org/carts/monty-hall.png"><meta data-react-helmet="true" property="og:url" content="https://wasm4.org/play/monty-hall"><meta data-react-helmet="true" name="docusaurus_locale" content="en"><meta data-react-helmet="true" name="docusaurus_tag" content="default"><meta data-react-helmet="true" name="description" property="og:description" content="Build retro games using WebAssembly for a fantasy console"><link data-react-helmet="true" rel="shortcut icon" href="/img/favicon.ico"><link data-react-helmet="true" rel="canonical" href="https://wasm4.org/play/monty-hall"><link data-react-helmet="true" rel="alternate" href="https://wasm4.org/play/monty-hall" hreflang="en"><link data-react-helmet="true" rel="alternate" href="https://wasm4.org/play/monty-hall" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.ac193158.css">
+<link rel="preload" href="/assets/js/runtime~main.ad1408b2.js" as="script">
+<link rel="preload" href="/assets/js/main.da77d2e8.js" as="script">
+</head>
+<body>
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"dark")}()</script><div id="__docusaurus">
+<div><a href="#" class="skipToContent_1oUP">Skip to main content</a></div><nav class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Navigation bar toggle" class="navbar__toggle clean-btn" type="button" tabindex="0"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><img src="/img/logo.svg" alt="WASM-4 Logo" class="themedImage_1VuW themedImage--light_3UqQ navbar__logo"><img src="/img/logo.svg" alt="WASM-4 Logo" class="themedImage_1VuW themedImage--dark_hz6m navbar__logo"><b class="navbar__title">WASM-4</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/play">Play 2025 Games</a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/play">Play 2026 Games</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/aduros/wasm4" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link header-github-link" aria-label="GitHub repository"></a></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div class="main-wrapper"><main><div class="container game-container"><div class="game-embed-wrapper ratio_3kC7"><svg class="innerSvg_3yDh" viewBox="0 0 1 1"></svg><div class="content_3hbi"><iframe src="https://wasm4.org/embed/#?url=http%3A%2F%2Flocalhost%3A3000%2Fcarts%2Fmonty-hall.wasm&amp;disk-prefix=monty-hall" allow="fullscreen; gamepad; autoplay" frameborder="0" class="game-embed"></iframe></div></div><div class="text--center margin-bottom--lg"><small>P1 controls: Arrows, X, Z / P2 controls: ESDF, Tab, Q</small></div><h1>Monty Hall<span class="cart-icons"><a href="/carts/monty-hall.wasm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" alt="Download" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><title>Download</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"></path></svg></a><a href="#"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" alt="Share" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><title>Share</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg></a></span></h1><div class="avatar-group"><div class="avatar"><div class="avatar__photo avatar__photo--lg avatar__photo--placeholder">V</div><div class="avatar__intro"><div class="avatar__name">Vitor Teodoro Correa</div><small class="avatar__subtitle">July 6, 2026</small></div></div></div><div class="margin-top--lg"><div><blockquote>
+<p><em>"Should I switch or stay? Does it even matter?"</em>
+It does. And the numbers will prove it.</p>
+</blockquote>
+<hr>
+<h2>What Is This?</h2>
+<p>This is a playable implementation of the <strong>Monty Hall Problem</strong> — one of the most famous and counterintuitive puzzles in probability theory — built for the <a href="https://wasm4.org/">WASM-4</a> fantasy console.</p>
+<p>Walk your character into one of three doors, watch the host reveal a goat, then decide: <strong>switch</strong> or <strong>stay</strong>. The game tracks your statistics across every round so you can watch the math unfold in real time.</p>
+<hr>
+<h2>How to Play</h2>
+<ol>
+<li><strong>Move</strong> your character with the <strong>arrow keys</strong>.</li>
+<li><strong>Walk into a door</strong> to make your initial pick. The host will immediately open one of the other doors, always revealing a goat.</li>
+<li>You now face a choice:
+<ul>
+<li>Press <strong>Z</strong> → <strong>Switch</strong> to the remaining unopened door.</li>
+<li>Press <strong>X</strong> → <strong>Stay</strong> with your original pick.</li>
+</ul>
+</li>
+<li>All three doors open. Either a <strong>$</strong> (prize) or a goat is behind your final choice.</li>
+<li>The round resets automatically after ~2.5 seconds.</li>
+</ol>
+<h3>Stats panel (top of screen)</h3>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Wins</code></td>
+<td>Total rounds won</td>
+</tr>
+<tr>
+<td><code>Rnd</code></td>
+<td>Total rounds played</td>
+</tr>
+<tr>
+<td><code>Sw</code></td>
+<td>Times you chose to Switch</td>
+</tr>
+<tr>
+<td><code>St</code></td>
+<td>Times you chose to Stay</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>The Monty Hall Problem</h2>
+<p>The puzzle originates from the American TV game show <em>Let's Make a Deal</em>, hosted by <strong>Monty Hall</strong>. It was formally posed as a probability puzzle by <strong>Marilyn vos Savant</strong> in her <em>Parade</em> magazine column in 1990 — and the response it generated was legendary.</p>
+<p><strong>The setup:</strong></p>
+<ul>
+<li>There are <strong>3 doors</strong>. Behind one is a <strong>prize</strong>. Behind the other two are <strong>goats</strong>.</li>
+<li>You pick a door.</li>
+<li>The host — who <em>always knows</em> where the prize is — opens one of the other doors, <strong>always revealing a goat</strong>.</li>
+<li>You are offered the chance to switch to the remaining closed door.</li>
+</ul>
+<p><strong>The question:</strong> Should you switch, stay, or does it not matter?</p>
+<p><strong>Most people's intuition:</strong> <em>"There are now 2 doors left, so it's 50/50. It doesn't matter."</em></p>
+<p><strong>The math:</strong> You should <strong>always switch</strong>. Switching wins <strong>2 out of 3 times</strong>.</p>
+<hr>
+<h2>The Mathematics</h2>
+<h3>Initial Probability</h3>
+<p>When you first pick a door, the probability that the prize is behind it is:</p>
+<pre><code>P(prize behind your door)            = 1/3
+P(prize behind one of the other two) = 2/3
+</code></pre>
+<h3>What the Host Reveals</h3>
+<p>The host's action is <strong>not random</strong>. He is constrained to always open a door that:</p>
+<ol>
+<li>You did <strong>not</strong> pick.</li>
+<li>Does <strong>not</strong> hide the prize.</li>
+</ol>
+<p>This constraint is the entire key to the puzzle. The host's reveal carries <strong>information</strong>.</p>
+<p>When the host opens a goat door, the <code>2/3</code> probability that was spread across the two unchosen doors does <strong>not</strong> disappear — it <strong>collapses entirely onto the one remaining closed door</strong>.</p>
+<pre><code>After the host reveals a goat:
+
+  Your door:       P(win if you stay)   = 1/3
+  Remaining door:  P(win if you switch) = 2/3
+</code></pre>
+<h3>Formal Proof via Bayes' Theorem</h3>
+<p>Let:</p>
+<ul>
+<li><code>C</code> = your initial choice (say, Door 1)</li>
+<li><code>P</code> = the door hiding the prize</li>
+<li><code>H</code> = the door the host opens (say, Door 3)</li>
+</ul>
+<p>We want <code>P(Prize at Door 2 | Host opened Door 3)</code>.</p>
+<p>Using Bayes' Theorem:</p>
+<pre><code>P(P=2 | H=3) =  P(H=3 | P=2) x P(P=2)
+                ───────────────────────
+                        P(H=3)
+</code></pre>
+<p>Computing each term:</p>
+<ul>
+<li><code>P(P=2) = 1/3</code> — uniform prior, prize equally likely behind any door</li>
+<li><code>P(H=3 | P=2) = 1</code> — if prize is at Door 2, host <strong>must</strong> open Door 3 (only valid choice)</li>
+<li><code>P(H=3 | P=1) = 1/2</code> — if prize is at Door 1 (your door), host can open Door 2 or 3 freely</li>
+<li><code>P(H=3 | P=3) = 0</code> — host never reveals the prize</li>
+</ul>
+<p>Normalising constant:</p>
+<pre><code>P(H=3) = P(H=3|P=1)*P(P=1) + P(H=3|P=2)*P(P=2) + P(H=3|P=3)*P(P=3)
+       = (1/2)(1/3) + (1)(1/3) + (0)(1/3)
+       = 1/6 + 2/6 = 1/2
+</code></pre>
+<p>Therefore:</p>
+<pre><code>P(P=2 | H=3) = (1 x 1/3) / (1/2) = 2/3   &#x3C;- Switch wins
+P(P=1 | H=3) = (1/2 x 1/3) / (1/2) = 1/3  &#x3C;- Stay wins
+</code></pre>
+<p>The math is unambiguous. <strong>Switching wins with probability 2/3.</strong></p>
+<hr>
+<h2>Long-Term Behaviour and the Normal Distribution</h2>
+<p>This is where it gets beautiful. Play enough rounds and something remarkable happens: the abstract probabilities crystallise into a shape you can see.</p>
+<h3>Each Round Is a Bernoulli Trial</h3>
+<p>Each round is a <strong>Bernoulli trial</strong> — a binary outcome (win or lose) with a fixed probability <code>p</code>.<br>
+If you always switch, <code>p = 2/3</code>. If you always stay, <code>p = 1/3</code>.</p>
+<h3>Law of Large Numbers</h3>
+<p>As the number of rounds <code>n</code> grows, your observed win rate converges to the true probability:</p>
+<pre><code>Wins / n  -->  p   as n -> infinity
+</code></pre>
+<p>Play 10 rounds and noise dominates. Play 1,000 rounds and your win rate will sit very close to 2/3 (switching) or 1/3 (staying). The randomness averages out.</p>
+<h3>Central Limit Theorem</h3>
+<p>More precisely, the <strong>total number of wins</strong> <code>W</code> after <code>n</code> rounds follows an approximately <strong>Normal distribution</strong>:</p>
+<pre><code>W ~ N(mu, sigma^2)
+
+  where:
+    mu    = n*p          (expected number of wins)
+    sigma^2 = n*p*(1-p)  (variance)
+    sigma   = sqrt(n*p*(1-p))  (standard deviation)
+</code></pre>
+<p>For <strong>always switching</strong> (p = 2/3) over n rounds:</p>
+<pre><code>mu_switch    = 2n/3
+sigma_switch = sqrt(n * 2/3 * 1/3) = sqrt(2n/9)
+</code></pre>
+<p>For <strong>always staying</strong> (p = 1/3) over n rounds:</p>
+<pre><code>mu_stay    = n/3
+sigma_stay = sqrt(n * 1/3 * 2/3) = sqrt(2n/9)
+</code></pre>
+<p>Both strategies produce bell curves with <strong>equal variance</strong>, but centred at completely different means — <code>n/3</code> vs <code>2n/3</code>. Their separation grows with <code>n</code>, while their width only grows with <code>sqrt(n)</code>.</p>
+<pre><code>Visualised over n rounds:
+
+        Stay                         Switch
+          |                            |
+    /-----\                      /-----\
+   /       \                    /       \
+--/-------- \------------------/-------- \--
+  0        n/3                2n/3        n
+
+         &#x3C;-------- n/3 gap ----------->
+</code></pre>
+<p>As <code>n</code> grows, the <strong>gap</strong> between the two means (<code>n/3</code>) grows <strong>linearly</strong>, while the <strong>spread</strong> (sigma) of each curve grows only as <code>sqrt(n)</code>. The curves diverge. After enough rounds they barely overlap at all — making the advantage of switching <strong>statistically undeniable</strong>.</p>
+<p>Long-term convergence:</p>
+<pre><code>Switching:   observed Win% --> 66.7%
+Staying:     observed Win% --> 33.3%
+</code></pre>
+<hr>
+<h2>The Paradox</h2>
+<p>So why is this called a paradox at all?</p>
+<p>When Marilyn vos Savant published her solution in 1990, the backlash was extraordinary. She received <strong>thousands of letters</strong> — including from PhDs and mathematics professors — insisting she was wrong. <em>"You blew it,"</em> wrote one. <em>"There is enough mathematical illiteracy in this country, and we don't need the world's highest IQ propagating more."</em></p>
+<p>She was right. They were wrong.</p>
+<p>The intuitive error is understandable: once one goat door is removed, the human brain <strong>reframes</strong> the situation as a fresh two-door problem. We implicitly assume the host's action was random and uninformative, so we assign equal probability to both remaining doors — arriving at 50/50.</p>
+<p>But the host's action is <strong>not</strong> random. He is constrained by knowledge of where the prize is. That constraint is precisely what transfers the entire <code>2/3</code> probability from the group of two unchosen doors onto the single remaining closed door.</p>
+<p>The paradox, in one sentence:</p>
+<blockquote>
+<p><strong>Your intuition says 1/2. The math says 2/3. And if you play this game long enough, the Normal distributions will show you — beyond any reasonable doubt — that the math is right.</strong></p>
+</blockquote>
+<p>This is the deepest lesson of the Monty Hall Problem: <strong>probability is not always what it feels like</strong>. Our brains evolved for a world of direct cause and effect, not for conditional probability. We ignore information carried by constrained actions. We treat dependent events as independent.</p>
+<p>Play this game for a hundred rounds. Track your <code>Sw</code> and <code>St</code> stats. Watch the win rate climb toward 2/3 every time you switch, and hover near 1/3 every time you stay. The bell curves will do what no argument can — they will make you <em>feel</em> the truth of the mathematics.</p>
+<hr>
+<h2>Controls</h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arrow keys</td>
+<td>Move character</td>
+</tr>
+<tr>
+<td><strong>Z</strong></td>
+<td>Switch doors (after host reveals a goat)</td>
+</tr>
+<tr>
+<td><strong>X</strong></td>
+<td>Stay with original pick (after host reveals a goat)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>Technical</h2>
+<ul>
+<li><strong>Engine:</strong> <a href="https://wasm4.org/">WASM-4</a> — a fantasy game console running WebAssembly</li>
+<li><strong>Language:</strong> C (compiled to WASM with <code>clang</code> / <code>make</code>)</li>
+<li><strong>Screen:</strong> 160x160 pixels, 4-colour palette</li>
+<li><strong>Build:</strong> <code>make</code> then <code>w4 run build/cart.wasm</code></li>
+</ul></div></div><div class="margin-top--lg"><small>License: <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA</a></small></div></div></main></div><footer class="footer"><div class="container"><div class="footer__bottom text--center"></div></div></footer></div>
+<script src="/assets/js/runtime~main.ad1408b2.js"></script>
+<script src="/assets/js/main.da77d2e8.js"></script>
+</body>
+</html>
