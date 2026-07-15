@@ -1,0 +1,246 @@
+[
+  {
+    "slug": "apple-game",
+    "title": "Apple Game",
+    "authors": [
+      {
+        "name": "João Gabriel de Campos Nassar",
+        "contact": "jgdecampos",
+        "contactType": "github",
+        "contactUrl": "https://github.com/jgdecampos"
+      }
+    ],
+    "date": 1783987200000,
+    "readme": "<p>A fast-paced survival and reflex game developed in C for the <a href=\"https://wasm4.org\">WASM-4</a> fantasy console.</p>\n<p>You control an apple and must escape from hungry snakes across 6 increasingly difficult phases. Use time portals strategically and collect power-ups to survive until the end!</p>\n<h2>Controls</h2>\n<ul>\n<li><strong>D-Pad (Arrows):</strong> Move the apple (Left, Right, Up, Down).</li>\n<li><strong>X Button:</strong> Start game / Confirm / Restart.</li>\n<li><strong>Z Button:</strong> Pause / Resume game.</li>\n</ul>\n<h2>Mechanics and Items</h2>\n<p>From Phase 3 onwards, you will face multiple snakes simultaneously. Some will chase you directly, while others will move unpredictably around the screen. To help you survive, the following items will appear randomly:</p>\n<ul>\n<li><strong>S (Speed Potion):</strong> Temporarily doubles the apple's movement speed.</li>\n<li><strong>Shield:</strong> Creates a protective barrier that absorbs the impact of <strong>one</strong> hit (granting you a brief moment of invincibility to escape right after it breaks).</li>\n</ul>\n<h2>Time Portals</h2>\n<p>Keep an eye on the sides of the screen! When red bars appear on the left and right edges, it means the time portals are open. Cross the horizontal edges to be teleported to the opposite side and pull off evasive maneuvers against the snakes.</p>"
+  },
+  {
+    "slug": "cheddar",
+    "title": "Cheddar",
+    "authors": [
+      {
+        "name": "Diego Pimenta Suárez",
+        "contact": "Diegolinop",
+        "contactType": "github",
+        "contactUrl": "https://github.com/Diegolinop"
+      }
+    ],
+    "date": 1783900800000,
+    "readme": "<p>A rat, a dark sewer, and a whole lot of cheese. Explore room by room, eat your way past locked doors, and make your way deeper in.</p>\n<p>It starts simple enough, but things aren't quite what they seem.</p>\n<h2>Controls</h2>\n<ul>\n<li><strong>⬅️ ➡️</strong>: Move</li>\n<li><strong>⬆️</strong>: Jump</li>\n<li><strong>X</strong>: Confirm / advance</li>\n</ul>\n<h2>Credits</h2>\n<p>Made as a project for the Systems Programming course within the Computer Science undergraduate program at the State University of Maringá (UEM). Supervised by Professor Marcelo de Gomensoro Malheiros.</p>"
+  },
+  {
+    "slug": "cosmic-hopper",
+    "title": "Cosmic Hopper",
+    "authors": [
+      {
+        "name": "Bernardo Wilchen de Oliveira",
+        "contact": "BerriesWithOnions",
+        "contactType": "github",
+        "contactUrl": "https://github.com/BerriesWithOnions"
+      }
+    ],
+    "date": 1783814400000,
+    "readme": "<p>Zorp, a little alien, fell out of his UFO and landed in the middle of a cosmic highway. Guide him across a lane of speeding spaceships and a river of stardust to reach the rescue landing pads on the other side — before his lives run out! Watch out not to fall into the void of space, or worse, getting run over by a space vehicle!</p>\n<h2>How to play</h2>\n<ul>\n<li>Use <strong>⬅ ➡ ⬆ ⬇</strong> to hop Zorp one tile at a time.</li>\n<li>Avoid the spaceships crossing the highway.</li>\n<li>Ride the drifting asteroid platforms to cross the stardust river — don't fall into the void between them!</li>\n<li>Guide Zorp into each of the 4 empty landing pads to fill them all and clear the stage.</li>\n<li>Clearing a stage grants a bonus life and raises the difficulty for the next one.</li>\n</ul>\n<h2>Stages</h2>\n<ol>\n<li><strong>Stage 1</strong> — slow traffic and wide, forgiving platforms. A gentle warm-up.</li>\n<li><strong>Stage 2</strong> — normal speed and spacing.</li>\n<li><strong>Stage 3</strong> — fast lanes and narrow platforms. Only a steady hand gets Zorp home!</li>\n</ol>\n<p>Clear all 3 stages to send Zorp back to his UFO and win the game.</p>\n<h2>Credits</h2>\n<p>Built with the WASM-4 fantasy console. Inspired by classic lane-crossing arcade games, reimagined with a cosmic alien theme.</p>"
+  },
+  {
+    "slug": "desvie",
+    "title": "Desvie !",
+    "authors": [
+      {
+        "name": "Arthur Spirandelli",
+        "contact": null,
+        "contactType": null,
+        "contactUrl": null
+      },
+      {
+        "name": "Nicolas Souza Tiradentes",
+        "contact": null,
+        "contactType": null,
+        "contactUrl": null
+      }
+    ],
+    "date": 1783728000000,
+    "readme": "<p>A simple game where the objective is to avoid cars that are randomly approaching on a road.</p>\n<h2>In the menu</h2>\n<p>In the menu, you have to press Z to start the game.</p>\n<h2>In the game</h2>\n<p>The gameplay has simple mechanics: the directional buttons are used to move the character dodging cars.</p>\n<h2>In the \"game over\" and \"you win\" screens</h2>\n<p>Press the X button to return to menu.</p>"
+  },
+  {
+    "slug": "dino-runner",
+    "title": "Dino Runner",
+    "authors": [
+      {
+        "name": "Gabriel Ortega",
+        "contact": null,
+        "contactType": null,
+        "contactUrl": null
+      },
+      {
+        "name": "Vinicius Kondo",
+        "contact": null,
+        "contactType": null,
+        "contactUrl": null
+      }
+    ],
+    "date": 1783641600000,
+    "readme": "<p>A endless runner game inspired by the Chrome offline dinosaur game, built for the WASM-4 fantasy console.</p>\n<h2>🎮 About the Game</h2>\n<p>Jump, duck, and dodge obstacles in this fast-paced retro-style runner! Control the dinosaur as it runs through a prehistoric landscape, avoiding cacti, rocks, and flying creatures. How far can you go?</p>\n<h2>🕹️ Controls</h2>\n<table>\n<thead>\n<tr>\n<th>Key</th>\n<th>Action</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>↑</strong> or <strong>Z</strong> or <strong>Space</strong></td>\n<td>Jump (hold for higher jump)</td>\n</tr>\n<tr>\n<td><strong>↓</strong></td>\n<td>Duck (reduces hitbox)</td>\n</tr>\n<tr>\n<td><strong>↑</strong> (Title Screen)</td>\n<td>Start Game</td>\n</tr>\n<tr>\n<td><strong>↑</strong> (Game Over)</td>\n<td>Restart</td>\n</tr>\n</tbody>\n</table>\n<h2>🦕 Features</h2>\n<ul>\n<li><strong>3 Lives</strong>: You start with 3 lives. Each collision costs 1 life.</li>\n<li><strong>Progressive Difficulty</strong>: Speed increases every 3 seconds, making obstacles appear more frequently.</li>\n<li><strong>Dynamic Obstacles</strong>: 6 different types of obstacles including small/big/double cacti, rocks, pterodactyls, and birds.</li>\n<li><strong>High Score</strong>: Your best score is saved during the session.</li>\n<li><strong>Parallax Background</strong>: Mountains and clouds move at different speeds for depth effect.</li>\n<li><strong>Dino Animation</strong>: Running, jumping, ducking, and surprised sprites.</li>\n</ul>\n<h2>📊 Scoring System</h2>\n<table>\n<thead>\n<tr>\n<th>Action</th>\n<th>Points</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Dodge an obstacle</td>\n<td>10 + (speed × 2)</td>\n</tr>\n<tr>\n<td>Survival bonus (every ~3 seconds)</td>\n<td>+50 points</td>\n</tr>\n</tbody>\n</table>\n<h2>🎨 Visual Style</h2>\n<p>The game uses a custom Game Boy-inspired color palette:</p>\n<ul>\n<li>White (#f8f8f8)</li>\n<li>Light Green (#a0c070)</li>\n<li>Medium Green (#407040)</li>\n<li>Dark Green (#082018)</li>\n</ul>\n<h2>🛠️ Technical Details</h2>\n<ul>\n<li><strong>Platform</strong>: WASM-4 Fantasy Console</li>\n<li><strong>Language</strong>: C</li>\n<li><strong>Resolution</strong>: 160×160 pixels</li>\n<li><strong>Color Depth</strong>: 4 colors (1-bit sprites)</li>\n<li><strong>Sprites</strong>: 8×8 and 8×12 pixel art</li>\n</ul>\n<h2>🚀 How to Play</h2>\n<ol>\n<li>Press <strong>x</strong> on the title screen to start</li>\n<li>Press <strong>x</strong> to jump over ground obstacles</li>\n<li>Press <strong>↓</strong> to duck under flying obstacles</li>\n<li>Press <strong>x</strong> (hold) to jump higher</li>\n<li>Survive as long as possible and beat your high score!</li>\n</ol>\n<h2>💀 Game Over</h2>\n<p>When you lose all 3 lives, the game ends. Your final score will be displayed and compared to your high score. Press <strong>↑</strong> to restart.</p>\n<h2>📝 Tips</h2>\n<ul>\n<li><strong>Hold the jump button</strong> to gain extra height!</li>\n<li><strong>Duck</strong> to avoid birds and pterodactyls</li>\n<li>The game speed increases gradually - stay alert!</li>\n<li>Watch the pattern - sometimes obstacles spawn in pairs</li>\n</ul>\n<hr>\n<p><em>Created with profissionalism using WASM-4</em></p>\n<p><a href=\"https://wasm4.org\">Download WASM-4</a></p>"
+  },
+  {
+    "slug": "dungeon-of-shards",
+    "title": "Dungeon of Shards",
+    "authors": [
+      {
+        "name": "Giovana da Silva Bulcão",
+        "contact": "giovanabulcao",
+        "contactType": "github",
+        "contactUrl": "https://github.com/giovanabulcao"
+      },
+      {
+        "name": "Cintia da Silva Bulcão",
+        "contact": "cintiasilva-blc",
+        "contactType": "github",
+        "contactUrl": "https://github.com/cintiasilva-blc"
+      }
+    ],
+    "date": 1783555200000,
+    "readme": "<p>Legend has it that a cursed maze deep underground hides six ancient shards... and Kiro, a hunter with a taste for cursed loot (and bad puns), just couldn't resist the rumor. The catch? The dungeon is crawling with angry mobs that won't take kindly to a stranger poking around their treasure.</p>\n<p>Inspired by the classic maze games, Dungeon of Shards drops you into Kiro's boots as you explore the dark corridors, dodge whatever's guarding them, and try to grab all six shards before something catches you first.</p>\n<p>Fast reflexes and a good sense of direction are your best weapons. <strong>Good luck!!</strong></p>\n<h2>How to Play</h2>\n<ul>\n<li>Collect the <strong>6 shards</strong> scattered across the maze.</li>\n<li>If an enemy catches you, it's <strong>game over</strong>.</li>\n<li>Some enemies patrol fixed routes, but start <strong>chasing</strong> the player once he gets close.</li>\n<li>The exit is a <strong>flashing tile</strong> at the far end of the maze, it only unlocks victory once <strong>all 6 shards</strong> have been collected. Step on it too early and you'll just get a warning telling you shards are missing.</li>\n</ul>\n<blockquote>\n<p><strong>Tip:</strong> the mobs guarding the dungeon aren't exactly geniuses... dodge them and grab the shards while they're not looking!</p>\n</blockquote>\n<h2>Controls</h2>\n<table>\n<thead>\n<tr>\n<th>Button</th>\n<th>Action</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Arrows</td>\n<td>Move through the maze</td>\n</tr>\n<tr>\n<td>X</td>\n<td>Confirm / Retry after game over or win</td>\n</tr>\n</tbody>\n</table>\n<hr>\n<p><em>This project was developed in C for the WASM-4 fantasy console by Computer Science students from UEM (State University of Maringá), guided by their professor, Marcelo Malheiros.</em></p>"
+  },
+  {
+    "slug": "hugo-defense",
+    "title": "Hugo's Defense",
+    "authors": [
+      {
+        "name": "Felipe Almeida Gomes",
+        "contact": "feagomes",
+        "contactType": "github",
+        "contactUrl": "https://github.com/feagomes"
+      }
+    ],
+    "date": 1783468800000,
+    "readme": "<p>Welcome to <strong>Hugo's Defense</strong>! This is a unique hybrid game for the WASM-4 fantasy console that combines classic Tower Defense mechanics with a rogue-like restart, where if you die you got to start all over again.</p>\n<h2>Gameplay</h2>\n<p>Defend your base against waves of incoming enemies while keeping an eye on Hugo's Tower. Manage his Damage, Attack, and Health.</p>\n<p>Survive through 10 waves of increasingly difficult bad goblins, culminating in an epic Boss Wave featuring the giant Grim Reaper!</p>\n<h2>Controls</h2>\n<ul>\n<li><strong>Mouse/Click (or Touch):</strong> Interact with the UI buttons to buy upgrades for your tower and manage Hugo's stats.\n</li>\n</ul>\n<h2>Upgrades &#x26; Economy</h2>\n<p>Collect coins by defeating enemies to buy crucial upgrades for your defense:</p>\n<ul>\n<li><strong>DAM (Damage):</strong> Increases the damage dealt by your tower's projectiles.</li>\n<li><strong>SPD (Speed):</strong> Reduces the attack cooldown, making your tower shoot faster.</li>\n<li><strong>HP (Health):</strong> Increases your tower's maximum health to withstand more hits.</li>\n</ul>\n<p>Good luck, and whatever you do, keep Hugo alive!</p>"
+  },
+  {
+    "slug": "labydinth",
+    "title": "LabyDINth",
+    "authors": [
+      {
+        "name": "André Batista",
+        "contact": "Andre-Luiz-Batista",
+        "contactType": "github",
+        "contactUrl": "https://github.com/Andre-Luiz-Batista"
+      },
+      {
+        "name": "Munir Shehadeh",
+        "contact": "Munirberg",
+        "contactType": "github",
+        "contactUrl": "https://github.com/Munirberg"
+      }
+    ],
+    "date": 1783382400000,
+    "readme": "<p>You are stuck in a labyrinth, escape as quickly as possible! Press X to start, then move using the arrow keys, get the key to open the exit's gate, and try not to get lost!</p>"
+  },
+  {
+    "slug": "monty-hall",
+    "title": "Monty Hall",
+    "authors": [
+      {
+        "name": "Vitor Teodoro Correa",
+        "contact": null,
+        "contactType": null,
+        "contactUrl": null
+      }
+    ],
+    "date": 1783296000000,
+    "readme": "<blockquote>\n<p><em>\"Should I switch or stay? Does it even matter?\"</em>\nIt does. And the numbers will prove it.</p>\n</blockquote>\n<hr>\n<h2>What Is This?</h2>\n<p>This is a playable implementation of the <strong>Monty Hall Problem</strong> — one of the most famous and counterintuitive puzzles in probability theory — built for the <a href=\"https://wasm4.org/\">WASM-4</a> fantasy console.</p>\n<p>Walk your character into one of three doors, watch the host reveal a goat, then decide: <strong>switch</strong> or <strong>stay</strong>. The game tracks your statistics across every round so you can watch the math unfold in real time.</p>\n<hr>\n<h2>How to Play</h2>\n<ol>\n<li><strong>Move</strong> your character with the <strong>arrow keys</strong>.</li>\n<li><strong>Walk into a door</strong> to make your initial pick. The host will immediately open one of the other doors, always revealing a goat.</li>\n<li>You now face a choice:\n<ul>\n<li>Press <strong>Z</strong> → <strong>Switch</strong> to the remaining unopened door.</li>\n<li>Press <strong>X</strong> → <strong>Stay</strong> with your original pick.</li>\n</ul>\n</li>\n<li>All three doors open. Either a <strong>$</strong> (prize) or a goat is behind your final choice.</li>\n<li>The round resets automatically after ~2.5 seconds.</li>\n</ol>\n<h3>Stats panel (top of screen)</h3>\n<table>\n<thead>\n<tr>\n<th>Label</th>\n<th>Meaning</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>Wins</code></td>\n<td>Total rounds won</td>\n</tr>\n<tr>\n<td><code>Rnd</code></td>\n<td>Total rounds played</td>\n</tr>\n<tr>\n<td><code>Sw</code></td>\n<td>Times you chose to Switch</td>\n</tr>\n<tr>\n<td><code>St</code></td>\n<td>Times you chose to Stay</td>\n</tr>\n</tbody>\n</table>\n<hr>\n<h2>The Monty Hall Problem</h2>\n<p>The puzzle originates from the American TV game show <em>Let's Make a Deal</em>, hosted by <strong>Monty Hall</strong>. It was formally posed as a probability puzzle by <strong>Marilyn vos Savant</strong> in her <em>Parade</em> magazine column in 1990 — and the response it generated was legendary.</p>\n<p><strong>The setup:</strong></p>\n<ul>\n<li>There are <strong>3 doors</strong>. Behind one is a <strong>prize</strong>. Behind the other two are <strong>goats</strong>.</li>\n<li>You pick a door.</li>\n<li>The host — who <em>always knows</em> where the prize is — opens one of the other doors, <strong>always revealing a goat</strong>.</li>\n<li>You are offered the chance to switch to the remaining closed door.</li>\n</ul>\n<p><strong>The question:</strong> Should you switch, stay, or does it not matter?</p>\n<p><strong>Most people's intuition:</strong> <em>\"There are now 2 doors left, so it's 50/50. It doesn't matter.\"</em></p>\n<p><strong>The math:</strong> You should <strong>always switch</strong>. Switching wins <strong>2 out of 3 times</strong>.</p>\n<hr>\n<h2>The Mathematics</h2>\n<h3>Initial Probability</h3>\n<p>When you first pick a door, the probability that the prize is behind it is:</p>\n<pre><code>P(prize behind your door)            = 1/3\nP(prize behind one of the other two) = 2/3\n</code></pre>\n<h3>What the Host Reveals</h3>\n<p>The host's action is <strong>not random</strong>. He is constrained to always open a door that:</p>\n<ol>\n<li>You did <strong>not</strong> pick.</li>\n<li>Does <strong>not</strong> hide the prize.</li>\n</ol>\n<p>This constraint is the entire key to the puzzle. The host's reveal carries <strong>information</strong>.</p>\n<p>When the host opens a goat door, the <code>2/3</code> probability that was spread across the two unchosen doors does <strong>not</strong> disappear — it <strong>collapses entirely onto the one remaining closed door</strong>.</p>\n<pre><code>After the host reveals a goat:\n\n  Your door:       P(win if you stay)   = 1/3\n  Remaining door:  P(win if you switch) = 2/3\n</code></pre>\n<h3>Formal Proof via Bayes' Theorem</h3>\n<p>Let:</p>\n<ul>\n<li><code>C</code> = your initial choice (say, Door 1)</li>\n<li><code>P</code> = the door hiding the prize</li>\n<li><code>H</code> = the door the host opens (say, Door 3)</li>\n</ul>\n<p>We want <code>P(Prize at Door 2 | Host opened Door 3)</code>.</p>\n<p>Using Bayes' Theorem:</p>\n<pre><code>P(P=2 | H=3) =  P(H=3 | P=2) x P(P=2)\n                ───────────────────────\n                        P(H=3)\n</code></pre>\n<p>Computing each term:</p>\n<ul>\n<li><code>P(P=2) = 1/3</code> — uniform prior, prize equally likely behind any door</li>\n<li><code>P(H=3 | P=2) = 1</code> — if prize is at Door 2, host <strong>must</strong> open Door 3 (only valid choice)</li>\n<li><code>P(H=3 | P=1) = 1/2</code> — if prize is at Door 1 (your door), host can open Door 2 or 3 freely</li>\n<li><code>P(H=3 | P=3) = 0</code> — host never reveals the prize</li>\n</ul>\n<p>Normalising constant:</p>\n<pre><code>P(H=3) = P(H=3|P=1)*P(P=1) + P(H=3|P=2)*P(P=2) + P(H=3|P=3)*P(P=3)\n       = (1/2)(1/3) + (1)(1/3) + (0)(1/3)\n       = 1/6 + 2/6 = 1/2\n</code></pre>\n<p>Therefore:</p>\n<pre><code>P(P=2 | H=3) = (1 x 1/3) / (1/2) = 2/3   &#x3C;- Switch wins\nP(P=1 | H=3) = (1/2 x 1/3) / (1/2) = 1/3  &#x3C;- Stay wins\n</code></pre>\n<p>The math is unambiguous. <strong>Switching wins with probability 2/3.</strong></p>\n<hr>\n<h2>Long-Term Behaviour and the Normal Distribution</h2>\n<p>This is where it gets beautiful. Play enough rounds and something remarkable happens: the abstract probabilities crystallise into a shape you can see.</p>\n<h3>Each Round Is a Bernoulli Trial</h3>\n<p>Each round is a <strong>Bernoulli trial</strong> — a binary outcome (win or lose) with a fixed probability <code>p</code>.<br>\nIf you always switch, <code>p = 2/3</code>. If you always stay, <code>p = 1/3</code>.</p>\n<h3>Law of Large Numbers</h3>\n<p>As the number of rounds <code>n</code> grows, your observed win rate converges to the true probability:</p>\n<pre><code>Wins / n  -->  p   as n -> infinity\n</code></pre>\n<p>Play 10 rounds and noise dominates. Play 1,000 rounds and your win rate will sit very close to 2/3 (switching) or 1/3 (staying). The randomness averages out.</p>\n<h3>Central Limit Theorem</h3>\n<p>More precisely, the <strong>total number of wins</strong> <code>W</code> after <code>n</code> rounds follows an approximately <strong>Normal distribution</strong>:</p>\n<pre><code>W ~ N(mu, sigma^2)\n\n  where:\n    mu    = n*p          (expected number of wins)\n    sigma^2 = n*p*(1-p)  (variance)\n    sigma   = sqrt(n*p*(1-p))  (standard deviation)\n</code></pre>\n<p>For <strong>always switching</strong> (p = 2/3) over n rounds:</p>\n<pre><code>mu_switch    = 2n/3\nsigma_switch = sqrt(n * 2/3 * 1/3) = sqrt(2n/9)\n</code></pre>\n<p>For <strong>always staying</strong> (p = 1/3) over n rounds:</p>\n<pre><code>mu_stay    = n/3\nsigma_stay = sqrt(n * 1/3 * 2/3) = sqrt(2n/9)\n</code></pre>\n<p>Both strategies produce bell curves with <strong>equal variance</strong>, but centred at completely different means — <code>n/3</code> vs <code>2n/3</code>. Their separation grows with <code>n</code>, while their width only grows with <code>sqrt(n)</code>.</p>\n<pre><code>Visualised over n rounds:\n\n        Stay                         Switch\n          |                            |\n    /-----\\                      /-----\\\n   /       \\                    /       \\\n--/-------- \\------------------/-------- \\--\n  0        n/3                2n/3        n\n\n         &#x3C;-------- n/3 gap ----------->\n</code></pre>\n<p>As <code>n</code> grows, the <strong>gap</strong> between the two means (<code>n/3</code>) grows <strong>linearly</strong>, while the <strong>spread</strong> (sigma) of each curve grows only as <code>sqrt(n)</code>. The curves diverge. After enough rounds they barely overlap at all — making the advantage of switching <strong>statistically undeniable</strong>.</p>\n<p>Long-term convergence:</p>\n<pre><code>Switching:   observed Win% --> 66.7%\nStaying:     observed Win% --> 33.3%\n</code></pre>\n<hr>\n<h2>The Paradox</h2>\n<p>So why is this called a paradox at all?</p>\n<p>When Marilyn vos Savant published her solution in 1990, the backlash was extraordinary. She received <strong>thousands of letters</strong> — including from PhDs and mathematics professors — insisting she was wrong. <em>\"You blew it,\"</em> wrote one. <em>\"There is enough mathematical illiteracy in this country, and we don't need the world's highest IQ propagating more.\"</em></p>\n<p>She was right. They were wrong.</p>\n<p>The intuitive error is understandable: once one goat door is removed, the human brain <strong>reframes</strong> the situation as a fresh two-door problem. We implicitly assume the host's action was random and uninformative, so we assign equal probability to both remaining doors — arriving at 50/50.</p>\n<p>But the host's action is <strong>not</strong> random. He is constrained by knowledge of where the prize is. That constraint is precisely what transfers the entire <code>2/3</code> probability from the group of two unchosen doors onto the single remaining closed door.</p>\n<p>The paradox, in one sentence:</p>\n<blockquote>\n<p><strong>Your intuition says 1/2. The math says 2/3. And if you play this game long enough, the Normal distributions will show you — beyond any reasonable doubt — that the math is right.</strong></p>\n</blockquote>\n<p>This is the deepest lesson of the Monty Hall Problem: <strong>probability is not always what it feels like</strong>. Our brains evolved for a world of direct cause and effect, not for conditional probability. We ignore information carried by constrained actions. We treat dependent events as independent.</p>\n<p>Play this game for a hundred rounds. Track your <code>Sw</code> and <code>St</code> stats. Watch the win rate climb toward 2/3 every time you switch, and hover near 1/3 every time you stay. The bell curves will do what no argument can — they will make you <em>feel</em> the truth of the mathematics.</p>\n<hr>\n<h2>Controls</h2>\n<table>\n<thead>\n<tr>\n<th>Key</th>\n<th>Action</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Arrow keys</td>\n<td>Move character</td>\n</tr>\n<tr>\n<td><strong>Z</strong></td>\n<td>Switch doors (after host reveals a goat)</td>\n</tr>\n<tr>\n<td><strong>X</strong></td>\n<td>Stay with original pick (after host reveals a goat)</td>\n</tr>\n</tbody>\n</table>\n<hr>\n<h2>Technical</h2>\n<ul>\n<li><strong>Engine:</strong> <a href=\"https://wasm4.org/\">WASM-4</a> — a fantasy game console running WebAssembly</li>\n<li><strong>Language:</strong> C (compiled to WASM with <code>clang</code> / <code>make</code>)</li>\n<li><strong>Screen:</strong> 160x160 pixels, 4-colour palette</li>\n<li><strong>Build:</strong> <code>make</code> then <code>w4 run build/cart.wasm</code></li>\n</ul>"
+  },
+  {
+    "slug": "my-pony",
+    "title": "My Pony",
+    "authors": [
+      {
+        "name": "Anna Lisia de Almeida Yaguti",
+        "contact": null,
+        "contactType": null,
+        "contactUrl": null
+      },
+      {
+        "name": "Veronica Manami Kitamura",
+        "contact": "vevekita",
+        "contactType": "github",
+        "contactUrl": "https://github.com/vevekita"
+      }
+    ],
+    "date": 1783209600000,
+    "readme": "<ul>\n<li>To move the character, use the right and left arrow keys on your keyboard.</li>\n<li>Collect the good apples (orange-colored) that fall from the tree; if you let one fall to the ground, the time will be reduced by 2 seconds.</li>\n<li>Do not pick up the bad apples (turquoise); if you pick one up, 10 points will be deducted from your score.</li>\n<li>Rack up as many points as possible!</li>\n</ul>\n<p>Have a good game and enjoy yourself!</p>"
+  },
+  {
+    "slug": "number-slide",
+    "title": "Number Slide",
+    "authors": [
+      {
+        "name": "Giovana Ferreira Waterkemper",
+        "contact": "gi-water-143844",
+        "contactType": "github",
+        "contactUrl": "https://github.com/gi-water-143844"
+      },
+      {
+        "name": "Jamily Goncalves de Sales Souza",
+        "contact": "JamilyGSS",
+        "contactType": "github",
+        "contactUrl": "https://github.com/JamilyGSS"
+      }
+    ],
+    "date": 1783123200000,
+    "readme": "<p>Number Slide is a classic 15-puzzle game developed with WASM-4.</p>\n<p>The objective is to arrange the numbered tiles in ascending order by sliding them into the empty space.</p>\n<h2>Controls</h2>\n<ul>\n<li>Arrow Keys: Move the tiles</li>\n<li>X: Start the game</li>\n</ul>\n<p>Good luck and have fun!</p>"
+  },
+  {
+    "slug": "paddle-duel",
+    "title": "Paddle Duel",
+    "authors": [
+      {
+        "name": "Arthur",
+        "contact": "artpedrii",
+        "contactType": "github",
+        "contactUrl": "https://github.com/artpedrii"
+      },
+      {
+        "name": "Guilherme Shimano Santana",
+        "contact": "GuiShimano",
+        "contactType": "github",
+        "contactUrl": "https://github.com/GuiShimano"
+      }
+    ],
+    "date": 1783036800000,
+    "readme": "<p>Paddle Duel is a local two-player arcade game inspired by classic table tennis games. Each player controls one paddle and tries to prevent the ball from passing their side of the screen.</p>\n<p>The left paddle is controlled by Player 2, and the right paddle is controlled by Player 1. The ball starts in the center of the screen and moves across the arena. When the ball passes one side, the opposite player scores a point.</p>\n<h2>Controls</h2>\n<p>Left player controls the left paddle using E/D.</p>\n<p>Right player controls the right paddle using the arrow keys.</p>\n<p>Only the up and down directions are used during gameplay.</p>\n<h2>Gameplay</h2>\n<p>Move your paddle up and down to block the ball. When the ball hits a paddle, it bounces back toward the other player. When it hits the top or bottom of the screen, it bounces vertically.</p>\n<p>The ball speed starts slowly and can increase during the match, making the game harder over time.</p>"
+  },
+  {
+    "slug": "pou-fashion",
+    "title": "Pou Fashion Simulator",
+    "authors": [
+      {
+        "name": "Ana Julia Thibes dos Santos",
+        "contact": "juju-thibes",
+        "contactType": "github",
+        "contactUrl": "https://github.com/juju-thibes"
+      }
+    ],
+    "date": 1782950400000,
+    "readme": "<p>The goal of the game is to dress up Pou for going out.</p>\n<p>To dress Pou, you need to click on the clothes of his wardrobe, and if you want more clothes to chose from, you can click on the arrows on the inferior right corner to pass the pages of clothes.</p>\n<p>You can also reset the outfit that Pou is wearing by clicking on the spiral arrow on the top left corner.</p>\n<p>Also, you NEED to dress Pou to complete the game (he can't go out naked, ok?)</p>\n<p>Have fun playing &#x3C;3</p>"
+  },
+  {
+    "slug": "raycast-maze",
+    "title": "Raycast Maze",
+    "authors": [
+      {
+        "name": "Bruno Rafael Comin Scheffel",
+        "contact": "brsctoo",
+        "contactType": "github",
+        "contactUrl": "https://github.com/brsctoo"
+      },
+      {
+        "name": "José Luis Peres de Sousa",
+        "contact": null,
+        "contactType": null,
+        "contactUrl": null
+      }
+    ],
+    "date": 1782864000000,
+    "readme": "<p>Find the exit before the timer runs out! A first-person maze game\nbuilt with a raycasting engine, running on the WASM-4 fantasy console.</p>\n<h2>How to play</h2>\n<p>Navigate a 3D maze from a first-person view and reach the exit\n(the blinking wall) before the countdown hits zero.</p>\n<ul>\n<li><strong>Arrow Up / Down</strong>: Move forward / backward</li>\n<li><strong>Arrow Left / Right</strong>: Turn left / right</li>\n<li><strong>X</strong>: Start the game / confirm</li>\n<li><strong>Z</strong>: Return to the main menu (during gameplay)</li>\n</ul>\n<h2>Features</h2>\n<ul>\n<li>Real-time raycasting engine (Wolfenstein-style 3D)</li>\n<li>Three difficulty levels (Easy, Medium, Hard) with larger, denser 32x32 mazes and their own time limits</li>\n<li>Linked portal pair: step into one portal to teleport across the maze, shown with a glitchy animated wall</li>\n<li>A compass that always points north to help you stay oriented</li>\n<li>A countdown timer and sound effects for menus, steps, and events</li>\n</ul>\n<h2>Tips</h2>\n<p>Use the compass in the top-right corner to keep track of direction.\nThe two portals are a shortcut across the map — find them to save\ntime on the harder mazes. On Hard, the layout is denser and larger,\nso plan your route and watch the clock.</p>"
+  }
+]

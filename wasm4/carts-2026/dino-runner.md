@@ -3,7 +3,7 @@ author: Gabriel Ortega, Vinicius Kondo
 date: 2026-07-10
 ---
 
-# DINO RUNNER
+# Dino Runner
 
 A endless runner game inspired by the Chrome offline dinosaur game, built for the WASM-4 fantasy console.
 

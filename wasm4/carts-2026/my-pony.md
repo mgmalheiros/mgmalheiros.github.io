@@ -3,7 +3,7 @@ author: Anna Lisia de Almeida Yaguti, Veronica Manami Kitamura <vevekita>
 date: 2026-07-05
 ---
 
-# Appleny
+# My Pony
 
 - To move the character, use the right and left arrow keys on your keyboard.
 - Collect the good apples (orange-colored) that fall from the tree; if you let one fall to the ground, the time will be reduced by 2 seconds.
