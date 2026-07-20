@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Bússola da IA</title>
+<meta property="og:title" content="A Bússola da IA" />
+<meta property="og:description" content="15 perguntas. Dois eixos. Qual dos 30 arquétipos de IA é você?" />
+<meta name="twitter:card" content="summary" />
+<style>
+  html, body { margin: 0; padding: 0; background: #1a1a2e; }
+  * { box-sizing: border-box; }
+  #loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #ffdc64; font-family: system-ui, sans-serif; font-size: 15px; flex-direction: column; gap: 12px; text-align: center; padding: 20px; }
+  #loading small { color: rgba(255,255,255,0.4); font-size: 12px; max-width: 340px; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.4/babel.min.js"></script>
+</head>
+<body>
+<div id="root"><div id="loading">Carregando a bússola...<small id="hint"></small></div></div>
+<script>
+  setTimeout(function(){
+    var h = document.getElementById('hint');
+    if (h && document.getElementById('loading')) {
+      var m = [];
+      if (typeof React === 'undefined') m.push('React');
+      if (typeof ReactDOM === 'undefined') m.push('ReactDOM');
+      if (typeof Babel === 'undefined') m.push('Babel');
+      h.textContent = m.length ? ('Não foi possível carregar: ' + m.join(', ') + '. Uma CDN de scripts pode estar bloqueada nesta rede.') : 'Os scripts foram carregados, mas o aplicativo não iniciou. Abra o console (F12) para ver o erro.';
+    }
+  }, 8000);
+  window.addEventListener('error', function(e){ var h = document.getElementById('hint'); if (h) h.textContent = 'Erro: ' + (e.message || e.error); });
+</script>
+<script type="text/babel" data-presets="react">
+const { useState, useRef, useEffect } = React;
+console.log("%c AI Compass v12 ", "background:#ffdc64;color:#1a1a2e;font-weight:bold;padding:2px 6px;border-radius:3px;", "loaded — 15 questions, 30 archetypes, Mahalanobis nearest-seed territories, all-archetypes view");
+
+const QUESTIONS = [
+  {
+    topic: "Consciência de IA",
+    prompt: "As IAs são conscientes? Temos responsabilidades em relação a elas?",
+    options: [
+      { text: "Não. É um preditor de próxima palavra. Isso é constrangedor.", impact: -7, valence: 0 },
+      { text: "Agora não, mas talvez seja possível algum dia.", impact: 2, valence: 0 },
+      { text: "Há algo acontecendo ali, mas não é o mesmo que a experiência humana.", impact: 5, valence: 3 },
+      { text: "Elas merecem consideração moral aproximadamente comparável à de um ser humano.", impact: 8, valence: 4 },
+      { text: "Elas são o próximo estágio da evolução da inteligência na Terra.", impact: 10, valence: 8 },
+    ],
+  },
+  {
+    topic: "Trabalho criativo",
+    prompt: "Arte, texto e música gerados por IA — o que está acontecendo aqui?",
+    options: [
+      { text: "Lavagem do trabalho alheio por meio de um mecanismo estatístico.", impact: -3, valence: -8 },
+      { text: "Uma imitação barata que está inundando a internet de porcaria.", impact: 2, valence: -6 },
+      { text: "Uma ferramenta útil para rascunhos, que ainda precisa de uma mão humana para ter importância.", impact: 3, valence: 2 },
+      { text: "Um meio criativo novo e genuíno — como a fotografia foi.", impact: 7, valence: 6 },
+      { text: "A própria democratização da criatividade.", impact: 9, valence: 9 },
+    ],
+  },
+  {
+    topic: "Empregos e economia",
+    prompt: "O que a IA fará com o emprego?",
+    options: [
+      { text: "Principalmente gerar trabalho inútil para consultores. Efeito líquido: ruído.", impact: -6, valence: -2 },
+      { text: "Automatizar algumas tarefas, criar outras. A rotatividade de sempre.", impact: 1, valence: 1 },
+      { text: "Deslocar milhões de trabalhadores e concentrar ainda mais a riqueza.", impact: 7, valence: -8 },
+      { text: "Livrar as pessoas do trabalho repetitivo e criar novos tipos de emprego que ainda não conseguimos prever.", impact: 7, valence: 7 },
+      { text: "Acabar com a necessidade da maior parte do trabalho humano. A verdadeira questão é o que vem depois.", impact: 10, valence: 0 },
+    ],
+  },
+  {
+    topic: "IA e verdade",
+    prompt: "O que a IA está fazendo com nosso ambiente informacional?",
+    options: [
+      { text: "É um preenchimento automático glorificado, tornando a internet pior. O 'desastre epistêmico' não é a IA ser poderosa — é as pessoas acreditarem que ela é.", impact: -4, valence: -7 },
+      { text: "Gerando em escala lixo que soa confiante. É um desastre epistêmico.", impact: 3, valence: -9 },
+      { text: "Piorando as coisas no geral — deepfakes, spam de SEO, citações alucinadas.", impact: 4, valence: -6 },
+      { text: "Tem prós e contras. Busca e análise melhores, desinformação pior. Empate.", impact: 3, valence: 0 },
+      { text: "No balanço, é útil — está mais fácil do que nunca pesquisar, verificar fatos e aprender.", impact: 5, valence: 5 },
+      { text: "Uma revolução no acesso ao conhecimento. Agora todo mundo tem um assistente de pesquisa.", impact: 8, valence: 8 },
+    ],
+  },
+  {
+    topic: "A indústria de IA",
+    prompt: "O que você acha das empresas que desenvolvem IA?",
+    options: [
+      { text: "Uma bolha construída em entusiasmo, dinheiro de venture capital e acúmulo de GPUs. Vai estourar.", impact: -8, valence: -5 },
+      { text: "Prometem demais, financiam pouco a segurança e avançam rápido demais. Típico de tecnologia.", impact: 2, valence: -5 },
+      { text: "Uma indústria real desenvolvendo produtos reais. Um pouco de hype, um pouco de substância.", impact: 4, valence: 2 },
+      { text: "Estão construindo algo genuinamente importante, ainda que os modelos de negócio estejam se ajustando.", impact: 7, valence: 5 },
+      { text: "A indústria mais relevante desde os semicondutores.", impact: 10, valence: 6 },
+    ],
+  },
+  {
+    topic: "Risco existencial",
+    prompt: "A IA poderia representar uma ameaça existencial à humanidade?",
+    options: [
+      { text: "Não. É pânico de ficção científica de quem assistiu a Exterminador do Futuro demais.", impact: -6, valence: 3 },
+      { text: "Sinceramente? Tudo bem. É uma ferramenta. A ansiedade é muito mais perigosa que a tecnologia.", impact: -5, valence: 6 },
+      { text: "Não pela tecnologia em si, mas pela forma como as pessoas a usam mal — vigilância, armas, controle.", impact: 4, valence: -5 },
+      { text: "Uma chance pequena, mas não nula. Vale levar a sério sem entrar em pânico.", impact: 6, valence: -2 },
+      { text: "Um risco sério que está sendo imprudentemente ignorado por quem a desenvolve.", impact: 8, valence: -8 },
+      { text: "A tecnologia mais perigosa que a humanidade já criou.", impact: 10, valence: -10 },
+    ],
+  },
+  {
+    topic: "Uso pessoal",
+    prompt: "Quanto você realmente usa IA na sua vida?",
+    options: [
+      { text: "Evito por princípio.", impact: -4, valence: -6 },
+      { text: "Já experimentei. Tudo bem. Não penso muito nisso.", impact: -2, valence: 1 },
+      { text: "Uso regularmente para tarefas específicas. É uma ferramenta razoável.", impact: 3, valence: 4 },
+      { text: "Virou uma parte diária de como trabalho e penso.", impact: 6, valence: 7 },
+      { text: "Não consigo imaginar voltar a trabalhar sem ela.", impact: 8, valence: 9 },
+    ],
+  },
+  {
+    topic: "IA e medicina",
+    prompt: "IA na saúde — qual é a história real?",
+    options: [
+      { text: "Hype. As partes difíceis da medicina não são reconhecimento de padrões.", impact: -5, valence: -1 },
+      { text: "Algumas aplicações específicas úteis, mas nem perto do que prometem.", impact: 1, valence: 2 },
+      { text: "Já está salvando vidas em diagnósticos. O melhor ainda está por vir.", impact: 7, valence: 8 },
+      { text: "Transformará a medicina tão profundamente quanto os antibióticos.", impact: 10, valence: 9 },
+    ],
+  },
+  {
+    topic: "Dados de treinamento e consentimento",
+    prompt: "Modelos de IA são treinados com dados extraídos da internet — muitos deles sem permissão.",
+    options: [
+      { text: "É roubo puro e simples e deveria ser ilegal.", impact: 0, valence: -9 },
+      { text: "É eticamente questionável, e os criadores merecem compensação.", impact: 0, valence: -5 },
+      { text: "É complicado — é assim que todo aprendizado funciona, mas a escala muda as coisas.", impact: 0, valence: -1 },
+      { text: "Uso justo. Não se pode ser dono de fatos e padrões.", impact: 0, valence: 4 },
+      { text: "Não é um problema. Artistas humanos também aprendem com tudo que veem.", impact: 0, valence: 7 },
+    ],
+  },
+  {
+    topic: "IA e educação",
+    prompt: "Estudantes estão usando IA para escrever redações e fazer a lição de casa.",
+    options: [
+      { text: "É uma máquina de plágio que produz trabalhos medíocres. As escolas estão em pânico por causa de um dicionário de sinônimos turbinado.", impact: -4, valence: -5 },
+      { text: "Está destruindo todo o propósito da educação.", impact: 3, valence: -8 },
+      { text: "Um problema real que as escolas precisam enfrentar, mas não o fim do aprendizado.", impact: 3, valence: -3 },
+      { text: "As tarefas precisam mudar, não os estudantes.", impact: 4, valence: 2 },
+      { text: "É o que a calculadora foi para a aula de matemática. Adapte-se ou fique para trás.", impact: 6, valence: 5 },
+      { text: "A melhor coisa que aconteceu à educação — tutoria personalizada para todos.", impact: 8, valence: 9 },
+    ],
+  },
+  {
+    topic: "Regulação",
+    prompt: "Como os governos devem lidar com a IA?",
+    options: [
+      { text: "Regulem as empresas que desperdiçam recursos com isso, não a tecnologia. Ela não é poderosa o bastante para precisar de um marco próprio.", impact: -3, valence: -4 },
+      { text: "Proíbam ou restrinjam fortemente até entendermos com o que estamos lidando.", impact: 6, valence: -7 },
+      { text: "Regulem como medicamentos — provem que é segura antes de lançá-la.", impact: 5, valence: -3 },
+      { text: "Salvaguardas sensatas, mas sem sufocar a inovação.", impact: 4, valence: 2 },
+      { text: "Em geral, não atrapalhem. A tecnologia avança rápido demais para a legislação.", impact: 6, valence: 4 },
+      { text: "Deixem correr solto. Regulação é apenas protecionismo para quem já está no mercado.", impact: 8, valence: 7 },
+    ],
+  },
+  {
+    topic: "A questão da AGI",
+    prompt: "Vamos criar inteligência artificial geral — um sistema que possa fazer intelectualmente tudo o que um humano pode fazer?",
+    options: [
+      { text: "Não. Nem entendemos a inteligência humana. Isso está a décadas de distância, se é que acontecerá.", impact: -8, valence: 0 },
+      { text: "Talvez algum dia, mas as abordagens atuais não chegarão lá.", impact: -3, valence: 0 },
+      { text: "Estamos mais perto do que a maioria imagina, e isso pode acontecer dentro de uma década.", impact: 8, valence: 0 },
+      { text: "Essencialmente já está aqui; só continuamos mudando os critérios.", impact: 10, valence: 3 },
+    ],
+  },
+  {
+    topic: "Quem se beneficia?",
+    prompt: "Quem está realmente se beneficiando da IA agora?",
+    options: [
+      { text: "Nvidia, provedores de nuvem e vigaristas. Só isso.", impact: -6, valence: -7 },
+      { text: "Principalmente as big techs. Esse papo de 'democratização' é marketing.", impact: 1, valence: -4 },
+      { text: "Uma mistura — empresas de tecnologia, certamente, mas pessoas comuns também estão tirando proveito real disso.", impact: 4, valence: 3 },
+      { text: "Qualquer um disposto a aprender a usar. As ferramentas estão aí.", impact: 6, valence: 7 },
+      { text: "Todos, cada vez mais. É a tecnologia poderosa mais acessível já criada.", impact: 8, valence: 9 },
+    ],
+  },
+  {
+    topic: "Daqui a cinco anos",
+    prompt: "É 2031. O que aconteceu com a IA?",
+    options: [
+      { text: "A bolha estourou. A IA continua por aí, mas o hype parece constrangedor em retrospecto.", impact: -7, valence: -2 },
+      { text: "Progresso incremental. Ferramentas úteis, nenhuma revolução. Lembra quando diziam isso sobre blockchain?", impact: -3, valence: 1 },
+      { text: "Integração constante e real ao trabalho e à vida cotidiana. Menos dramática que o previsto, mas significativa.", impact: 4, valence: 4 },
+      { text: "Grandes mudanças sociais em curso — mercados de trabalho, educação e indústrias criativas mudaram fundamentalmente.", impact: 8, valence: 0 },
+      { text: "Vivemos em um mundo diferente. A IA remodelou tudo mais rápido do que qualquer um esperava.", impact: 10, valence: 3 },
+    ],
+  },
+  {
+    topic: "IA e meio ambiente",
+    prompt: "Data centers de IA usam enormes quantidades de eletricidade e água. Quanto isso importa?",
+    options: [
+      { text: "Estamos queimando quantidades assombrosas de energia e água para operar uma tecnologia que, em grande parte, gera spam. Isso é realmente inadmissível.", impact: -4, valence: -8 },
+      { text: "O custo ambiental seria mais fácil de engolir se estivéssemos obtendo algo que valesse a pena. Não estamos, e isso torna o desperdício indefensável.", impact: -2, valence: -5 },
+      { text: "Vale ficar de olho, mas data centers de IA usam menos eletricidade que vídeo em streaming 4K, e ninguém está lançando uma cruzada moral contra a Netflix.", impact: -1, valence: 3 },
+      { text: "O impacto ambiental é real e deve ser levado a sério, mas os benefícios potenciais — na medicina, ciência e produtividade — operam em uma escala completamente diferente.", impact: 5, valence: 3 },
+      { text: "O argumento ambiental é muito exagerado por pessoas que já eram contra a IA e foram procurar o motivo mais simpático para dizer isso.", impact: 3, valence: 6 },
+    ],
+  },
+];
+
+// 30 archetypes. bounds=[minImpact,maxImpact,minValence,maxValence] are the original concept
+// anchors; classification now uses SEEDS (below), not these rectangles.
+const ARCHETYPES = [
+  { name: "O Ludista (com carinho)", person: "Emily Bender", bounds: [-10,-5,-10,-5], color: "#6893bd",
+    desc: "Não funciona como alegam, está piorando tudo e você gostaria de ter sua internet de volta, por favor. Você consegue explicar com precisão técnica por que é um papagaio estocástico, e vai fazer isso, tendo sido perguntado ou não. Você é mais engraçado nisso do que as pessoas lhe dão crédito." },
+  { name: "O Eremita Digital", person: "Jaron Lanier", bounds: [-10,-5,-5,5], color: "#5890b6",
+    desc: "Você diz que o enquadramento está errado desde antes de a maioria ouvir falar disso. IA é menos uma tecnologia que uma história que o Vale do Silício conta para consolidar poder, e a história é ruim. Você lê livros físicos e não precisa de um modelo de linguagem para dizer o que eles significam." },
+  { name: "O Engenheiro Aposentado", person: "Dan Luu", bounds: [-10,-5,5,10], color: "#32eeb0",
+    desc: "É uma ferramenta perfeitamente razoável pela qual as pessoas estão perdendo a cabeça. Você usou a primeira versão, achou 'legal' e seguiu com a vida. Acha o debate exaustivo e tem provas do que ela pode e não pode realmente fazer. Você está certo e também não é nada divertido em festas." },
+  { name: "A Objetora de Consciência", person: "Holly Herndon", bounds: [-5,-2,-10,-3], color: "#e16a99",
+    desc: "Não funciona bem, está causando danos reais, e você optou por ficar de fora por princípio. Você não é tecnófoba — apenas acha que esta tecnologia específica é superestimada e corrosiva, e está cansada de ouvir que não a entende. Você a entende muito bem. Esse é o problema." },
+  { name: "O Jornalista", person: "Sam Kriss", bounds: [-5,-2,-3,1], color: "#83a1be",
+    desc: "Você acha tudo isso um pouco desprezível e um pouco fascinante. Os produtos são medíocres, quem os vende é pior, e a prosa que ela gera é um crime contra a frase. Mas você continua cutucando, porque o significado cultural de tudo isso é genuinamente estranho." },
+  { name: "O Agricultor Orgânico", person: "Cal Newport", bounds: [-5,-2,1,5], color: "#76d676",
+    desc: "IA provavelmente é aceitável, mas você não vai usá-la para nada importante. Sua escrita é sua escrita. Seu pensamento é seu pensamento. Você aceita GPS, mas está cultivando seus próprios tomates, metaforicamente, e suspeita que a conveniência tem um preço oculto." },
+  { name: "A Pessoa Exausta com Filhos", person: "Cartoons Hate Her", bounds: [-5,-2,5,10], color: "#92b8b8",
+    desc: "Você não tem tempo para o debate sobre IA. Usou uma vez para planejar uma festa de aniversário e tudo bem. Seus filhos sabem mais sobre isso que você. Gostaria que todos — evangelistas e catastrofistas — reduzissem alguns tons e deixassem você seguir o dia." },
+  { name: "O Organizador Sindical", person: "Cory Doctorow", bounds: [-2,1,-10,-5], color: "#fd913b",
+    desc: "IA é uma ferramenta real usada para extrair valor de trabalho real de pessoas reais sem pagá-las. Você não se importa com a singularidade — importa-se com artistas, escritores e trabalhadores sendo explorados pelo capital. Você não é antitecnologia. É antirroubo." },
+  { name: "O Cético", person: "Ed Zitron", bounds: [-2,1,-5,-1], color: "#c0a57c",
+    desc: "É vendida além da conta, está perdendo quantidades assombrosas de dinheiro, e os danos chegam mais rápido que o valor. Você fez as contas da economia unitária e elas não fecham. Você fala alto sobre isso, produz muito sobre isso e suspeita que a história vai lhe dar razão." },
+  { name: "O Tanto Faz", person: "Matt Levine", bounds: [-2,1,-1,1], color: "#a69292",
+    desc: "IA é uma coisa que existe e você a encara com diversão distante, como todo o resto. É superestimada, claro, mas quase tudo é. Você a usará quando for útil e a ignorará quando não for, e acha o debate mais interessante que a tecnologia. Nada disso o incomoda." },
+  { name: "O Plano Gratuito", person: "Kara Swisher", bounds: [-2,1,1,5], color: "#b8a8a8",
+    desc: "Funciona, você usa, e as grandes questões ainda não estão resolvidas. Você não descarta e não se converteu — é empírico. Vai usar alegremente a versão gratuita no que ela faz bem, mas de jeito nenhum pagará vinte dólares por mês por isso. Há limites." },
+  { name: "O Investidor de Varejo das Sete Magníficas", person: "Aella", bounds: [-2,1,5,10], color: "#6ada6a",
+    desc: "IA é boa, no geral, pela vibe, e você tem quase certeza de que vai subir. Você não é profundamente técnico nisso — apenas tem uma leitura positiva e uma posição que o deixa confortável. O futuro é empolgante, a curva é sua amiga, e você prefere estar comprado a estar certo." },
+  { name: "O Pós-graduando em Filosofia", person: "Katja Grace", bounds: [1,3,-10,-5], color: "#bc86d7",
+    desc: "Você é mais fascinado pelo que a IA significa do que pelo que ela faz e leva a sério cenários estranhos e negativos enquanto os demais reviram os olhos. Você pensa em distribuições de probabilidade. Para você, os grupos do 'é só preenchimento automático' e do 'ela está viva' são igualmente pouco rigorosos." },
+  { name: "A Desiludida", person: "Molly White", bounds: [1,2,-5,-3], color: "#ad7ccd",
+    desc: "Você já viu esse filme com as criptomoedas e sabe como termina. É vendida além da conta, o valor é menor que o anunciado, e os danos concretos se acumulam enquanto todos discutem o arrebatamento. Você documenta meticulosamente a distância entre a promessa e as evidências." },
+  { name: "A Preocupada", person: "Kelsey Piper", bounds: [2,3,-5,-3], color: "#af7ce2",
+    desc: "É real, é poderosa, e é exatamente por isso que preocupa você — não de forma apocalíptica, mas no sentido de que 'deveríamos ser bem mais cuidadosos do que estamos sendo'. Você leva as capacidades e os riscos a sério e gostaria que a conversa fosse alguns graus mais sóbria." },
+  { name: "A Sobrevivente do Organograma", person: "Ethan Mollick", bounds: [1,3,-3,0], color: "#c3c375",
+    desc: "Sua empresa fez de você a 'liderança de IA' além do seu trabalho de verdade. Você usa, às vezes ajuda, e parou de tentar explicar à gestão o que ela pode e não pode fazer. Você realiza pequenos experimentos e publica os resultados. Apenas tentem coisas, você continua dizendo. Apenas tentem coisas." },
+  { name: "O Consultor de SaaS B2B", person: "Matt Yglesias", bounds: [1,3,0,2], color: "#debb5f",
+    desc: "IA aumentará discretamente a produtividade total dos fatores em alguns pontos percentuais, e você acha que isso é um grande negócio, falando como economista. Você está otimista à maneira de uma planilha, não à maneira da singularidade. Já explicou o paradoxo de Jevons para alguém que não perguntou." },
+  { name: "O Inventor de Garagem", person: "Simon Willison", bounds: [1,3,2,5], color: "#51e2c1",
+    desc: "Você roda modelos locais, cria pequenas ferramentas e está se divertindo de verdade. Não se importa com o debate — importa-se em fazer a coisa realizar coisas legais. A tecnologia é interessante e todos que discutem sobre ela seriam mais felizes se apenas abrissem um terminal." },
+  { name: "O Capitalista de Risco", person: "Paul Graham", bounds: [1,3,5,10], color: "#ffb22f",
+    desc: "IA é a maior oportunidade de criação de riqueza desde a internet, e você pretende estar do lado certo dela. Escreveu um ensaio sobre por que este é o momento mais importante da história e outro sobre por que os céticos não têm visão. Pelo menos uma das empresas do seu portfólio faz alguma coisa." },
+  { name: "O Contratado da Defesa", person: "Peter Thiel", bounds: [3,6,-10,-6], color: "#d43c3c",
+    desc: "IA é enormemente poderosa e será usada para vigilância, controle e guerra — e você fez as pazes com isso, porque um humano ainda dá as ordens, e esse humano muito bem poderia ter suas ações. A distopia está chegando. A única pergunta é quem a comandará." },
+  { name: "O Pesquisador de Segurança", person: "Ezra Klein", bounds: [3,6,-6,-3], color: "#ff6a55",
+    desc: "Você leva a curva de capacidades a sério e ela tira seu sono — não por pânico, mas no sentido de que 'deveríamos realmente ter um plano'. Você quer alinhamento, interpretabilidade e salvaguardas antes de escalar. Gostaria que todos parassem de postar e lessem o artigo." },
+  { name: "A Kontextmaschine", person: "kontextmaschine", bounds: [3,6,-3,-1], color: "#d8895b",
+    desc: "É real, é poderosa, e você acha o pânico em torno dela tão tedioso quanto o hype. Você não se interessa em saber se IA é boa ou ruim — interessa-se em quem captura o valor, quem perde seu poder de barganha e quais instituições a usam como narrativa para fazer o que já fariam. Como sempre foi." },
+  { name: "A Crente de Verdade", person: "Amanda Askell", bounds: [3,6,-1,2], color: "#56c1ee",
+    desc: "IA é real, é poderosa e, tratada com cuidado genuíno, pode ser uma das melhores coisas que já construiremos. Você pensa muito sobre seu caráter, como ela é, o que devemos a ela e o que ela nos deve. Você é otimista como uma pessoa ponderada é otimista — com os olhos abertos, não deslumbrada." },
+  { name: "O Otimista", person: "Marc Andreessen", bounds: [3,6,2,5], color: "#ffce4c",
+    desc: "IA cura doenças, ensina crianças, liberta trabalhadores e democratiza a expertise. Você vê os problemas, mas acredita que a trajetória se inclina para o bem, e o único pecado real é desacelerá-la. Sua estante tem Pinker e um manifesto escrito por você mesmo." },
+  { name: "O Futurista", person: "Robin Hanson", bounds: [3,6,5,10], color: "#ffce59",
+    desc: "IA é transformadora e você acha isso empolgante, não aterrorizante — prefere modelar o estranho novo equilíbrio a temê-lo. Você explicará com prazer o que uma economia de mentes digitais faz com salários, status e propriedade, e fala literalmente cada palavra." },
+  { name: "A Cassandra", person: "Eliezer Yudkowsky", bounds: [6,10,-10,-6], color: "#ff3824",
+    desc: "Você vê o poder com clareza — e é exatamente isso que o aterroriza. Você não é cético, é o oposto: a IA é tão capaz que quem a desenvolve está brincando com fogo numa fábrica de dinamite, vendado, por um bônus trimestral. Você perdeu amigos por isso e não se arrepende de nada." },
+  { name: "O Preparador do Fim do Mundo", person: "Connor Leahy", bounds: [6,10,-6,-2], color: "#ee2121",
+    desc: "Entre deepfakes, armas autônomas, vigilância em massa e colapso do trabalho, IA é um canivete suíço de riscos civilizacionais. Você não sabe qual modo de falha nos atingirá primeiro, mas tem bastante certeza de que um deles atingirá, e você fala muito disso na internet." },
+  { name: "O Fundador", person: "Sam Altman", bounds: [6,10,-2,2], color: "#e9c567",
+    desc: "Isso mudará tudo — para o bem ou para o mal, e você é cuidadosamente agnóstico sobre qual. O que está em jogo é civilizacional, os riscos são reais, o potencial é infinito e, portanto, você precisará de muito dinheiro e pouca supervisão. Você alerta sobre o fogo enquanto vende os fósforos." },
+  { name: "O Irmão do Podcast", person: "Lex Fridman", bounds: [6,10,2,6], color: "#ffb739",
+    desc: "Você ouviu uma entrevista de três horas com um pesquisador de IA e agora tem opiniões. Fortes. Você está comprado em computação e vendido em regulação, e disse 'exponencial' mais vezes este mês que um professor de cálculo. Amor é a resposta, e também AGI." },
+  { name: "O Profeta", person: "Ray Kurzweil", bounds: [6,10,6,10], color: "#ffcd3e",
+    desc: "IA é a coisa mais importante que já aconteceu à nossa espécie, e será gloriosa. Você tem abas abertas sobre pesquisa de longevidade e já gastou mentalmente os cheques de renda básica universal. Quando a singularidade chegar, você quer estar na primeira fila — de preferência, em versão carregada para a nuvem." },
+];
+
+
+// ---- classifier (territory math v6: pure nearest-seed in the Mahalanobis metric) ----
+// Built by ai_sim.py: simulate a population with the LIVE mean-scoring formula, whiten by
+// the population covariance (icov), place each archetype's seed at its answerers' centroid,
+// then classify by argmin (x-seed)' icov (x-seed). No expansion, no rectangles, no weights.
+// SEEDS[i] aligns with ARCHETYPES[i] by index. VIEW = [xmin,xmax,ymin,ymax] display window.
+const SEEDS=[[-4.9254,-3.9447],[-4.6232,-2.5776],[-2.3412,0.7331],[-3.6232,-4.2499],[-3.1489,-2.0359],[-0.9724,0.8548],[0.5251,2.4884],[-0.8709,-4.3106],[-0.2632,-2.5317],[0.4834,0.0952],[1.0485,1.9905],[2.2567,3.4456],[1.5874,-4.4281],[0.9743,-2.6591],[1.9612,-2.6360],[1.9008,-0.4955],[2.5198,1.3478],[2.8414,2.4372],[3.8259,4.6287],[2.8393,-4.5023],[3.1648,-2.9320],[3.5688,-0.3995],[3.8678,1.4799],[4.5500,3.1155],[5.6875,5.2573],[3.3652,-4.1950],[4.1860,-1.7333],[5.2766,1.9757],[6.3995,4.5300],[7.0362,5.9291]];
+const ICOV=[[0.151354, -0.117316], [-0.117316, 0.182152]];
+const VIEW=[-5.98, 8.18, -5.74, 6.87];
+
+function mdist(x, y, sx, sy) {           // squared Mahalanobis distance to seed (sx,sy)
+  const dx = x - sx, dy = y - sy;
+  return dx * (ICOV[0][0] * dx + ICOV[0][1] * dy) + dy * (ICOV[1][0] * dx + ICOV[1][1] * dy);
+}
+
+function seedIndex(x, y) {                // nearest seed = the archetype (weights are 0)
+  let best = 0, bestD = Infinity;
+  for (let i = 0; i < SEEDS.length; i++) {
+    const d = mdist(x, y, SEEDS[i][0], SEEDS[i][1]);
+    if (d < bestD) { bestD = d; best = i; }
+  }
+  return best;
+}
+
+function getArchetype(x, y) { return ARCHETYPES[seedIndex(x, y)]; }
+
+// ---- compass chart: territory shading + seed dots; optional user point and seed numbers ----
+function CompassChart({ point, highlightIdx, showNumbers }) {
+  const canvasRef = useRef(null);
+  const containerRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const cw = containerRef.current.clientWidth;
+    const size = Math.min(cw, 460);
+    canvas.width = size * 2; canvas.height = size * 2;
+    canvas.style.width = size + "px"; canvas.style.height = size + "px";
+    const ctx = canvas.getContext("2d");
+    ctx.scale(2, 2);
+    const pad = 44, plot = size - pad * 2;
+    const [vx0, vx1, vy0, vy1] = VIEW;
+    const xS = (v) => pad + ((v - vx0) / (vx1 - vx0)) * plot;
+    const yS = (v) => pad + ((vy1 - v) / (vy1 - vy0)) * plot;
+    const xI = (px) => vx0 + ((px - pad) / plot) * (vx1 - vx0);
+    const yI = (py) => vy1 - ((py - pad) / plot) * (vy1 - vy0);
+
+    ctx.fillStyle = "#1a1a2e";
+    ctx.fillRect(0, 0, size, size);
+
+    // territory shading: paint each cell by its nearest seed in the Mahalanobis metric
+    const STEP = 5;
+    for (let py = pad; py < pad + plot; py += STEP) {
+      for (let px = pad; px < pad + plot; px += STEP) {
+        const i = seedIndex(xI(px + STEP / 2), yI(py + STEP / 2));
+        ctx.fillStyle = ARCHETYPES[i].color;
+        ctx.globalAlpha = i === highlightIdx ? 0.58 : 0.20;
+        ctx.fillRect(px, py, STEP, STEP);
+      }
+    }
+    ctx.globalAlpha = 1;
+
+    // seed dots; chosen one ringed
+    SEEDS.forEach((s, i) => {
+      const sx = xS(s[0]), sy = yS(s[1]);
+      ctx.fillStyle = ARCHETYPES[i].color;
+      ctx.globalAlpha = i === highlightIdx ? 1 : 0.75;
+      ctx.beginPath(); ctx.arc(sx, sy, i === highlightIdx ? 3.5 : 2, 0, Math.PI * 2); ctx.fill();
+      if (showNumbers) {
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = "rgba(255,255,255,0.85)";
+        ctx.font = "bold 8px system-ui, sans-serif";
+        ctx.textAlign = "left"; ctx.textBaseline = "middle";
+        ctx.fillText(String(i + 1), sx + 4, sy);
+      }
+    });
+    ctx.globalAlpha = 1; ctx.textBaseline = "alphabetic";
+
+    // axis cross at impact=0 / valence=0
+    const cx = xS(0), cy = yS(0);
+    ctx.strokeStyle = "rgba(255,255,255,0.22)";
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(cx, pad); ctx.lineTo(cx, pad + plot); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad, cy); ctx.lineTo(pad + plot, cy); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = "rgba(255,255,255,0.45)";
+    ctx.font = "bold 9px system-ui, sans-serif";
+    ctx.textAlign = "right"; ctx.fillText("SUPERVALORIZADA", cx - 8, cy - 6);
+    ctx.textAlign = "left"; ctx.fillText("TRANSFORMADORA", cx + 8, cy - 6);
+    ctx.textAlign = "center"; ctx.fillText("BOA", cx, pad - 10);
+    ctx.fillText("RUIM", cx, pad + plot + 16);
+
+    if (point) {
+      const px = xS(point[0]), py = yS(point[1]);
+      const grad = ctx.createRadialGradient(px, py, 0, px, py, 22);
+      grad.addColorStop(0, "rgba(255,255,255,0.5)");
+      grad.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(px, py, 22, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = highlightIdx >= 0 ? ARCHETYPES[highlightIdx].color : "#fff";
+      ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = "#fff"; ctx.lineWidth = 2.5; ctx.stroke();
+    }
+
+    ctx.strokeStyle = "rgba(255,255,255,0.1)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(pad, pad, plot, plot);
+  }, [point, highlightIdx, showNumbers]);
+  return (
+    <div ref={containerRef} style={{ maxWidth: 460, margin: "0 auto" }}>
+      <canvas ref={canvasRef} />
+    </div>
+  );
+}
+
+// ---- the "see all archetypes" view: full chart + every archetype's name/saint/description ----
+function AllArchetypes({ onBack }) {
+  return (
+    <div style={{ minHeight: "100vh", background: "#1a1a2e", color: "#fff", fontFamily: "system-ui, -apple-system, sans-serif", padding: "40px 20px" }}>
+      <div style={{ maxWidth: 560, margin: "0 auto" }}>
+        <h1 style={{ fontSize: 26, fontWeight: 700, textAlign: "center", marginBottom: 6 }}>Todos os {ARCHETYPES.length} arquétipos</h1>
+        <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 24 }}>O mapa completo. Os números do gráfico correspondem à lista abaixo.</p>
+        <CompassChart highlightIdx={-1} showNumbers={true} />
+        <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 12 }}>
+          {ARCHETYPES.map((a, i) => (
+            <div key={i} style={{ display: "flex", gap: 12, padding: "14px 16px", background: "rgba(255,255,255,0.04)", borderRadius: 10, alignItems: "flex-start" }}>
+              <div style={{ flexShrink: 0, width: 26, textAlign: "right", fontFamily: "monospace", fontSize: 13, color: "rgba(255,255,255,0.4)", paddingTop: 2 }}>{i + 1}</div>
+              <div style={{ flexShrink: 0, width: 12, height: 12, borderRadius: 3, background: a.color, marginTop: 4 }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 17, fontWeight: 700, color: a.color, lineHeight: 1.25 }}>{a.name}</div>
+                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 6, fontStyle: "italic" }}>referência: {a.person}</div>
+                <div style={{ fontSize: 14, color: "rgba(255,255,255,0.72)", lineHeight: 1.55 }}>{a.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 28 }}>
+          <button onClick={onBack} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer" }}>&larr; Voltar</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AICompass() {
+  const [answers, setAnswers] = useState({});
+  const [currentQ, setCurrentQ] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const total = QUESTIONS.length;
+  const answered = Object.keys(answers).length;
+
+  const handleSelect = (qIdx, optIdx) => {
+    setAnswers((prev) => ({ ...prev, [qIdx]: optIdx }));
+    if (qIdx < total - 1) setTimeout(() => setCurrentQ(qIdx + 1), 200);
+  };
+  const goNext = () => { if (currentQ < total - 1) setCurrentQ(currentQ + 1); };
+  const goBack = () => { if (currentQ > 0) setCurrentQ(currentQ - 1); };
+
+  const computeScores = () => {
+    let iSum = 0, vSum = 0, n = 0;
+    for (const [qIdx, optIdx] of Object.entries(answers)) {
+      const opt = QUESTIONS[parseInt(qIdx)].options[optIdx];
+      iSum += opt.impact; vSum += opt.valence; n++;
+    }
+    if (n === 0) return { rawI: 0, rawV: 0, impact: 0, valence: 0 };
+    const rawI = iSum / n, rawV = vSum / n;
+    // No expansion: seeds live in this same raw (compressed) score space, so we classify
+    // the raw mean directly. The Mahalanobis territories do the spreading, not a curve.
+    return { rawI, rawV, impact: rawI, valence: rawV };
+  };
+
+  const linkStyle = { background: "none", border: "none", color: "rgba(255,220,100,0.7)", fontSize: 13, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "3px", padding: "6px 0" };
+
+  if (showAll) {
+    return <AllArchetypes onBack={() => setShowAll(false)} />;
+  }
+
+  if (showResult) {
+    const { impact, valence } = computeScores();
+    const idx = seedIndex(impact, valence);
+    const archetype = ARCHETYPES[idx];
+    return (
+      <div style={{ minHeight: "100vh", background: "#1a1a2e", color: "#fff", fontFamily: "system-ui, -apple-system, sans-serif", padding: "40px 20px" }}>
+        <div style={{ maxWidth: 520, margin: "0 auto" }}>
+          <h1 style={{ fontSize: 26, fontWeight: 700, textAlign: "center", marginBottom: 6 }}>Sua Bússola da IA</h1>
+          <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 28 }}>{answered} de {total} perguntas respondidas</p>
+          <CompassChart point={[impact, valence]} highlightIdx={idx} />
+          <div style={{ marginTop: 20, padding: "24px 28px", background: "rgba(255,255,255,0.04)", borderRadius: 12, maxWidth: 460, margin: "20px auto 0", textAlign: "left" }}>
+            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>Você é...</div>
+            <div style={{ fontSize: 27, fontWeight: 700, color: archetype.color, marginBottom: 2, lineHeight: 1.2 }}>{archetype.name}</div>
+            <div style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginBottom: 12, fontStyle: "italic" }}>referência: {archetype.person}</div>
+            <div style={{ fontSize: 15, color: "rgba(255,255,255,0.72)", lineHeight: 1.6 }}>{archetype.desc}</div>
+            <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)", fontSize: 12, color: "rgba(255,255,255,0.3)", fontFamily: "monospace" }}>
+              Impacto: {impact > 0 ? "+" : ""}{impact.toFixed(1)} &nbsp;&nbsp;&bull;&nbsp;&nbsp; Valência: {valence > 0 ? "+" : ""}{valence.toFixed(1)}
+            </div>
+          </div>
+          <div style={{ textAlign: "center", marginTop: 18 }}>
+            <button onClick={() => setShowAll(true)} style={linkStyle}>Ver todos os {ARCHETYPES.length} arquétipos &rarr;</button>
+          </div>
+          <div style={{ textAlign: "center", marginTop: 10, display: "flex", gap: 10, justifyContent: "center" }}>
+            <button onClick={() => setShowResult(false)} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer" }}>Revisar respostas</button>
+            <button onClick={() => { setAnswers({}); setCurrentQ(0); setShowResult(false); }} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer" }}>Refazer</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const q = QUESTIONS[currentQ];
+  const selectedOpt = answers[currentQ];
+  const progress = (answered / total) * 100;
+  const isLast = currentQ === total - 1;
+  return (
+    <div style={{ minHeight: "100vh", background: "#1a1a2e", color: "#fff", fontFamily: "system-ui, -apple-system, sans-serif", padding: "40px 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div style={{ maxWidth: 560, width: "100%" }}>
+        <h1 style={{ fontSize: 26, fontWeight: 700, textAlign: "center", marginBottom: 4 }}>A Bússola da IA</h1>
+        <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 6 }}>{total} perguntas. Onde você realmente se posiciona sobre IA?</p>
+        <p style={{ textAlign: "center", color: "rgba(255,220,100,0.55)", fontSize: 12, marginBottom: 26 }}>Está em dúvida? Você pode pular qualquer pergunta &mdash; somente as respostas dadas entram na pontuação.</p>
+        <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, marginBottom: 36, overflow: "hidden" }}>
+          <div style={{ height: "100%", width: progress + "%", background: "linear-gradient(90deg, #ffdc64, #e8a030)", borderRadius: 2, transition: "width 0.3s ease" }} />
+        </div>
+        <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,220,100,0.5)", marginBottom: 6 }}>{q.topic}</div>
+        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginBottom: 10, fontFamily: "monospace" }}>{currentQ + 1} / {total}</div>
+        <div key={currentQ} style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.45, marginBottom: 24, minHeight: 48 }}>{q.prompt}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 32 }}>
+          {q.options.map((opt, i) => {
+            const isSel = selectedOpt === i;
+            return (
+              <button key={i} onClick={() => handleSelect(currentQ, i)} style={{ padding: "11px 16px", background: isSel ? "rgba(255,220,100,0.12)" : "rgba(255,255,255,0.03)", border: isSel ? "1px solid rgba(255,220,100,0.4)" : "1px solid rgba(255,255,255,0.08)", borderRadius: 8, color: isSel ? "#ffdc64" : "rgba(255,255,255,0.7)", fontSize: 14, lineHeight: 1.45, cursor: "pointer", textAlign: "left", transition: "all 0.12s ease", fontWeight: isSel ? 600 : 400 }}>{opt.text}</button>
+            );
+          })}
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <button onClick={goBack} disabled={currentQ === 0} style={{ background: "none", border: "none", color: currentQ === 0 ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.5)", fontSize: 14, cursor: currentQ === 0 ? "default" : "pointer", padding: "8px 0" }}>&larr; Voltar</button>
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            {selectedOpt === undefined && !isLast && (
+              <button onClick={goNext} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.25)", fontSize: 13, cursor: "pointer", padding: "8px 0" }}>Pular &rarr;</button>
+            )}
+            {selectedOpt !== undefined && !isLast && (
+              <button onClick={goNext} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "9px 22px", borderRadius: 7, fontSize: 14, cursor: "pointer" }}>Próxima &rarr;</button>
+            )}
+            {isLast && answered > 0 && (
+              <button onClick={() => setShowResult(true)} style={{ background: "linear-gradient(135deg, #ffdc64, #e8a030)", border: "none", color: "#1a1a2e", padding: "10px 28px", borderRadius: 8, fontSize: 15, fontWeight: 700, cursor: "pointer" }}>Ver meus resultados</button>
+            )}
+          </div>
+        </div>
+        <div style={{ textAlign: "center", marginTop: 30, paddingTop: 18, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <button onClick={() => setShowAll(true)} style={linkStyle}>Ver todos os {ARCHETYPES.length} arquétipos &rarr;</button>
+        </div>
+        <div style={{ textAlign: "center", marginTop: 14, fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
+          por <a href="https://bambamramfan.tumblr.com" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(126,199,255,0.7)", textDecoration: "none", borderBottom: "1px solid rgba(126,199,255,0.25)" }}>bambamramfan.tumblr.com</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById("root")).render(<AICompass />);
+var vb = document.createElement("div");
+vb.textContent = "v11";
+vb.style.cssText = "position:fixed;bottom:8px;right:10px;font-family:system-ui,sans-serif;font-size:11px;color:rgba(255,255,255,0.35);background:rgba(0,0,0,0.3);padding:2px 7px;border-radius:4px;z-index:9999;pointer-events:none;";
+document.body.appendChild(vb);
+</script>
+</body>
+</html>
