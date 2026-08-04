@@ -421,6 +421,8 @@ function AICompass() {
   const [currentQ, setCurrentQ] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const copyResetTimer = useRef(null);
   const total = QUESTIONS.length;
   const answered = Object.keys(answers).length;
 
@@ -442,6 +444,31 @@ function AICompass() {
     // No expansion: seeds live in this same raw (compressed) score space, so we classify
     // the raw mean directly. The Mahalanobis territories do the spreading, not a curve.
     return { rawI, rawV, impact: rawI, valence: rawV };
+  };
+
+  const copyResults = (archetypeNumber, impact, valence) => {
+    const text = `${archetypeNumber},${impact.toFixed(1)},${valence.toFixed(1)},${answered}`;
+    const markCopied = () => {
+      setCopied(true);
+      clearTimeout(copyResetTimer.current);
+      copyResetTimer.current = setTimeout(() => setCopied(false), 1800);
+    };
+    const fallback = () => {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const didCopy = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      if (didCopy) markCopied();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(markCopied).catch(fallback);
+    } else {
+      fallback();
+    }
   };
 
   const linkStyle = { background: "none", border: "none", color: "rgba(255,220,100,0.7)", fontSize: 13, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "3px", padding: "6px 0" };
@@ -473,8 +500,9 @@ function AICompass() {
             <button onClick={() => setShowAll(true)} style={linkStyle}>Ver todos os {ARCHETYPES.length} arquétipos &rarr;</button>
           </div>
           <div style={{ textAlign: "center", marginTop: 10, display: "flex", gap: 10, justifyContent: "center" }}>
-            <button onClick={() => setShowResult(false)} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer" }}>Revisar respostas</button>
-            <button onClick={() => { setAnswers({}); setCurrentQ(0); setShowResult(false); }} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer" }}>Refazer</button>
+            <button onClick={() => { setCopied(false); setShowResult(false); }} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer" }}>Revisar respostas</button>
+            <button onClick={() => { setCopied(false); setAnswers({}); setCurrentQ(0); setShowResult(false); }} style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer" }}>Refazer</button>
+            <button onClick={() => copyResults(idx + 1, impact, valence)} style={{ background: copied ? "rgba(50,238,176,0.22)" : "rgba(255,255,255,0.08)", border: copied ? "1px solid rgba(50,238,176,0.65)" : "1px solid rgba(255,255,255,0.15)", color: copied ? "#32eeb0" : "#fff", padding: "10px 24px", borderRadius: 8, fontSize: 14, cursor: "pointer", transition: "all 0.18s ease" }}>{copied ? "Copiado!" : "Copiar"}</button>
           </div>
         </div>
       </div>
@@ -533,7 +561,7 @@ function AICompass() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(<AICompass />);
 var vb = document.createElement("div");
-vb.textContent = "v11";
+vb.textContent = "v12";
 vb.style.cssText = "position:fixed;bottom:8px;right:10px;font-family:system-ui,sans-serif;font-size:11px;color:rgba(255,255,255,0.35);background:rgba(0,0,0,0.3);padding:2px 7px;border-radius:4px;z-index:9999;pointer-events:none;";
 document.body.appendChild(vb);
 </script>
