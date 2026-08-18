@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Car VR Prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- iOS gyroscope permission overlay -->
+  <div id="permission-overlay">
+    <div id="permission-card">
+      <p>Car VR Prototype</p>
+      <button id="enable-gyro">Enter VR</button>
+    </div>
+  </div>
+
+  <!-- Info hint -->
+  <div id="hint">look around by moving your phone</div>
+
+  <!-- Three.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <!-- App logic -->
+  <script src="app.js"></script>
+</body>
+</html>
