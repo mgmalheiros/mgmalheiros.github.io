@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oficina de Recursão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: mapa de fases fixo à esquerda (pilha de mundos), bancada de trabalho à direita com código, peças e o traço da recursão */
+:root {
+  --bg: #F1F4F1;
+  --surface: #FFFFFF;
+  --sunk: #E5EAE5;
+  --ink: #17201B;
+  --muted: #56635C;
+  --line: #CFD7D0;
+  --accent: #B8337A;
+  --accent-soft: #F6DDEA;
+  --accent-ink: #FFFFFF;
+  --ok: #1B7556;
+  --ok-bg: #DCEFE5;
+  --bad: #AE3B27;
+  --bad-bg: #F7E1DB;
+  --star: #C98A12;
+  --code-bg: #18201C;
+  --code-fg: #E3EAE5;
+  --code-line: #2A3530;
+  --code-hl: rgba(243, 143, 198, 0.17);
+  --kw: #F38FC6;
+  --ty: #86D4B2;
+  --num: #F1C56C;
+  --str: #B9DB8B;
+  --com: #7E8D86;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-code: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111513; --surface: #19201C; --sunk: #212925; --ink: #E4EBE6; --muted: #9AA8A1; --line: #2D3832;
+    --accent: #EE7DB9; --accent-soft: #3A1F2E; --accent-ink: #1B0E15;
+    --ok: #62CC9F; --ok-bg: #163428; --bad: #F0907A; --bad-bg: #3A1F19; --star: #F0BE4E;
+    --code-bg: #0B0F0D; --code-fg: #E3EAE5; --code-line: #212A26;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111513; --surface: #19201C; --sunk: #212925; --ink: #E4EBE6; --muted: #9AA8A1; --line: #2D3832;
+  --accent: #EE7DB9; --accent-soft: #3A1F2E; --accent-ink: #1B0E15;
+  --ok: #62CC9F; --ok-bg: #163428; --bad: #F0907A; --bad-bg: #3A1F19; --star: #F0BE4E;
+  --code-bg: #0B0F0D; --code-fg: #E3EAE5; --code-line: #212A26;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+}
+.app {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+  display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 28px;
+}
+header.top {
+  grid-column: 1 / -1;
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px;
+  border-bottom: 2px solid var(--ink); padding-bottom: 14px;
+}
+header.top h1 {
+  font-family: var(--f-display); font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.4rem);
+  line-height: 1; margin: 0; letter-spacing: -0.02em; text-wrap: balance;
+}
+header.top h1 .paren { color: var(--accent); }
+header.top p { margin: 6px 0 0; color: var(--muted); }
+.score {
+  font-family: var(--f-code); font-size: 0.95rem; font-variant-numeric: tabular-nums;
+  display: flex; align-items: center; gap: 10px;
+}
+.score .stars { color: var(--star); font-weight: 600; }
+.reset { background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 0.8rem; cursor: pointer; }
+.reset:hover { color: var(--ink); border-color: var(--muted); }
+
+/* mapa */
+nav.map { display: flex; flex-direction: column; gap: 18px; align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+.world { display: flex; flex-direction: column; gap: 4px; }
+.world-btn {
+  all: unset; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+  padding: 6px 8px; border-radius: 6px;
+}
+.world-btn:focus-visible, .lv:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.world-btn .wname { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; }
+.world-btn .wtag { font-family: var(--f-code); font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.world-btn.on { background: var(--accent-soft); }
+.lv {
+  all: unset; cursor: pointer; display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: 8px;
+  padding: 5px 8px 5px 10px; border-left: 2px solid var(--line); margin-left: 12px; font-size: 0.92rem;
+}
+.lv .n { font-family: var(--f-code); font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.lv .st { font-size: 0.75rem; color: var(--star); letter-spacing: 1px; font-variant-numeric: tabular-nums; }
+.lv .st .off { color: var(--line); }
+.lv:hover { background: var(--sunk); }
+.lv.on { border-left-color: var(--accent); background: var(--sunk); font-weight: 700; }
+.lv.locked { cursor: not-allowed; color: var(--muted); opacity: 0.55; }
+.lv.locked:hover { background: none; }
+
+/* painel */
+main { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.eyebrow { font-family: var(--f-code); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.eyebrow b { color: var(--accent); font-weight: 600; }
+h2 { font-family: var(--f-display); font-weight: 800; font-size: clamp(1.5rem, 3.4vw, 2rem); line-height: 1.1; margin: 4px 0 8px; letter-spacing: -0.015em; text-wrap: balance; }
+h3 { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; margin: 0 0 8px; }
+.prose { max-width: 66ch; }
+.prose p { margin: 0 0 10px; }
+
+.code {
+  background: var(--code-bg); color: var(--code-fg); border-radius: 10px;
+  font-family: var(--f-code); font-size: 0.9rem; line-height: 1.7;
+  overflow-x: auto; padding: 16px 0; min-width: 0;
+}
+.code pre { margin: 0; padding: 0 18px; font: inherit; white-space: pre; }
+.code.lines { padding: 12px 0; font-size: 0.86rem; }
+.k { color: var(--kw); } .t { color: var(--ty); } .nm { color: var(--num); } .s { color: var(--str); } .c { color: var(--com); font-style: italic; }
+
+.cl { white-space: pre; padding: 0 16px 0 13px; border-left: 3px solid transparent; }
+.cl .ln, .bugline .ln { color: var(--com); display: inline-block; width: 3ch; user-select: none; }
+.cl.on { background: var(--code-hl); border-left-color: var(--kw); }
+.cl.on .ln { color: var(--kw); }
+.fillv { color: var(--ty); border-bottom: 1px dotted var(--ty); }
+
+.slot {
+  display: inline-block; min-width: 4.5ch; padding: 0 6px; margin: 1px 0;
+  border: 1.5px dashed var(--kw); border-radius: 5px; color: var(--code-fg);
+  cursor: pointer; font: inherit; background: transparent; line-height: 1.45; text-align: center;
+}
+.slot.empty { color: var(--com); }
+.slot.active { border-style: solid; background: color-mix(in srgb, var(--kw) 22%, transparent); }
+.slot.wrong { border: 1.5px solid #F0907A; color: #F7B3A4; text-decoration: line-through; }
+
+.bugline { display: block; width: 100%; text-align: left; font: inherit; color: inherit; background: none; border: 0; padding: 0 18px 0 15px; cursor: pointer; white-space: pre; border-left: 3px solid transparent; }
+.bugline:hover { background: var(--code-line); }
+.bugline:focus-visible { outline: 2px solid var(--kw); outline-offset: -2px; }
+.bugline.wrong { border-left-color: #F0907A; background: rgba(240,144,122,0.12); }
+
+.bank { display: flex; flex-direction: column; gap: 8px; }
+.bank-label { font-size: 0.9rem; color: var(--muted); }
+.tiles { display: flex; flex-wrap: wrap; gap: 8px; }
+.tile {
+  font-family: var(--f-code); font-size: 0.88rem; padding: 7px 12px; border-radius: 7px;
+  background: var(--surface); color: var(--ink); border: 1.5px solid var(--line); cursor: pointer;
+  box-shadow: 0 2px 0 var(--line);
+}
+.tile:hover { border-color: var(--accent); box-shadow: 0 2px 0 var(--accent); }
+.tile:focus-visible, .btn:focus-visible, .slot:focus-visible, .opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tile.chosen { background: var(--accent-soft); border-color: var(--accent); }
+
+.question { font-size: 1.02rem; }
+.question .call { font-family: var(--f-code); font-weight: 600; background: var(--sunk); padding: 2px 8px; border-radius: 5px; }
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; max-width: 560px; }
+.opt {
+  font-family: var(--f-code); font-size: 1rem; padding: 12px; border-radius: 8px; cursor: pointer;
+  background: var(--surface); color: var(--ink); border: 1.5px solid var(--line); box-shadow: 0 2px 0 var(--line);
+}
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt.wrong { background: var(--bad-bg); border-color: var(--bad); color: var(--bad); text-decoration: line-through; }
+.opt.right { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); font-weight: 600; }
+.opt:disabled { cursor: default; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn {
+  font-family: var(--f-body); font-weight: 700; font-size: 0.95rem; padding: 9px 18px; border-radius: 8px; cursor: pointer;
+  border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg);
+}
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--ink); }
+.btn.accent { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:disabled { opacity: 0.4; cursor: default; }
+
+.feedback { padding: 10px 14px; border-radius: 8px; font-size: 0.95rem; max-width: 70ch; }
+.feedback.bad { background: var(--bad-bg); color: var(--bad); }
+.feedback.hint { background: var(--sunk); color: var(--ink); border-left: 3px solid var(--star); }
+
+.result { border-top: 2px solid var(--ink); padding-top: 18px; display: flex; flex-direction: column; gap: 16px; }
+.won { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.won .bigstars { font-size: 1.6rem; color: var(--star); letter-spacing: 3px; }
+.won .bigstars .off { color: var(--line); }
+.won h3 { margin: 0; }
+
+/* acompanhamento */
+.follow { display: flex; flex-direction: column; gap: 12px; }
+.follow-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.follow-head h3 { margin: 0; }
+.stepper { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.stepper .count { font-family: var(--f-code); font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.note { font-size: 0.97rem; min-height: 1.6em; max-width: 70ch; padding: 10px 14px; background: var(--accent-soft); border-radius: 8px; }
+.note b { color: var(--accent); }
+.trace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(200px, 300px); gap: 14px; align-items: start; }
+.side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.vars { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+.vars .lab { font-family: var(--f-code); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.vars .vchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.vchip { font-family: var(--f-code); font-size: 0.82rem; padding: 3px 8px; border-radius: 5px; background: var(--sunk); overflow-wrap: anywhere; }
+.steps { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 0; overflow-x: auto; min-width: 0; }
+.steps .lab { font-family: var(--f-code); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0 16px 6px; }
+.step { font-family: var(--f-code); font-size: 0.86rem; padding: 3px 16px; white-space: pre; color: var(--muted); }
+.step.cur { color: var(--ink); background: var(--accent-soft); font-weight: 600; }
+.keys { font-size: 0.8rem; color: var(--muted); }
+kbd { font-family: var(--f-code); font-size: 0.75rem; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; }
+
+svg.tree { max-width: 100%; height: auto; display: block; }
+svg.tree .edge { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+svg.tree .node { fill: var(--surface); stroke: var(--ink); stroke-width: 1.5; }
+svg.tree .node.hl { fill: var(--accent); stroke: var(--accent); }
+svg.tree text { fill: var(--ink); font-family: var(--f-code); font-size: 14px; font-weight: 600; text-anchor: middle; dominant-baseline: central; }
+svg.tree text.hl { fill: var(--accent-ink); }
+.treebox { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 4px; align-items: center; }
+.treebox .cap { font-size: 0.75rem; color: var(--muted); font-family: var(--f-code); }
+
+/* intro de mundo */
+.recipe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.recipe div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.recipe .q { font-family: var(--f-code); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; }
+.recipe p { margin: 4px 0 0; font-size: 0.93rem; }
+.anatomy { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--f-code); font-size: 0.95rem; }
+.chip { padding: 6px 10px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--surface); }
+.chip.a { border-color: var(--accent); background: var(--accent-soft); }
+.arrow { color: var(--muted); }
+
+@media (max-width: 860px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  nav.map { position: static; flex-direction: row; overflow-x: auto; gap: 14px; padding-bottom: 6px; }
+  .world { min-width: 230px; }
+  .trace { grid-template-columns: minmax(0, 1fr); }
+  .recipe { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .result { animation: rise .35s ease-out; }
+  .cl { transition: background-color .2s; }
+  @keyframes rise { from { transform: translateY(6px); opacity: .6; } to { transform: none; opacity: 1; } }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="top">
+    <div>
+      <h1><span class="paren">(</span>Oficina de Recursão<span class="paren">)</span></h1>
+      <p>Listas, naturais e árvores binárias em Gleam, uma fase de cada vez.</p>
+    </div>
+    <div class="score"><span class="stars" id="score"></span><button class="reset" id="reset" type="button">Zerar progresso</button></div>
+  </header>
+  <nav class="map" id="map" aria-label="Fases"></nav>
+  <main id="main"></main>
+</div>
+
+<script>
+// ---------- árvores ----------
+const T = (v, l = null, r = null) => ({ v, l, r });
+const ARV_P = T(5, T(3), T(8));
+const ARV_Q = T(5, T(3, T(1)), T(8));
+const ARV_R = T(5, T(3, T(1, null, T(2))), T(8));
+const ARV_E = T(5, T(3, T(1)), T(8, null, T(9)));
+const ARV_E_ESP = T(5, T(8, T(9)), T(3, null, T(1)));
+const ARV_ABB = T(5, T(3, T(1), T(4)), T(8, null, T(9)));
+
+// passo do acompanhamento: linhas (base 0), expressão, variáveis, explicação, nós destacados, árvore nova
+const S = (ln, e, v = "", n = "", m = null, t = null) => ({ ln: Array.isArray(ln) ? ln : [ln], e, v, n, m, t });
+
+// ---------- conteúdo ----------
+const WORLDS = [
+{
+  id: "listas", name: "Listas", tag: "[primeiro, ..resto]",
+  lead: "Uma lista é vazia, ou é um primeiro elemento grudado num resto que também é lista. A função segue essa forma: um caso para cada formato.",
+  anatomy: [["[4, 1, 5]", ""], ["→", "arrow"], ["4", "a"], ["..", "arrow"], ["[1, 5]", ""]],
+  template: `pub fn f(lst: List(Int)) -> Resultado {
+  case lst {
+    [] -> // resposta para a lista vazia
+    [primeiro, ..resto] -> // combina primeiro com f(resto)
+  }
+}`,
+  recipe: [
+    ["caso base", "O que a função devolve para []? Costuma ser o elemento neutro: 0 para soma, [] para listas, True para \"todos\"."],
+    ["fica menor", "A chamada recursiva sempre recebe resto. Se chamar com lst de novo, nunca termina."],
+    ["combina", "Junte primeiro com o resultado de f(resto): somando, colocando na frente com [x, ..], ou decidindo com case."]
+  ],
+  levels: [
+    { id: "l1", kind: "fill", title: "Somar uma lista",
+      prompt: "A soma de [] é 0. A soma de uma lista não vazia é o primeiro mais a soma do resto. Complete as duas lacunas.",
+      code: `pub fn soma(lst: List(Int)) -> Int {
+  case lst {
+    [] -> {{0}}
+    [primeiro, ..resto] -> primeiro + {{1}}
+  }
+}`,
+      blanks: [["0", "1", "[]"], ["soma(resto)", "soma(lst)", "resto", "soma(primeiro)"]],
+      hint: "O caso base precisa ser um Int que não altere a soma. E a chamada recursiva tem que receber algo menor do que lst.",
+      explain: "O caso base é 0 porque somar 0 não muda nada. A chamada <b>soma(resto)</b> trabalha numa lista menor, então em algum momento chega em []. Se fosse soma(lst), a função chamaria a si mesma com a mesma lista para sempre.",
+      trace: [
+        S(0, "soma([4, 1, 5])", "lst = [4, 1, 5]", "A função é chamada com a lista inteira."),
+        S([1, 3], "= 4 + soma([1, 5])", "primeiro = 4 · resto = [1, 5]", "A lista não é vazia, então casa com [primeiro, ..resto]. O 4 fica <b>esperando</b> o resultado de soma(resto)."),
+        S([1, 3], "= 4 + (1 + soma([5]))", "primeiro = 1 · resto = [5]", "Nova chamada, mesma linha, outras variáveis. Cada chamada tem as suas."),
+        S([1, 3], "= 4 + (1 + (5 + soma([])))", "primeiro = 5 · resto = []"),
+        S([1, 2], "= 4 + (1 + (5 + 0))", "lst = []", "Lista vazia: <b>caso base</b>. Devolve 0 sem fazer nenhuma chamada nova."),
+        S(3, "= 4 + (1 + 5)", "primeiro = 5 · soma([]) = 0", "Agora as chamadas voltam. A que tinha primeiro = 5 termina sua linha: 5 + 0 = 5."),
+        S(3, "= 4 + 6", "primeiro = 1 · soma([5]) = 5", "A chamada com primeiro = 1 termina: 1 + 5 = 6."),
+        S(3, "= 10", "primeiro = 4 · soma([1, 5]) = 6", "A primeira chamada termina: 4 + 6 = 10.")
+      ] },
+    { id: "l2", kind: "predict", title: "Contar positivos",
+      prompt: "Leia a função com calma e descubra o resultado sem rodar.",
+      code: `pub fn conta_positivos(lst: List(Int)) -> Int {
+  case lst {
+    [] -> 0
+    [primeiro, ..resto] ->
+      case primeiro > 0 {
+        True -> 1 + conta_positivos(resto)
+        False -> conta_positivos(resto)
+      }
+  }
+}`,
+      call: "conta_positivos([3, -1, 0, 2])", options: ["3", "2", "4", "1"], answer: "2",
+      hint: "Teste cada elemento com primeiro > 0. Atenção ao 0.",
+      explain: "Quando o teste dá False, a função só segue com o resto sem somar nada. O 0 é a armadilha: <b>0 > 0 é False</b>. Casos de fronteira como esse aparecem muito em prova.",
+      trace: [
+        S(0, "conta_positivos([3, -1, 0, 2])", "lst = [3, -1, 0, 2]", "Chamada inicial."),
+        S([4, 5], "= 1 + conta_positivos([-1, 0, 2])", "primeiro = 3 · 3 > 0 é True", "Ramo True: conta 1 e segue com o resto."),
+        S([4, 6], "= 1 + conta_positivos([0, 2])", "primeiro = -1 · -1 > 0 é False", "Ramo False: não conta nada, a expressão não ganha nenhum + 1."),
+        S([4, 6], "= 1 + conta_positivos([2])", "primeiro = 0 · 0 > 0 é False", "O 0 não é positivo. Essa é a armadilha."),
+        S([4, 5], "= 1 + (1 + conta_positivos([]))", "primeiro = 2 · 2 > 0 é True"),
+        S(2, "= 1 + (1 + 0)", "lst = []", "Caso base: devolve 0."),
+        S(5, "= 1 + 1", "primeiro = 2 · conta_positivos([]) = 0", "Voltando: a chamada com primeiro = 2 devolve 1 + 0 = 1. As chamadas com 0 e -1 passaram pelo ramo False e só repassam esse 1."),
+        S(5, "= 2", "primeiro = 3 · conta_positivos([-1, 0, 2]) = 1", "A primeira chamada termina: 1 + 1 = 2.")
+      ] },
+    { id: "l3", kind: "fill", title: "Dobrar cada elemento",
+      prompt: "A saída tem o mesmo tamanho da entrada, com cada número multiplicado por 2. Complete a construção da lista.",
+      code: `pub fn dobrar(lst: List(Int)) -> List(Int) {
+  case lst {
+    [] -> {{0}}
+    [primeiro, ..resto] -> [{{1}}, ..{{2}}]
+  }
+}`,
+      blanks: [["[]", "0", "[0]"], ["primeiro * 2", "primeiro", "resto * 2"], ["dobrar(resto)", "resto", "dobrar(lst)"]],
+      hint: "Lista vazia dobrada continua vazia. Na frente vai o primeiro transformado; atrás, o resto já transformado.",
+      explain: "Quando a saída tem o mesmo tamanho da entrada, <b>todo caso recursivo coloca exatamente um elemento na frente</b>. Se usasse só resto atrás, os outros números não seriam dobrados.",
+      trace: [
+        S(0, "dobrar([3, 1, 4])", "lst = [3, 1, 4]", "Chamada inicial."),
+        S([1, 3], "= [6, ..dobrar([1, 4])]", "primeiro = 3 · resto = [1, 4]", "O 6 já está calculado. O que vem atrás depende da chamada recursiva."),
+        S([1, 3], "= [6, ..[2, ..dobrar([4])]]", "primeiro = 1 · resto = [4]"),
+        S([1, 3], "= [6, ..[2, ..[8, ..dobrar([])]]]", "primeiro = 4 · resto = []"),
+        S([1, 2], "= [6, ..[2, ..[8, ..[]]]]", "lst = []", "Caso base: a lista vazia fecha a construção."),
+        S(3, "= [6, 2, 8]", "", "Voltando, cada chamada gruda seu elemento na frente da lista que recebeu: [8], depois [2, 8], depois [6, 2, 8].")
+      ] },
+    { id: "l4", kind: "bug", title: "Limitar volumes",
+      prompt: "limitar([0.25, 0.75, 0.5], 0.5) devolve [0.25, 0.5], mas deveria devolver [0.25, 0.5, 0.5]. Clique na linha errada.",
+      code: `pub fn limitar(lst: List(Float), limite: Float) -> List(Float) {
+  case lst {
+    [] -> []
+    [primeiro, ..resto] ->
+      case primeiro >. limite {
+        True -> limitar(resto, limite)
+        False -> [primeiro, ..limitar(resto, limite)]
+      }
+  }
+}`,
+      bugLine: 5, fix: "        True -> [limite, ..limitar(resto, limite)]",
+      hint: "A saída ficou com um elemento a menos. Procure o ramo que não coloca nada na frente.",
+      explain: "O ramo True descartava o volume em vez de trocar pelo limite. Pela regra da fase anterior, <b>se o tamanho se preserva, os dois ramos precisam pôr um elemento na frente</b>.",
+      trace: [
+        S(0, "limitar([0.25, 0.75, 0.5], 0.5)", "lst = [0.25, 0.75, 0.5] · limite = 0.5", "O limite é repassado igual em todas as chamadas."),
+        S([4, 6], "= [0.25, ..limitar([0.75, 0.5], 0.5)]", "primeiro = 0.25 · 0.25 >. 0.5 é False", "Ramo False: mantém o volume."),
+        S([4, 5], "= [0.25, ..[0.5, ..limitar([0.5], 0.5)]]", "primeiro = 0.75 · 0.75 >. 0.5 é True", "Ramo True, a linha corrigida: coloca o limite no lugar. Na versão com bug, o 0.75 sumia aqui."),
+        S([4, 6], "= [0.25, ..[0.5, ..[0.5, ..limitar([], 0.5)]]]", "primeiro = 0.5 · 0.5 >. 0.5 é False", "Igual ao limite não passa do limite: mantém."),
+        S([1, 2], "= [0.25, ..[0.5, ..[0.5, ..[]]]]", "lst = []", "Caso base."),
+        S(6, "= [0.25, 0.5, 0.5]", "", "Voltando, cada chamada coloca seu elemento na frente. Três entradas, três saídas.")
+      ] },
+    { id: "l5", kind: "fill", title: "Manter só os pares",
+      prompt: "Agora a saída pode ser menor que a entrada. Os pares ficam, os ímpares somem.",
+      code: `pub fn pares(lst: List(Int)) -> List(Int) {
+  case lst {
+    [] -> []
+    [primeiro, ..resto] ->
+      case primeiro % 2 == 0 {
+        True -> {{0}}
+        False -> {{1}}
+      }
+  }
+}`,
+      blanks: [["[primeiro, ..pares(resto)]", "pares(resto)", "[primeiro, ..resto]"], ["pares(resto)", "[primeiro, ..pares(resto)]", "[]"]],
+      hint: "Num filtro, um ramo coloca o primeiro na frente e o outro não coloca nada. Os dois continuam filtrando o resto.",
+      explain: "Isto é um <b>filtro</b>: um ramo põe o elemento na frente, o outro pula. Repare que [primeiro, ..resto] estaria errado: ele para de filtrar e devolve o resto inteiro, com ímpares e tudo.",
+      trace: [
+        S(0, "pares([1, 2, 3, 4])", "lst = [1, 2, 3, 4]", "Chamada inicial."),
+        S([4, 6], "= pares([2, 3, 4])", "primeiro = 1 · 1 % 2 == 0 é False", "Ímpar: ramo False. Nada vai para a frente, só segue com o resto."),
+        S([4, 5], "= [2, ..pares([3, 4])]", "primeiro = 2 · 2 % 2 == 0 é True", "Par: ramo True. O 2 fica na frente."),
+        S([4, 6], "= [2, ..pares([4])]", "primeiro = 3 · 3 % 2 == 0 é False"),
+        S([4, 5], "= [2, ..[4, ..pares([])]]", "primeiro = 4 · 4 % 2 == 0 é True"),
+        S([1, 2], "= [2, ..[4, ..[]]]", "lst = []", "Caso base."),
+        S(5, "= [2, 4]", "", "Quatro entradas, duas saídas: é um filtro.")
+      ] }
+  ]
+},
+{
+  id: "naturais", name: "Naturais", tag: "n → n - 1",
+  lead: "Um natural é 0, ou é o sucessor de outro natural. Então a função tem um caso para 0 e um caso que usa a resposta para n - 1.",
+  anatomy: [["3", "a"], ["→", "arrow"], ["2", ""], ["→", "arrow"], ["1", ""], ["→", "arrow"], ["0", "a"]],
+  template: `pub fn f(n: Int) -> Resultado {
+  case n <= 0 {
+    True -> // resposta para 0
+    False -> // combina n com f(n - 1)
+  }
+}`,
+  recipe: [
+    ["caso base", "Use n <= 0 em vez de n == 0. Assim um número negativo não faz a recursão descer para sempre."],
+    ["fica menor", "A chamada recursiva recebe n - 1. Só o parâmetro que conta diminui; os outros passam iguais."],
+    ["combina", "Use o resultado de f(n - 1). Guarde num let se for usar mais de uma vez."]
+  ],
+  levels: [
+    { id: "n1", kind: "fill", title: "Fatorial",
+      prompt: "fatorial(0) é 1. fatorial(n) é n vezes o fatorial de n - 1.",
+      code: `pub fn fatorial(n: Int) -> Int {
+  case n <= 0 {
+    True -> {{0}}
+    False -> {{1}} * fatorial({{2}})
+  }
+}`,
+      blanks: [["1", "0", "n"], ["n", "n - 1", "1"], ["n - 1", "n", "n + 1"]],
+      hint: "Para multiplicação, o elemento neutro não é 0.",
+      explain: "Com caso base 0, todo fatorial daria 0, porque qualquer coisa vezes 0 é 0. O neutro da multiplicação é <b>1</b>. E fatorial(n + 1) se afasta do caso base em vez de chegar nele.",
+      trace: [
+        S(0, "fatorial(4)", "n = 4", "Chamada inicial."),
+        S([1, 3], "= 4 * fatorial(3)", "n = 4 · 4 <= 0 é False", "O 4 espera o resultado de fatorial(3)."),
+        S([1, 3], "= 4 * (3 * fatorial(2))", "n = 3 · 3 <= 0 é False"),
+        S([1, 3], "= 4 * (3 * (2 * fatorial(1)))", "n = 2 · 2 <= 0 é False"),
+        S([1, 3], "= 4 * (3 * (2 * (1 * fatorial(0))))", "n = 1 · 1 <= 0 é False"),
+        S([1, 2], "= 4 * (3 * (2 * (1 * 1)))", "n = 0 · 0 <= 0 é True", "Caso base: devolve 1."),
+        S(3, "= 4 * (3 * (2 * 1))", "n = 1 · fatorial(0) = 1", "Voltando pela linha do False: 1 * 1 = 1."),
+        S(3, "= 4 * (3 * 2)", "n = 2 · fatorial(1) = 1", "2 * 1 = 2."),
+        S(3, "= 4 * 6", "n = 3 · fatorial(2) = 2", "3 * 2 = 6."),
+        S(3, "= 24", "n = 4 · fatorial(3) = 6", "4 * 6 = 24.")
+      ] },
+    { id: "n2", kind: "predict", title: "Soma até n",
+      prompt: "Esta versão usa case com padrão literal em vez de n <= 0.",
+      code: `pub fn soma_ate(n: Int) -> Int {
+  case n {
+    0 -> 0
+    _ -> n + soma_ate(n - 1)
+  }
+}`,
+      call: "soma_ate(4)", options: ["10", "4", "24", "6"], answer: "10",
+      hint: "4 + 3 + 2 + 1 + 0.",
+      explain: "Funciona para 4, mas tem um risco: <b>soma_ate(-1) nunca termina</b>, porque -1, -2, -3... nunca batem no padrão 0. Por isso a guarda n <= 0 é mais segura.",
+      trace: [
+        S(0, "soma_ate(4)", "n = 4", "Chamada inicial."),
+        S([1, 3], "= 4 + soma_ate(3)", "n = 4 · não é 0, casa com _"),
+        S([1, 3], "= 4 + (3 + soma_ate(2))", "n = 3"),
+        S([1, 3], "= 4 + (3 + (2 + soma_ate(1)))", "n = 2"),
+        S([1, 3], "= 4 + (3 + (2 + (1 + soma_ate(0))))", "n = 1"),
+        S([1, 2], "= 4 + (3 + (2 + (1 + 0)))", "n = 0 · casa com o padrão 0", "Caso base."),
+        S(3, "= 4 + (3 + 3)", "n = 2 · soma_ate(1) = 1", "Voltando: 1 + 0 = 1, depois 2 + 1 = 3."),
+        S(3, "= 10", "n = 4 · soma_ate(3) = 6", "3 + 3 = 6, depois 4 + 6 = 10.")
+      ] },
+    { id: "n3", kind: "bug", title: "Contagem regressiva",
+      prompt: "regressiva(3) deveria devolver [3, 2, 1], mas o programa trava. Clique na linha errada.",
+      code: `pub fn regressiva(n: Int) -> List(Int) {
+  case n <= 0 {
+    True -> []
+    False -> [n, ..regressiva(n)]
+  }
+}`,
+      bugLine: 3, fix: "    False -> [n, ..regressiva(n - 1)]",
+      hint: "Travar quase sempre significa que a recursão nunca chega no caso base.",
+      explain: "regressiva(n) chama regressiva(n) de novo, com o mesmo valor. <b>A chamada recursiva precisa receber algo menor</b>, senão o caso base nunca é alcançado.",
+      trace: [
+        S(0, "regressiva(3)", "n = 3", "Chamada inicial."),
+        S([1, 3], "= [3, ..regressiva(2)]", "n = 3 · 3 <= 0 é False", "Com a correção, a próxima chamada recebe 2. Na versão com bug, recebia 3 de novo para sempre."),
+        S([1, 3], "= [3, ..[2, ..regressiva(1)]]", "n = 2 · 2 <= 0 é False"),
+        S([1, 3], "= [3, ..[2, ..[1, ..regressiva(0)]]]", "n = 1 · 1 <= 0 é False"),
+        S([1, 2], "= [3, ..[2, ..[1, ..[]]]]", "n = 0 · 0 <= 0 é True", "Caso base."),
+        S(3, "= [3, 2, 1]", "", "Voltando, cada chamada coloca seu n na frente.")
+      ] },
+    { id: "n4", kind: "fill", title: "Potência",
+      prompt: "Dois parâmetros, mas só um controla a recursão. potencia(b, 0) é 1; potencia(b, e) é b vezes potencia(b, e - 1).",
+      code: `pub fn potencia(base: Int, exp: Int) -> Int {
+  case exp <= 0 {
+    True -> {{0}}
+    False -> base * {{1}}
+  }
+}`,
+      blanks: [["1", "0", "base"], ["potencia(base, exp - 1)", "potencia(base - 1, exp)", "potencia(base, exp)"]],
+      hint: "Qual dos dois parâmetros está sendo testado no case?",
+      explain: "A recursão desce pelo parâmetro que é testado no caso base, aqui o <b>exp</b>. A base passa igual em toda chamada, do mesmo jeito que o limite passava igual em limitar_volumes.",
+      trace: [
+        S(0, "potencia(2, 3)", "base = 2 · exp = 3", "Chamada inicial."),
+        S([1, 3], "= 2 * potencia(2, 2)", "base = 2 · exp = 3 · 3 <= 0 é False", "A base passa igual; só o exp diminui."),
+        S([1, 3], "= 2 * (2 * potencia(2, 1))", "base = 2 · exp = 2"),
+        S([1, 3], "= 2 * (2 * (2 * potencia(2, 0)))", "base = 2 · exp = 1"),
+        S([1, 2], "= 2 * (2 * (2 * 1))", "exp = 0 · 0 <= 0 é True", "Caso base."),
+        S(3, "= 2 * (2 * 2)", "exp = 1 · potencia(2, 0) = 1", "Voltando: 2 * 1 = 2."),
+        S(3, "= 2 * 4", "exp = 2 · potencia(2, 1) = 2", "2 * 2 = 4."),
+        S(3, "= 8", "exp = 3 · potencia(2, 2) = 4", "2 * 4 = 8.")
+      ] },
+    { id: "n5", kind: "predict", title: "Temperatura do processador",
+      prompt: "O exercício da sua lista. Começa em 70.0; se a anterior for >= 80.0, resfria 10, senão esquenta 5.",
+      code: `pub fn temperatura(n: Int) -> Float {
+  case n <= 0 {
+    True -> 70.0
+    False -> {
+      let anterior = temperatura(n - 1)
+      case anterior >=. 80.0 {
+        True -> anterior -. 10.0
+        False -> anterior +. 5.0
+      }
+    }
+  }
+}`,
+      call: "temperatura(5)", options: ["75.0", "80.0", "70.0", "85.0"], answer: "80.0",
+      hint: "Monte uma tabelinha de n = 0 até 5.",
+      explain: "Aqui a combinação depende do valor da chamada recursiva, então ela é guardada no <b>let anterior</b>. Chamar temperatura(n - 1) duas vezes daria o mesmo resultado, mas o número de chamadas dobraria a cada nível.",
+      trace: [
+        S(0, "temperatura(5)", "n = 5", "Chamada inicial."),
+        S([1, 4], "temperatura(5) espera temperatura(4)", "n = 5 · 5 <= 0 é False", "Ela para na linha do let. Não dá para decidir nada antes de saber a temperatura anterior."),
+        S([1, 4], "… espera temperatura(3), (2), (1), (0)", "n = 4, 3, 2, 1", "Cada chamada para na mesma linha do let, esperando a de baixo."),
+        S([1, 2], "temperatura(0) = 70.0", "n = 0 · 0 <= 0 é True", "Caso base. Agora as chamadas que esperavam começam a decidir."),
+        S([5, 7], "temperatura(1) = 75.0", "n = 1 · anterior = 70.0 · 70.0 >=. 80.0 é False", "O let recebe 70.0. Ramo False: esquenta 5."),
+        S([5, 7], "temperatura(2) = 80.0", "n = 2 · anterior = 75.0 · False"),
+        S([5, 6], "temperatura(3) = 70.0", "n = 3 · anterior = 80.0 · 80.0 >=. 80.0 é True", "Igual a 80 já resfria."),
+        S([5, 7], "temperatura(4) = 75.0", "n = 4 · anterior = 70.0 · False"),
+        S([5, 7], "temperatura(5) = 80.0", "n = 5 · anterior = 75.0 · False", "A chamada original termina.")
+      ] }
+  ]
+},
+{
+  id: "arvores", name: "Árvores", tag: "No(v, esq, dir)",
+  lead: "Uma árvore binária é Vazia, ou é um nó com um valor e duas subárvores. Como há duas partes recursivas, o caso No costuma ter duas chamadas recursivas.",
+  tree: ARV_E,
+  template: `pub type Arvore {
+  Vazia
+  No(valor: Int, esq: Arvore, dir: Arvore)
+}
+
+pub fn f(arv: Arvore) -> Resultado {
+  case arv {
+    Vazia -> // resposta para a árvore vazia
+    No(valor, esq, dir) -> // combina valor, f(esq) e f(dir)
+  }
+}`,
+  recipe: [
+    ["caso base", "O que a função devolve para Vazia? As folhas também têm filhos: dois Vazia."],
+    ["fica menor", "esq e dir são menores que a árvore inteira. Chame f(esq) e f(dir)."],
+    ["combina", "Junte valor com os dois resultados. Esquecer um dos lados é o erro mais comum."]
+  ],
+  levels: [
+    { id: "a1", kind: "fill", title: "Contar nós", tree: ARV_P,
+      prompt: "Uma árvore vazia tem 0 nós. Um nó conta 1, mais os nós de cada lado.",
+      code: `pub fn tamanho(arv: Arvore) -> Int {
+  case arv {
+    Vazia -> {{0}}
+    No(_, esq, dir) -> 1 + {{1}} + {{2}}
+  }
+}`,
+      blanks: [["0", "1", "Vazia"], ["tamanho(esq)", "esq", "tamanho(arv)"], ["tamanho(dir)", "dir", "1"]],
+      hint: "esq e dir são árvores, não números. Para somar, precisa transformá-las em Int.",
+      explain: "O _ ignora o valor porque só interessa contar. <b>Cada subárvore ganha sua própria chamada recursiva</b>, e o 1 conta o nó atual.",
+      traceTree: ARV_P,
+      trace: [
+        S(0, "tamanho(No(5, …))", "arv = nó 5", "Chamada na raiz. O … abrevia as subárvores.", [5]),
+        S([1, 3], "= 1 + tamanho(No(3, …)) + tamanho(No(8, …))", "esq = nó 3 · dir = nó 8", "O valor é ignorado com _. Cada lado ganha sua chamada; a da esquerda roda primeiro.", [5]),
+        S([1, 3], "= 1 + (1 + tamanho(Vazia) + tamanho(Vazia)) + tamanho(No(8, …))", "arv = nó 3 · esq = Vazia · dir = Vazia", "Dentro do 3. Uma folha ainda tem dois filhos, ambos Vazia.", [3]),
+        S([1, 2], "= 1 + (1 + 0 + 0) + tamanho(No(8, …))", "arv = Vazia", "Caso base duas vezes: cada Vazia devolve 0.", []),
+        S([1, 3], "= 1 + 1 + (1 + tamanho(Vazia) + tamanho(Vazia))", "arv = nó 8 · esq = Vazia · dir = Vazia", "O lado esquerdo terminou valendo 1. Agora a chamada da direita.", [8]),
+        S([1, 2], "= 1 + 1 + (1 + 0 + 0)", "arv = Vazia", "Caso base de novo.", []),
+        S(3, "= 3", "esq vale 1 · dir vale 1", "A raiz fecha a conta: 1 + 1 + 1.", [5, 3, 8])
+      ] },
+    { id: "a2", kind: "fill", title: "Somar os valores", tree: ARV_Q,
+      prompt: "Mesma forma do tamanho, mas agora o valor do nó entra na conta.",
+      code: `pub fn soma_arv(arv: Arvore) -> Int {
+  case arv {
+    Vazia -> 0
+    No(valor, esq, dir) -> {{0}}
+  }
+}`,
+      blanks: [["valor + soma_arv(esq) + soma_arv(dir)", "valor + soma_arv(esq)", "soma_arv(esq) + soma_arv(dir)", "valor + esq + dir"]],
+      hint: "Três coisas precisam aparecer: o valor e os dois lados.",
+      explain: "Esquecer soma_arv(dir) é o erro clássico: o código compila e funciona em árvores que só crescem para a esquerda, então os testes podem não pegar. <b>Sempre confira se valor, esq e dir aparecem.</b>",
+      traceTree: ARV_Q,
+      trace: [
+        S(0, "soma_arv(No(5, …))", "arv = nó 5", "Chamada na raiz.", [5]),
+        S([1, 3], "= 5 + soma_arv(No(3, …)) + soma_arv(No(8, …))", "valor = 5 · esq = nó 3 · dir = nó 8", "", [5]),
+        S([1, 3], "= 5 + (3 + soma_arv(No(1, …)) + soma_arv(Vazia)) + soma_arv(No(8, …))", "valor = 3 · esq = nó 1 · dir = Vazia", "Dentro do 3. Ele só tem filho à esquerda.", [3]),
+        S([1, 3], "= 5 + (3 + (1 + soma_arv(Vazia) + soma_arv(Vazia)) + soma_arv(Vazia)) + …", "valor = 1 · esq = Vazia · dir = Vazia", "Dentro do 1, que é folha.", [1]),
+        S([1, 2], "= 5 + (3 + (1 + 0 + 0) + 0) + soma_arv(No(8, …))", "arv = Vazia", "Três Vazia caem no caso base: 0 cada.", []),
+        S([1, 3], "= 5 + 4 + (8 + 0 + 0)", "valor = 8 · esq = Vazia · dir = Vazia", "O lado esquerdo da raiz terminou valendo 4. Agora o 8.", [8]),
+        S(3, "= 17", "valor = 5 · esq vale 4 · dir vale 8", "A raiz fecha: 5 + 4 + 8.", [5, 3, 1, 8])
+      ] },
+    { id: "a3", kind: "predict", title: "Altura", tree: ARV_R,
+      prompt: "Olhe a árvore desenhada e descubra a altura que esta função calcula. Ela escolhe o maior lado com case, sem biblioteca.",
+      code: `pub fn altura(arv: Arvore) -> Int {
+  case arv {
+    Vazia -> 0
+    No(_, esq, dir) -> {
+      let alt_esq = altura(esq)
+      let alt_dir = altura(dir)
+      case alt_esq > alt_dir {
+        True -> 1 + alt_esq
+        False -> 1 + alt_dir
+      }
+    }
+  }
+}`,
+      call: "altura(arvore_desenhada)", options: ["3", "4", "5", "2"], answer: "4",
+      hint: "Conte os nós no caminho mais longo da raiz até uma folha.",
+      explain: "Os dois resultados vão para let, e um case escolhe <b>o maior dos dois lados</b>, somando 1 pelo nó atual. O caminho 5 → 3 → 1 → 2 tem 4 nós. Ajuda resolver de baixo para cima, das folhas até a raiz.",
+      traceTree: ARV_R,
+      trace: [
+        S(0, "altura(No(5, …))", "arv = nó 5", "A raiz para nos let, esperando a altura dos dois lados. Vamos acompanhar as chamadas terminando de baixo para cima.", [5]),
+        S([4, 5], "altura(Vazia) = 0", "arv = Vazia", "Todo filho Vazia devolve 0 pelo caso base (linha 3).", []),
+        S([6, 8], "altura(No(2, Vazia, Vazia)) = 1", "alt_esq = 0 · alt_dir = 0 · 0 > 0 é False", "Empate cai no False: 1 + 0.", [2]),
+        S([6, 8], "altura(No(1, Vazia, No(2, …))) = 2", "alt_esq = 0 · alt_dir = 1 · 0 > 1 é False", "A direita é maior: 1 + 1.", [1]),
+        S([6, 7], "altura(No(3, No(1, …), Vazia)) = 3", "alt_esq = 2 · alt_dir = 0 · 2 > 0 é True", "Agora a esquerda é maior: 1 + 2.", [3]),
+        S([6, 8], "altura(No(8, Vazia, Vazia)) = 1", "alt_esq = 0 · alt_dir = 0 · False", "", [8]),
+        S([6, 7], "altura(No(5, …)) = 4", "alt_esq = 3 · alt_dir = 1 · 3 > 1 é True", "A raiz pega o lado mais alto e soma 1.", [5])
+      ] },
+    { id: "a4", kind: "bug", title: "Espelhar", tree: ARV_E,
+      prompt: "espelhar deveria trocar esquerda e direita em todos os níveis, mas devolve a árvore igual. Clique na linha errada.",
+      code: `pub fn espelhar(arv: Arvore) -> Arvore {
+  case arv {
+    Vazia -> Vazia
+    No(v, esq, dir) -> No(v, espelhar(esq), espelhar(dir))
+  }
+}`,
+      bugLine: 3, fix: "    No(v, esq, dir) -> No(v, espelhar(dir), espelhar(esq))",
+      hint: "A recursão está certa. O problema é a ordem em que os resultados são montados.",
+      explain: "A versão errada reconstrói a mesma árvore. A troca acontece na hora de montar o nó: <b>o espelho do dir vai para a esquerda</b> e vice-versa. As chamadas recursivas garantem a troca nos níveis de baixo.",
+      traceTree: ARV_E,
+      trace: [
+        S(0, "espelhar(No(5, …))", "arv = nó 5", "Chamada na raiz.", [5]),
+        S([1, 3], "= No(5, espelhar(No(8, …)), espelhar(No(3, …)))", "v = 5 · esq = nó 3 · dir = nó 8", "Na linha corrigida, o espelho da direita vai para a esquerda.", [5]),
+        S([1, 3], "espelhar(No(8, Vazia, No(9, …))) = No(8, espelhar(No(9, …)), espelhar(Vazia))", "v = 8 · esq = Vazia · dir = nó 9", "Mesma linha dentro do 8.", [8]),
+        S([1, 2], "= No(8, No(9, Vazia, Vazia), Vazia)", "arv = Vazia", "Espelhar Vazia devolve Vazia. O 9 agora está à esquerda.", [8, 9]),
+        S([1, 3], "espelhar(No(3, No(1, …), Vazia)) = No(3, Vazia, No(1, Vazia, Vazia))", "v = 3 · esq = nó 1 · dir = Vazia", "O 1 passa para a direita.", [3, 1]),
+        S(3, "= No(5, No(8, No(9, …), Vazia), No(3, Vazia, No(1, …)))", "", "A raiz monta o resultado com os dois lados já espelhados.", [], ARV_E_ESP)
+      ] },
+    { id: "a5", kind: "fill", title: "Buscar numa ABB", tree: ARV_ABB,
+      prompt: "Numa árvore binária de busca, tudo à esquerda é menor que o nó e tudo à direita é maior. Use isso para visitar só um lado.",
+      code: `pub fn contem(arv: Arvore, x: Int) -> Bool {
+  case arv {
+    Vazia -> {{0}}
+    No(v, esq, dir) ->
+      case x == v, x < v {
+        True, _ -> True
+        False, True -> {{1}}
+        False, False -> {{2}}
+      }
+  }
+}`,
+      blanks: [["False", "True", "0"], ["contem(esq, x)", "contem(dir, x)", "contem(arv, x)"], ["contem(dir, x)", "contem(esq, x)", "False"]],
+      hint: "Se x é menor que v, onde ele estaria? E se a busca chegou em Vazia, ele existe?",
+      explain: "Aqui só uma das duas chamadas acontece, então a busca desce um caminho só. <b>Chegar em Vazia significa que não achou</b>, por isso o caso base é False.",
+      traceTree: ARV_ABB,
+      trace: [
+        S(0, "contem(No(5, …), 7)", "arv = nó 5 · x = 7", "Vamos procurar o 7, que não está na árvore.", [5]),
+        S([4, 7], "= contem(No(8, …), 7)", "v = 5 · 7 == 5 é False · 7 < 5 é False", "Maior que 5: só pode estar à direita. A esquerda inteira é descartada.", [5]),
+        S([4, 6], "= contem(Vazia, 7)", "v = 8 · 7 == 8 é False · 7 < 8 é True", "Menor que 8: vai para a esquerda do 8, que é Vazia.", [8]),
+        S([1, 2], "= False", "arv = Vazia", "Chegou em Vazia: o 7 não está na árvore. Visitou só 2 dos 6 nós.", [])
+      ] },
+    { id: "a6", kind: "fill", title: "Árvore para lista", tree: ARV_ABB,
+      prompt: "Os dois mundos juntos: percorra em ordem (esquerda, nó, direita) e devolva uma lista. A concatenar já está pronta, escrita com recursão em lista.",
+      code: `pub fn concatenar(a: List(Int), b: List(Int)) -> List(Int) {
+  case a {
+    [] -> b
+    [primeiro, ..resto] -> [primeiro, ..concatenar(resto, b)]
+  }
+}
+
+pub fn em_ordem(arv: Arvore) -> List(Int) {
+  case arv {
+    Vazia -> []
+    No(v, esq, dir) -> concatenar(em_ordem(esq), {{0}})
+  }
+}`,
+      blanks: [["[v, ..em_ordem(dir)]", "em_ordem(dir)", "[v, ..dir]", "[v]"]],
+      hint: "Depois dos valores da esquerda vem o próprio v, e depois os da direita já convertidos em lista.",
+      explain: "dir é uma árvore, então não pode ir direto atrás de [v, ..]: precisa virar lista com <b>em_ordem(dir)</b>. Numa ABB, o percurso em ordem devolve os valores já ordenados.",
+      traceTree: ARV_ABB,
+      trace: [
+        S(7, "em_ordem(No(5, …))", "arv = nó 5", "Chamada na raiz.", [5]),
+        S([8, 10], "= concatenar(em_ordem(No(3, …)), [5, ..em_ordem(No(8, …))])", "v = 5 · esq = nó 3 · dir = nó 8", "Antes de concatenar, as duas chamadas em_ordem precisam terminar.", [5]),
+        S([8, 10], "em_ordem(No(3, …)) = concatenar([1], [3, ..[4]])", "v = 3 · em_ordem(nó 1) = [1] · em_ordem(nó 4) = [4]", "Mesma linha na subárvore da esquerda. Numa folha, em_ordem dá concatenar([], [v]), que é [v].", [3, 1, 4]),
+        S([1, 3], "concatenar([1], [3, 4]) = [1, ..concatenar([], [3, 4])]", "a = [1] · b = [3, 4] · primeiro = 1 · resto = []", "Agora é recursão em lista: percorre a e coloca cada elemento na frente.", [3]),
+        S([1, 2], "concatenar([], [3, 4]) = [3, 4]", "a = [] · b = [3, 4]", "Caso base da concatenar: a acabou, devolve b inteira. O lado esquerdo vira [1, 3, 4].", [1, 3, 4]),
+        S([8, 10], "em_ordem(No(8, …)) = concatenar([], [8, ..[9]]) = [8, 9]", "v = 8 · esq = Vazia · em_ordem(Vazia) = []", "A esquerda do 8 é Vazia (linha 10), então concatenar devolve direto o segundo argumento.", [8, 9]),
+        S(10, "= concatenar([1, 3, 4], [5, 8, 9])", "v = 5", "De volta à raiz, com os dois lados prontos.", [5]),
+        S([1, 3], "= [1, 3, 4, 5, 8, 9]", "a = [1, 3, 4] · b = [5, 8, 9]", "concatenar copia 1, 3, 4 na frente de [5, 8, 9]. Numa ABB, o resultado sai ordenado.", [1, 3, 4, 5, 8, 9])
+      ] }
+  ]
+}
+];
+
+const KIND = { fill: "Complete o código", predict: "Qual o resultado?", bug: "Ache o erro" };
+const TOTAL = WORLDS.reduce((s, w) => s + w.levels.length, 0) * 3;
+
+// ---------- estado ----------
+const KEY = "oficina-recursao-v1";
+let progress = {};
+try { progress = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { progress = {}; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(progress)); } catch (e) {} }
+
+let view = { type: "intro", w: 0 };
+let run = null;
+
+function unlocked(w, l) { return l === 0 || progress[WORLDS[w].levels[l - 1].id] != null; }
+
+// ---------- utilidades ----------
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+function hl(code) {
+  const re = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|\b(pub|fn|case|let|type|if|import)\b|\b([A-Z][A-Za-z0-9_]*)\b|(\b\d+(?:\.\d+)?\b)/g;
+  let out = "", last = 0, m;
+  while ((m = re.exec(code))) {
+    out += esc(code.slice(last, m.index));
+    const cls = m[1] ? "c" : m[2] ? "s" : m[3] ? "k" : m[4] ? "t" : "nm";
+    out += `<span class="${cls}">${esc(m[0])}</span>`;
+    last = re.lastIndex;
+  }
+  return out + esc(code.slice(last));
+}
+function shuffled(arr, seed) {
+  const a = arr.slice(); let h = 0;
+  for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  for (let i = a.length - 1; i > 0; i--) { h = (h * 1103515245 + 12345) >>> 0; const j = h % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function starStr(n) { return "★".repeat(n) + `<span class="off">${"★".repeat(3 - n)}</span>`; }
+
+function treeSVG(t, mark = []) {
+  if (!t) return "";
+  const nodes = [], edges = []; let i = 0, maxd = 0;
+  (function walk(n, d) {
+    if (!n) return null;
+    const L = walk(n.l, d + 1);
+    const me = { v: n.v, x: i++, d };
+    nodes.push(me);
+    const R = walk(n.r, d + 1);
+    if (L) edges.push([me, L]); if (R) edges.push([me, R]);
+    maxd = Math.max(maxd, d); return me;
+  })(t, 0);
+  const sx = 46, sy = 54, pad = 22;
+  const W = (i - 1) * sx + pad * 2, H = maxd * sy + pad * 2;
+  const X = n => pad + n.x * sx, Y = n => pad + n.d * sy;
+  let s = `<svg class="tree" width="${W}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Árvore binária">`;
+  for (const [a, b] of edges) s += `<line class="edge" x1="${X(a)}" y1="${Y(a)}" x2="${X(b)}" y2="${Y(b)}"/>`;
+  for (const n of nodes) {
+    const on = mark.includes(n.v) ? " hl" : "";
+    s += `<circle class="node${on}" cx="${X(n)}" cy="${Y(n)}" r="17"/><text class="${on.trim()}" x="${X(n)}" y="${Y(n)}">${n.v}</text>`;
+  }
+  return s + "</svg>";
+}
+
+// código resolvido, linha a linha, com as lacunas preenchidas ou a linha corrigida
+function solvedLines(lv) {
+  return lv.code.split("\n").map((line, i) => {
+    if (lv.kind === "bug" && i === lv.bugLine) return hl(lv.fix) + `  <span class="c">// corrigida</span>`;
+    if (lv.kind === "fill") {
+      return line.split(/\{\{(\d+)\}\}/).map((p, j) => j % 2 ? `<span class="fillv">${esc(lv.blanks[+p][0])}</span>` : hl(p)).join("");
+    }
+    return hl(line);
+  });
+}
+
+// ---------- mapa ----------
+function renderMap() {
+  const got = Object.values(progress).reduce((s, n) => s + n, 0);
+  document.getElementById("score").innerHTML = `★ ${got} / ${TOTAL}`;
+  let h = "";
+  WORLDS.forEach((w, wi) => {
+    const on = view.w === wi && view.type === "intro" ? " on" : "";
+    h += `<div class="world"><button type="button" class="world-btn${on}" data-world="${wi}"><span class="wname">${w.name}</span><span class="wtag">${esc(w.tag)}</span></button>`;
+    w.levels.forEach((lv, li) => {
+      const ok = unlocked(wi, li), st = progress[lv.id];
+      const cur = view.type === "level" && view.w === wi && view.l === li ? " on" : "";
+      h += `<button type="button" class="lv${cur}${ok ? "" : " locked"}" data-w="${wi}" data-l="${li}" ${ok ? "" : 'aria-disabled="true"'}>
+        <span class="n">${wi + 1}.${li + 1}</span><span>${lv.title}</span>
+        <span class="st">${st != null ? starStr(st) : ok ? "" : "🔒"}</span></button>`;
+    });
+    h += "</div>";
+  });
+  document.getElementById("map").innerHTML = h;
+}
+
+// ---------- intro de mundo ----------
+function renderIntro(wi) {
+  const w = WORLDS[wi];
+  let vis = "";
+  if (w.anatomy) vis = `<div class="anatomy">${w.anatomy.map(([t, c]) => c === "arrow" ? `<span class="arrow">${esc(t)}</span>` : `<span class="chip ${c}">${esc(t)}</span>`).join("")}</div>`;
+  if (w.tree) vis = `<div class="treebox" style="align-self:flex-start">${treeSVG(w.tree, [5])}<span class="cap">No(5, esq, dir)</span></div>`;
+  const firstOpen = w.levels.findIndex(l => progress[l.id] == null);
+  const next = firstOpen === -1 ? 0 : firstOpen;
+  return `
+    <div><span class="eyebrow">Mundo ${wi + 1} de ${WORLDS.length}</span><h2>Recursão com ${w.name.toLowerCase()}</h2>
+    <div class="prose"><p>${w.lead}</p></div></div>
+    ${vis}
+    <div><h3>A receita</h3><div class="code"><pre>${hl(w.template)}</pre></div></div>
+    <div class="recipe">${w.recipe.map(([q, t]) => `<div><span class="q">${q}</span><p>${esc(t)}</p></div>`).join("")}</div>
+    <div class="actions"><button type="button" class="btn accent" data-go="${wi},${next}">${firstOpen === -1 ? "Rever fases" : firstOpen === 0 ? "Começar" : "Continuar"} →</button>
+    <span class="eyebrow">${w.levels.length} fases</span></div>`;
+}
+
+// ---------- fase ----------
+function startLevel(wi, li) {
+  const lv = WORLDS[wi].levels[li];
+  run = { lv, wi, li, attempts: 0, solved: false, hint: false, msg: "", step: 0,
+    filled: lv.blanks ? lv.blanks.map(() => null) : null, active: 0, wrong: new Set(), picked: new Set() };
+  if (lv.blanks) run.opts = lv.blanks.map((b, i) => shuffled(b, lv.id + i));
+  if (lv.options) run.opts = lv.options;
+}
+
+function renderCode() {
+  const lv = run.lv;
+  if (lv.kind === "fill") {
+    const parts = lv.code.split(/\{\{(\d+)\}\}/);
+    let h = "";
+    parts.forEach((p, i) => {
+      if (i % 2 === 0) { h += hl(p); return; }
+      const b = +p, val = run.filled[b];
+      let cls = "slot";
+      if (val == null) cls += " empty";
+      if (run.active === b) cls += " active";
+      if (run.wrong.has(b)) cls += " wrong";
+      h += `<button type="button" class="${cls}" data-slot="${b}" aria-label="Lacuna ${b + 1}">${val == null ? "?" : esc(val)}</button>`;
+    });
+    return `<div class="code"><pre>${h}</pre></div>`;
+  }
+  if (lv.kind === "bug") {
+    const h = lv.code.split("\n").map((ln, i) => {
+      const cls = "bugline" + (run.picked.has(i) ? " wrong" : "");
+      return `<button type="button" class="${cls}" data-line="${i}"><span class="ln">${i + 1}</span>${hl(ln) || " "}</button>`;
+    }).join("");
+    return `<div class="code">${h}</div>`;
+  }
+  return `<div class="code"><pre>${hl(lv.code)}</pre></div>`;
+}
+
+function renderInteract() {
+  const lv = run.lv;
+  if (lv.kind === "fill") {
+    const b = run.active;
+    return `<div class="bank"><span class="bank-label">Peças para a lacuna ${b + 1} de ${lv.blanks.length}:</span>
+      <div class="tiles">${run.opts[b].map(o => `<button type="button" class="tile${run.filled[b] === o ? " chosen" : ""}" data-tile="${esc(o)}">${esc(o)}</button>`).join("")}</div></div>
+      <div class="actions"><button type="button" class="btn" data-check ${run.filled.some(v => v == null) ? "disabled" : ""}>Verificar</button>
+      ${run.hint ? "" : `<button type="button" class="btn ghost" data-hint>Dica</button>`}</div>`;
+  }
+  if (lv.kind === "predict") {
+    return `<p class="question">Qual o valor de <span class="call">${esc(lv.call)}</span>?</p>
+      <div class="opts">${run.opts.map(o => {
+        const c = "opt" + (run.picked.has(o) ? " wrong" : "");
+        return `<button type="button" class="${c}" data-opt="${esc(o)}" ${run.picked.has(o) ? "disabled" : ""}>${esc(o)}</button>`;
+      }).join("")}</div>
+      ${run.hint ? "" : `<div class="actions"><button type="button" class="btn ghost" data-hint>Dica</button></div>`}`;
+  }
+  if (lv.kind === "bug") {
+    return run.hint ? "" : `<div class="actions"><span class="bank-label">Clique numa linha do código.</span><button type="button" class="btn ghost" data-hint>Dica</button></div>`;
+  }
+}
+
+function renderFollow() {
+  const lv = run.lv, k = run.step, steps = lv.trace, cur = steps[k], last = steps.length - 1;
+  let tree = lv.traceTree || null;
+  for (let i = 0; i <= k; i++) if (steps[i].t) tree = steps[i].t;
+  const mark = cur.m || [];
+  const lines = solvedLines(lv).map((html, i) =>
+    `<div class="cl${cur.ln.includes(i) ? " on" : ""}"><span class="ln">${i + 1}</span>${html || " "}</div>`).join("");
+  const vars = cur.v ? cur.v.split(" · ").map(x => `<span class="vchip">${esc(x)}</span>`).join("") : "";
+  const lineLabel = cur.ln.length > 1 ? `linhas ${cur.ln.map(x => x + 1).join(" e ")}` : `linha ${cur.ln[0] + 1}`;
+  const expr = steps.slice(0, k + 1).map((s, i) => `<div class="step${i === k ? " cur" : ""}">${esc(s.e)}</div>`).join("");
+  return `
+  <section class="follow" aria-label="Acompanhar a recursão">
+    <div class="follow-head">
+      <h3>Acompanhe a recursão</h3>
+      <div class="stepper">
+        <button type="button" class="btn ghost" data-step="first" ${k === 0 ? "disabled" : ""}>Início</button>
+        <button type="button" class="btn ghost" data-step="-1" ${k === 0 ? "disabled" : ""}>← Voltar</button>
+        <button type="button" class="btn" data-step="1" ${k === last ? "disabled" : ""}>Próximo passo →</button>
+        <span class="count">${k + 1}/${steps.length}</span>
+      </div>
+    </div>
+    <div class="note" aria-live="polite"><b>${lineLabel}:</b> ${cur.n || "mesma ideia do passo anterior, com novos valores."}</div>
+    <div class="trace">
+      <div class="code lines">${lines}</div>
+      <div class="side">
+        ${vars ? `<div class="vars"><span class="lab">Nesta chamada</span><div class="vchips">${vars}</div></div>` : ""}
+        ${tree ? `<div class="treebox">${treeSVG(tree, mark)}<span class="cap">destaque = nós deste passo</span></div>` : ""}
+      </div>
+    </div>
+    <div class="steps"><div class="lab">Expressão até agora</div>${expr}</div>
+    <span class="keys">Dica: use <kbd>←</kbd> e <kbd>→</kbd> do teclado para andar pelos passos.</span>
+  </section>`;
+}
+
+function nextTarget() {
+  const { wi, li } = run;
+  if (li + 1 < WORLDS[wi].levels.length) return { label: "Próxima fase →", go: `${wi},${li + 1}` };
+  if (wi + 1 < WORLDS.length) return { label: `Mundo ${WORLDS[wi + 1].name} →`, intro: wi + 1 };
+  return null;
+}
+
+function renderLevel() {
+  const lv = run.lv, w = WORLDS[run.wi];
+  let h = `<div><span class="eyebrow">${w.name} · fase ${run.li + 1} de ${w.levels.length} · <b>${KIND[lv.kind]}</b></span>
+    <h2>${lv.title}</h2><div class="prose"><p>${esc(lv.prompt)}</p></div></div>`;
+  if (!run.solved) {
+    if (lv.tree) h += `<div class="treebox" style="align-self:flex-start">${treeSVG(lv.tree)}</div>`;
+    h += renderCode();
+    h += renderInteract();
+    if (run.msg) h += `<div class="feedback bad" role="status">${run.msg}</div>`;
+    if (run.hint) h += `<div class="feedback hint"><b>Dica:</b> ${esc(lv.hint)}</div>`;
+    return h;
+  }
+  const st = starsFor(run.attempts), nx = nextTarget();
+  h += `<section class="result">
+    <div class="won"><span class="bigstars" aria-label="${st} de 3 estrelas">${starStr(st)}</span>
+      <h3>${run.attempts === 0 ? "De primeira!" : run.attempts === 1 ? "Resolvido com um erro" : `Resolvido com ${run.attempts} erros`}</h3></div>
+    <div class="prose"><p>${lv.explain}</p></div>
+    ${renderFollow()}
+    <div class="actions">
+      ${nx ? `<button type="button" class="btn accent" ${nx.go ? `data-go="${nx.go}"` : `data-world="${nx.intro}"`}>${nx.label}</button>` : `<span class="eyebrow"><b>Você terminou todas as fases.</b></span>`}
+      <button type="button" class="btn ghost" data-retry>Refazer fase</button>
+    </div></section>`;
+  return h;
+}
+
+function starsFor(a) { return a === 0 ? 3 : a === 1 ? 2 : 1; }
+
+function win() {
+  run.solved = true; run.msg = ""; run.step = 0;
+  const st = starsFor(run.attempts);
+  progress[run.lv.id] = Math.max(progress[run.lv.id] || 0, st);
+  save();
+}
+
+const WRONG_MSG = {
+  fill: n => `${n === 1 ? "Uma lacuna está errada" : n + " lacunas estão erradas"}. Elas ficaram marcadas no código.`,
+  predict: () => "Não é esse. Siga a recursão elemento por elemento.",
+  bug: () => "Essa linha está certa. Pense no que a saída tem de diferente do esperado."
+};
+
+// ---------- render ----------
+function render(scrollTop) {
+  renderMap();
+  const main = document.getElementById("main");
+  main.innerHTML = view.type === "intro" ? renderIntro(view.w) : renderLevel();
+  if (scrollTop) main.scrollIntoView({ block: "start", behavior: "auto" });
+}
+function goLevel(wi, li) {
+  if (!unlocked(wi, li)) return;
+  view = { type: "level", w: wi, l: li }; startLevel(wi, li); render(true);
+}
+function moveStep(how) {
+  const n = run.lv.trace.length;
+  run.step = how === "first" ? 0 : Math.min(n - 1, Math.max(0, run.step + how));
+  render();
+  const btn = document.querySelector(`[data-step="${how}"]:not(:disabled)`) || document.querySelector('[data-step="1"]:not(:disabled)') || document.querySelector('[data-step="-1"]:not(:disabled)');
+  if (btn && document.activeElement === document.body) btn.focus({ preventScroll: true });
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("button");
+  if (!t) return;
+  if (t.dataset.world != null) { view = { type: "intro", w: +t.dataset.world }; render(true); return; }
+  if (t.dataset.w != null) { goLevel(+t.dataset.w, +t.dataset.l); return; }
+  if (t.dataset.go) { const [a, b] = t.dataset.go.split(",").map(Number); goLevel(a, b); return; }
+  if (!run) return;
+  if (t.dataset.slot != null) { run.active = +t.dataset.slot; render(); return; }
+  if (t.dataset.tile != null) {
+    const b = run.active;
+    run.filled[b] = t.dataset.tile; run.wrong.delete(b); run.msg = "";
+    const nextEmpty = run.filled.findIndex(v => v == null);
+    if (nextEmpty !== -1) run.active = nextEmpty;
+    render(); return;
+  }
+  if (t.hasAttribute("data-check")) {
+    run.wrong = new Set();
+    run.filled.forEach((v, i) => { if (v !== run.lv.blanks[i][0]) run.wrong.add(i); });
+    if (run.wrong.size === 0) win();
+    else { run.attempts++; run.msg = WRONG_MSG.fill(run.wrong.size); run.active = [...run.wrong][0]; }
+    render(); return;
+  }
+  if (t.dataset.opt != null) {
+    if (t.dataset.opt === run.lv.answer) win();
+    else { run.picked.add(t.dataset.opt); run.attempts++; run.msg = WRONG_MSG.predict(); }
+    render(); return;
+  }
+  if (t.dataset.line != null) {
+    const i = +t.dataset.line;
+    if (i === run.lv.bugLine) win();
+    else if (!run.picked.has(i)) { run.picked.add(i); run.attempts++; run.msg = WRONG_MSG.bug(); }
+    render(); return;
+  }
+  if (t.hasAttribute("data-hint")) { run.hint = true; render(); return; }
+  if (t.dataset.step) { moveStep(t.dataset.step === "first" ? "first" : +t.dataset.step); return; }
+  if (t.hasAttribute("data-retry")) { startLevel(run.wi, run.li); render(true); return; }
+});
+
+document.addEventListener("keydown", e => {
+  if (!run || !run.solved || view.type !== "level" || e.altKey || e.ctrlKey || e.metaKey) return;
+  if (e.key === "ArrowRight") { e.preventDefault(); moveStep(1); }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); moveStep(-1); }
+});
+
+let resetArmed = false;
+document.getElementById("reset").addEventListener("click", e => {
+  const b = e.currentTarget;
+  if (!resetArmed) { resetArmed = true; b.textContent = "Confirmar: apagar estrelas?"; setTimeout(() => { resetArmed = false; b.textContent = "Zerar progresso"; }, 4000); return; }
+  progress = {}; save(); resetArmed = false; b.textContent = "Zerar progresso";
+  view = { type: "intro", w: 0 }; run = null; render(true);
+});
+
+render(false);
+
+</script>
+</body>
+</html>
